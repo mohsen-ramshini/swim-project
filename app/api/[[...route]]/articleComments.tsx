@@ -20,13 +20,26 @@ const app = new Hono()
   })
   .post("/", zValidator("json", insertArticleCommentsSchema), async (c) => {
     console.log("POST route hit");
-    const values = c.req.valid("json");
-    console.log("Raw Body:", await c.req.json());
-    console.log("Validated Data:", values);
-    const data = await db.insert(articleComments).values({
-      ...values,
-    });
-    return c.json({ data });
+
+    // Log raw body
+    const rawBody = await c.req.json();
+    console.log("Raw Body:", rawBody);
+
+    try {
+      // Validate request
+      const values = c.req.valid("json");
+      console.log("Validated Data:", values);
+
+      // Insert into database
+      const data = await db.insert(articleComments).values({ ...values });
+      return c.json({ data });
+    } catch (error) {
+      console.error("Error during validation or insertion:", error);
+      return c.json(
+        { error: "Validation failed or database error", details: error },
+        400
+      );
+    }
   });
 
 export default app;

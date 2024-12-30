@@ -4,7 +4,7 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCreateAccount } from "@/features/articleCategory/api/use-create-article-cat";
+import { useCreateAccount } from "@/features/articleTag/api/use-create-article-tag";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,29 +18,27 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { insertArticleCategoriesSchema } from "@/db/schema/articleCategory";
+import { insertArticleTagSchema } from "@/db/schema/articleTag";
 
-const formSchema = insertArticleCategoriesSchema.pick({
+const formSchema = insertArticleTagSchema.pick({
   id: true,
   title: true,
   slug: true,
   isActive: true,
 });
 
-type FormValues = z.input<typeof formSchema>;
+type FormValues = z.input<typeof insertArticleTagSchema>;
 
-const ArticleCategoryForm = () => {
+const ArticleTagForm = () => {
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(insertArticleTagSchema),
     defaultValues: {
       title: "",
       slug: "",
       isActive: true,
     },
   });
-
   const mutation = useCreateAccount();
-
   function onSubmit(values: FormValues) {
     console.log(values);
     mutation.mutate(values);
@@ -50,7 +48,7 @@ const ArticleCategoryForm = () => {
     <div className="flex items-center justify-center min-h-screen p-4">
       <div className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
         {/* Header */}
-        <h1 className="text-2xl font-bold mb-4">Article Category</h1>
+        <h1 className="text-2xl font-bold mb-4">Article Tag</h1>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -113,4 +111,4 @@ const ArticleCategoryForm = () => {
   );
 };
 
-export default ArticleCategoryForm;
+export default ArticleTagForm;

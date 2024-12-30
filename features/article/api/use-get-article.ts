@@ -4,9 +4,9 @@ import { client } from "@/lib/hono";
 
 export const useGetArticles = () => {
   const query = useQuery({
-    queryKey: ["category"],
+    queryKey: ["article"],
     queryFn: async () => {
-      const response = await client.api.category.$get();
+      const response = await client.api.article.$get();
 
       if (!response.ok) {
         throw new Error("Failed to fetch articles");

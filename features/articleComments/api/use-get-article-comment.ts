@@ -6,7 +6,7 @@ export const useGetArticles = () => {
   const query = useQuery({
     queryKey: ["articles"],
     queryFn: async () => {
-      const response = await client.api.articles.$get();
+      const response = await client.api.comment.$get();
 
       if (!response.ok) {
         throw new Error("Failed to fetch articles");

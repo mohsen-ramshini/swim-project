@@ -3,18 +3,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
-type RequestType = InferRequestType<typeof client.api.comment.$post>["json"];
-type ResponseType = InferResponseType<typeof client.api.comment.$post>;
+type RequestType = InferRequestType<typeof client.api.article.$post>["json"];
+type ResponseType = InferResponseType<typeof client.api.article.$post>;
 
 export const useCreateAccount = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
-      const response = await client.api.comment.$post({ json });
-      return await response.json();
       // try {
-      //   const response = await client.api.comment.$post({ json });
+      const response = await client.api.article.$post({ json });
+      return await response.json();
 
       //   const data = await response.json();
       //   if (!Array.isArray(data)) {
@@ -31,11 +30,11 @@ export const useCreateAccount = () => {
       // }
     },
     onSuccess: () => {
-      toast.success("comment created");
-      queryClient.invalidateQueries({ queryKey: ["comment"] });
+      toast.success("Article created");
+      queryClient.invalidateQueries({ queryKey: ["articles"] });
     },
     onError: () => {
-      toast.error("Failed to create comment");
+      toast.error("Failed to create article");
     },
   });
 
