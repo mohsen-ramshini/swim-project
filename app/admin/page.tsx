@@ -1,15 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-// import Navbar from "@/components/Navbar";
 import ArticleForm from "@/features/article/components/ArticleForm";
-import ArticleCategoryForm from "@/features/articleCategory/components/ArticleCatForm";
 import ArticleCommentsForm from "@/features/articleComments/components/ArticleCommentsForm";
 import ArticleTagForm from "@/features/articleTag/components/ArticleTagForm";
 import AuthorForm from "@/features/author/components/AuthorForm";
 import EditorForm from "@/features/editor/components/EditorForm";
 import TranslatorForm from "@/features/translator/components/TranslatorForm";
 import { useAppContext } from "@/providers/Appcontext";
+import ArticleCategory from "@/features/articleCategory/components/ArticleCategory";
 
 export default function BlogForm() {
   const { activePage } = useAppContext();
@@ -19,25 +17,24 @@ export default function BlogForm() {
       case "article":
         return <ArticleForm />;
       case "articleCategory":
-        return <ArticleCategoryForm />; // passed
+        return <ArticleCategory />;
       case "ArticleComment":
         return <ArticleCommentsForm />;
       case "articleTag":
-        return <ArticleTagForm />; // passed
+        return <ArticleTagForm />;
       case "author":
-        return <AuthorForm />; // passed
+        return <AuthorForm />;
       case "editor":
-        return <EditorForm />; // passed
+        return <EditorForm />;
       case "translator":
-        return <TranslatorForm />; // passed
+        return <TranslatorForm />;
       default:
-        return <div>Page Not Found</div>;
+        return <div className="text-center text-red-500">Page Not Found</div>;
     }
   };
 
   return (
-    <section className="min-h-screen w-full  flex flex-col">
-      {/* <Navbar setActiveSection={setActivePage} /> */}
+    <section className="min-h-screen w-full flex flex-col bg-white shadow rounded-lg p-6">
       {renderActivePage()}
     </section>
   );

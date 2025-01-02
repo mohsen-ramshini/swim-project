@@ -86,3 +86,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+[dir="rtl"] .sidebar {
+  direction: rtl;
+}
+
+[dir="rtl"] .sidebar-item {
+  text-align: right;
+  margin-left: auto;
+  margin-right: 0;
+}

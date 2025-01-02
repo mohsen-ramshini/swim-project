@@ -16,4 +16,5 @@ export const useGetArticles = () => {
       return data;
     },
   });
+  return query;
 };

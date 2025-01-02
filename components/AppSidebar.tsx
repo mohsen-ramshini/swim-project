@@ -79,7 +79,7 @@ export function AppSidebar() {
   ];
 
   return (
-    <Sidebar side="right" dir="rtl" variant="sidebar">
+    <Sidebar side="left" dir="rtl" variant="sidebar">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>

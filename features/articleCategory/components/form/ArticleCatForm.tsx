@@ -19,6 +19,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { insertArticleCategoriesSchema } from "@/db/schema/articleCategory";
+import ArticleCatTable from "../table/ArticleCatTable";
+import { useNewAccount } from "../../hook/useNewCat";
 
 const formSchema = insertArticleCategoriesSchema.pick({
   id: true,
@@ -39,23 +41,21 @@ const ArticleCategoryForm = () => {
     },
   });
 
+  const newArticle = useNewAccount();
+
   const mutation = useCreateAccount();
 
   function onSubmit(values: FormValues) {
     console.log(values);
     mutation.mutate(values);
+    newArticle.onClose();
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <div className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
-        {/* Header */}
-        <h1 className="text-2xl font-bold mb-4">Article Category</h1>
+    <div>
+      <div>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 bg-gray-100 p-6 rounded-lg shadow-md"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             {/* Title */}
             <FormField
               control={form.control}
