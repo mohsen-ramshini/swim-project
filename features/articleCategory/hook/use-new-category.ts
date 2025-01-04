@@ -1,12 +1,4 @@
 import { create } from "zustand";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 type NewArticleState = {
   isOpen: boolean;
@@ -14,7 +6,7 @@ type NewArticleState = {
   onClose: () => void;
 };
 
-export const useNewAccount = create<NewArticleState>((set) => ({
+export const useNewCategory = create<NewArticleState>((set) => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),

@@ -1,51 +1,3 @@
-// // import { Hono } from "hono";
-// // import { db } from "@/db/drizzle";
-
-// // import { zValidator } from "@hono/zod-validator";
-// // import { articleCategories } from "@/db/schema/articleCategory";
-
-// // const app = new Hono().get("/", async (c) => {
-// //   const data = await db
-// //     .select({
-// //       id: articleCategories.id,
-// //       title: articleCategories.title,
-// //     })
-// //     .from(articleCategories);
-// //   return c.json({ data });
-// // });
-
-// // export default app;
-
-// import { Hono } from "hono";
-// import { db } from "@/db/drizzle"; // Ensure this imports your Drizzle DB connection
-// import { articleCategories } from "@/db/schema/articleCategory"; // Ensure this matches your schema
-
-// const articleCat = new Hono();
-
-// articleCat.get("/", async (c) => {
-//   try {
-//     const categories = await db
-//       .select({ id: articleCategories.id, title: articleCategories.title })
-//       .from(articleCategories);
-//     return c.json({ categories });
-//   } catch (error) {
-//     console.error("Error fetching categories:", error);
-//     return c.json({ error: "Failed to fetch categories" }, 500);
-//   }
-// });
-
-// articleCat.post("/", async (c) => {
-//   try {
-//     const body = await c.req.json();
-//     const newCategory = await db.insert(articleCategories).values(body);
-//     return c.json(newCategory);
-//   } catch (error) {
-//     console.error("Error creating category:", error);
-//     return c.json({ error: "Failed to create category" }, 500);
-//   }
-// });
-
-// export default articleCat;
 import { Hono } from "hono";
 import { db } from "@/db/drizzle";
 import {
@@ -53,6 +5,9 @@ import {
   insertArticleCategoriesSchema,
 } from "@/db/schema/articleCategory";
 import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
+import { and, eq, inArray } from "drizzle-orm";
+import { error } from "console";
 
 const app = new Hono()
   .get("/", async (c) => {
@@ -66,6 +21,44 @@ const app = new Hono()
       .from(articleCategories);
     return c.json({ data });
   })
+  .get(
+    "/:id",
+    zValidator(
+      "param",
+      z.object({
+        id: z.string().optional(),
+      })
+    ),
+    async (c) => {
+      const { id } = c.req.valid("param");
+
+      if (!id) {
+        return c.json({ error: "Missing id" }, 400);
+      }
+
+      // Convert the id to a number
+      const numericId = parseInt(id, 10);
+
+      if (isNaN(numericId)) {
+        return c.json({ error: "Invalid id" }, 400);
+      }
+
+      const [data] = await db
+        .select({
+          id: articleCategories.id,
+          title: articleCategories.title,
+        })
+        .from(articleCategories)
+        .where(and(eq(articleCategories.id, numericId)));
+
+      if (!data) {
+        return c.json({ error: "Not found" }, 404);
+      }
+
+      return c.json({ data });
+    }
+  )
+
   .post("/", zValidator("json", insertArticleCategoriesSchema), async (c) => {
     console.log("POST route hit");
     const values = c.req.valid("json");
@@ -75,6 +68,33 @@ const app = new Hono()
       ...values,
     });
     return c.json({ data });
-  });
+  })
+  .post(
+    "/bulk-delete",
+    zValidator(
+      "json",
+      z.object({
+        ids: z.array(z.string()),
+      })
+    ),
+    async (c) => {
+      try {
+        const values = c.req.valid("json");
+        const numericIds = values.ids.map((id) => parseInt(id, 10));
+
+        const data = await db
+          .delete(articleCategories)
+          .where(inArray(articleCategories.id, numericIds))
+          .returning({
+            id: articleCategories.id,
+          });
+
+        return c.json({ success: true, deleted: data });
+      } catch (error) {
+        console.error("Bulk delete error:", error);
+        return c.json({ success: false, error: "Failed to delete items" }, 500);
+      }
+    }
+  );
 
 export default app;

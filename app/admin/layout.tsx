@@ -1,5 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import { SheetProvider } from "@/providers/sheet-provider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,6 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <SidebarTrigger className="text-gray-700" />
             <h1 className="text-lg font-semibold">Dashboard</h1>
           </header>
+          <SheetProvider />
           <div className="flex-1 p-6 bg-gray-50">{children}</div>
         </main>
       </section>
