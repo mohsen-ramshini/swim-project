@@ -2,7 +2,7 @@
 
 import ArticleForm from "@/features/article/components/ArticleForm";
 import ArticleCommentsForm from "@/features/articleComments/components/ArticleCommentsForm";
-import ArticleTagForm from "@/features/articleTag/components/ArticleTagForm";
+import ArticleTag from "@/features/articleTag/components/ArticleTag";
 import AuthorForm from "@/features/author/components/AuthorForm";
 import EditorForm from "@/features/editor/components/EditorForm";
 import TranslatorForm from "@/features/translator/components/TranslatorForm";
@@ -21,7 +21,7 @@ export default function BlogForm() {
       case "ArticleComment":
         return <ArticleCommentsForm />;
       case "articleTag":
-        return <ArticleTagForm />;
+        return <ArticleTag />;
       case "author":
         return <AuthorForm />;
       case "editor":

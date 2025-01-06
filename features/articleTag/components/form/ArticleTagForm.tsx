@@ -4,12 +4,10 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCreateAccount } from "@/features/articleTag/api/use-create-article-tag";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,42 +16,50 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { insertArticleTagSchema } from "@/db/schema/articleTag";
+import { insertArticleCategoriesSchema } from "@/db/schema/articleCategory";
+import { Trash } from "lucide-react";
 
-const formSchema = insertArticleTagSchema.pick({
+const formSchema = insertArticleCategoriesSchema.pick({
   id: true,
   title: true,
   slug: true,
   isActive: true,
 });
 
-type FormValues = z.input<typeof insertArticleTagSchema>;
+type FormValues = z.input<typeof formSchema>;
 
-const ArticleTagForm = () => {
+type Props = {
+  id?: string;
+  defaultValues?: FormValues;
+  onSubmit: (values: FormValues) => void;
+  onDelete?: () => void;
+  disabled?: boolean;
+};
+
+export const ArticleTagForm = ({
+  id,
+  defaultValues,
+  onSubmit,
+  onDelete,
+  disabled,
+}: Props) => {
   const form = useForm<FormValues>({
-    resolver: zodResolver(insertArticleTagSchema),
-    defaultValues: {
-      title: "",
-      slug: "",
-      isActive: true,
-    },
+    resolver: zodResolver(formSchema),
+    defaultValues: defaultValues,
   });
-  const mutation = useCreateAccount();
-  function onSubmit(values: FormValues) {
-    console.log(values);
-    mutation.mutate(values);
-  }
+
+  const handleSubmit = (values: FormValues) => {
+    onSubmit(values);
+  };
+  const handleDelete = () => {
+    onDelete?.();
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <div className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
-        {/* Header */}
-        <h1 className="text-2xl font-bold mb-4">Article Tag</h1>
+    <div>
+      <div>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 bg-gray-100 p-6 rounded-lg shadow-md"
-          >
+          <form onSubmit={form.handleSubmit(handleSubmit)}>
             {/* Title */}
             <FormField
               control={form.control}
@@ -62,7 +68,11 @@ const ArticleTagForm = () => {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter the title" {...field} />
+                    <Input
+                      placeholder="Enter the title"
+                      {...field}
+                      disabled={disabled}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -103,12 +113,24 @@ const ArticleTagForm = () => {
               )}
             />
 
-            <Button type="submit">Submit</Button>
+            <Button className="w-full" disabled={disabled}>
+              {id ? "Save Changes" : "Create account"}
+            </Button>
+            {!!id && (
+              <Button
+                type="button"
+                disabled={disabled}
+                onClick={handleDelete}
+                className="w-full"
+                variant="outline"
+              >
+                <Trash className="size-4 mr-2"></Trash>
+                Delete Category
+              </Button>
+            )}
           </form>
         </Form>
       </div>
     </div>
   );
 };
-
-export default ArticleTagForm;

@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 
 import { client } from "@/lib/hono";
 
-export const useGetArticles = () => {
+export const useGetTags = () => {
   const query = useQuery({
-    queryKey: ["author"],
+    queryKey: ["tags"],
     queryFn: async () => {
       const response = await client.api.tag.$get();
 
@@ -16,4 +16,5 @@ export const useGetArticles = () => {
       return data;
     },
   });
+  return query;
 };
