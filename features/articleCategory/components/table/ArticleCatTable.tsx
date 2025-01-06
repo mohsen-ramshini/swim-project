@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Plus } from "lucide-react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { useGetArticles } from "@/features/articleCategory/api/use-get-article-cats";
+import { useGetArticles } from "@/features/articleCategory/api/use-get-categories";
 import { useNewCategory } from "../../hook/use-new-category";
 
 import { Skeleton } from "@/components/ui/skeleton";

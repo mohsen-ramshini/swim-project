@@ -11,11 +11,11 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useGetArticle } from "../../api/use-get-category";
 
 const formSchema = insertArticleCategoriesSchema.pick({
   title: true,
   slug: true,
+  isActive: true,
 });
 
 type FormValues = z.input<typeof formSchema>;

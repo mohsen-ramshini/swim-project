@@ -7,7 +7,6 @@ import {
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { and, eq, inArray } from "drizzle-orm";
-import { error } from "console";
 
 const app = new Hono()
   .get("/", async (c) => {
@@ -17,6 +16,8 @@ const app = new Hono()
       .select({
         id: articleCategories.id,
         title: articleCategories.title,
+        slug: articleCategories.slug,
+        isActive: articleCategories.isActive,
       })
       .from(articleCategories);
     return c.json({ data });
@@ -47,6 +48,8 @@ const app = new Hono()
         .select({
           id: articleCategories.id,
           title: articleCategories.title,
+          slug: articleCategories.slug,
+          isActive: articleCategories.isActive,
         })
         .from(articleCategories)
         .where(and(eq(articleCategories.id, numericId)));
@@ -58,7 +61,6 @@ const app = new Hono()
       return c.json({ data });
     }
   )
-
   .post("/", zValidator("json", insertArticleCategoriesSchema), async (c) => {
     console.log("POST route hit");
     const values = c.req.valid("json");
@@ -94,6 +96,84 @@ const app = new Hono()
         console.error("Bulk delete error:", error);
         return c.json({ success: false, error: "Failed to delete items" }, 500);
       }
+    }
+  )
+  .patch(
+    "/:id",
+    zValidator(
+      "param",
+      z.object({
+        id: z.string().optional(),
+      })
+    ),
+    zValidator(
+      "json",
+      insertArticleCategoriesSchema.pick({
+        title: true,
+        slug: true,
+        isActive: true,
+      })
+    ),
+    async (c) => {
+      const { id } = c.req.valid("param");
+      const values = c.req.valid("json");
+
+      if (!id) {
+        return c.json({ error: "Missing id parameter" }, 400);
+      }
+
+      const numericId = parseInt(id, 10);
+
+      if (isNaN(numericId)) {
+        return c.json({ error: "Invalid id format" }, 400);
+      }
+
+      const [data] = await db
+        .update(articleCategories)
+        .set(values)
+        .where(eq(articleCategories.id, numericId))
+        .returning();
+
+      if (!data) {
+        return c.json({ error: "No record found to update" }, 404);
+      }
+
+      return c.json({ data });
+    }
+  )
+  .delete(
+    "/:id",
+    zValidator(
+      "param",
+      z.object({
+        id: z.string().optional(),
+      })
+    ),
+    async (c) => {
+      const { id } = c.req.valid("param");
+
+      if (!id) {
+        return c.json({ error: "Missing id parameter" }, 400);
+      }
+
+      const numericId = parseInt(id, 10);
+
+      if (isNaN(numericId)) {
+        return c.json({ error: "Invalid id format" }, 400);
+      }
+
+      const [data] = await db
+        .delete(articleCategories)
+        .where(eq(articleCategories.id, numericId))
+        .returning({
+          id: articleCategories.id,
+        });
+
+      if (!data) {
+        return c.json({ error: "No record found to delete" }, 404);
+      }
+
+      return c.json({ data });
     }
   );
 

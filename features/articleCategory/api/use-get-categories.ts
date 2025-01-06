@@ -4,7 +4,7 @@ import { client } from "@/lib/hono";
 
 export const useGetArticles = () => {
   const query = useQuery({
-    queryKey: ["category"],
+    queryKey: ["categories"],
     queryFn: async () => {
       const response = await client.api.category.$get();
 

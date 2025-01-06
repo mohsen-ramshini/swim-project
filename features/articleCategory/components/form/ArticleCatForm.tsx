@@ -4,12 +4,10 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCreateCategory } from "@/features/articleCategory/api/use-create-article-cat";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { insertArticleCategoriesSchema } from "@/db/schema/articleCategory";
-import { useNewCategory } from "../../hook/use-new-category";
+import { Trash } from "lucide-react";
 
 const formSchema = insertArticleCategoriesSchema.pick({
   id: true,
@@ -51,7 +49,7 @@ export const ArticleCategoryForm = ({
   });
 
   const handleSubmit = (values: FormValues) => {
-    console.log(values);
+    onSubmit(values);
   };
   const handleDelete = () => {
     onDelete?.();
@@ -61,7 +59,7 @@ export const ArticleCategoryForm = ({
     <div>
       <div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(handleSubmit)}>
             {/* Title */}
             <FormField
               control={form.control}
@@ -115,103 +113,24 @@ export const ArticleCategoryForm = ({
               )}
             />
 
-            <Button type="submit">Submit</Button>
+            <Button className="w-full" disabled={disabled}>
+              {id ? "Save Changes" : "Create account"}
+            </Button>
+            {!!id && (
+              <Button
+                type="button"
+                disabled={disabled}
+                onClick={handleDelete}
+                className="w-full"
+                variant="outline"
+              >
+                <Trash className="size-4 mr-2"></Trash>
+                Delete Category
+              </Button>
+            )}
           </form>
         </Form>
       </div>
     </div>
   );
 };
-
-// return (
-//   <Form {...form}>
-//     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 pt-4">
-//       <FormField title="name" control={form.control}/>
-//     </form>
-//   </Form>
-// )
-// };
-
-// const ArticleCategoryForm = () => {
-//   const form = useForm<FormValues>({
-//     resolver: zodResolver(formSchema),
-//     defaultValues: {
-//       title: "",
-//       slug: "",
-//       isActive: true,
-//     },
-//   });
-
-//   const newArticle = useNewCategory();
-
-//   const mutation = useCreateCategory();
-
-//   function onSubmit(values: FormValues) {
-//     console.log(values);
-//     mutation.mutate(values);
-//     newArticle.onClose();
-//   }
-
-//   return (
-//     <div>
-//       <div>
-//         <Form {...form}>
-//           <form onSubmit={form.handleSubmit(onSubmit)}>
-//             {/* Title */}
-//             <FormField
-//               control={form.control}
-//               name="title"
-//               render={({ field }) => (
-//                 <FormItem>
-//                   <FormLabel>Title</FormLabel>
-//                   <FormControl>
-//                     <Input placeholder="Enter the title" {...field} />
-//                   </FormControl>
-//                   <FormMessage />
-//                 </FormItem>
-//               )}
-//             />
-
-//             {/* Slug */}
-//             <FormField
-//               control={form.control}
-//               name="slug"
-//               render={({ field }) => (
-//                 <FormItem>
-//                   <FormLabel>Slug</FormLabel>
-//                   <FormControl>
-//                     <Input placeholder="URL-friendly slug" {...field} />
-//                   </FormControl>
-//                   <FormMessage />
-//                 </FormItem>
-//               )}
-//             />
-
-//             {/* Is Active */}
-//             <FormField
-//               control={form.control}
-//               name="isActive"
-//               render={({ field }) => (
-//                 <FormItem>
-//                   <FormLabel>Active</FormLabel>
-//                   <FormControl>
-//                     <Checkbox
-//                       checked={field.value}
-//                       onCheckedChange={field.onChange}
-//                       ref={field.ref}
-//                     />
-//                   </FormControl>
-//                   <FormMessage />
-//                 </FormItem>
-//               )}
-//             />
-
-//             <Button type="submit">Submit</Button>
-//           </form>
-//         </Form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ArticleCategoryForm;

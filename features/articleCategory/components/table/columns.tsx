@@ -65,6 +65,20 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
   },
   {
+    accessorKey: "isActive",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Active
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
     id: "actions",
     cell: ({ row }) => <Actions id={row.original.id.toString()} />,
   },
