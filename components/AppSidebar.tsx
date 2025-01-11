@@ -1,12 +1,12 @@
 "use client";
 import {
-  Calendar,
-  Home,
+  MessageCircle,
+  Newspaper,
   Inbox,
-  Search,
-  Settings,
-  Server,
-  IndentDecrease,
+  BookPlus,
+  Tag,
+  BookType,
+  FilePenLine,
 } from "lucide-react";
 
 import {
@@ -31,9 +31,9 @@ import { useAppContext } from "@/providers/Appcontext";
 
 // head item
 const headItem = {
-  title: "Article",
+  title: "مقالات",
   url: "#",
-  icon: Home,
+  icon: Newspaper,
 };
 
 export function AppSidebar() {
@@ -42,47 +42,47 @@ export function AppSidebar() {
   // Menu items
   const subItems = [
     {
-      title: "Article",
+      title: "مقالات",
       setActive: () => setActivePage("article"),
-      icon: Inbox,
+      icon: BookPlus,
     },
     {
-      title: "Article Categories",
+      title: "دسته بندی مقالات",
       setActive: () => setActivePage("articleCategory"),
       icon: Inbox,
     },
     {
-      title: "Article Comment",
+      title: "نظرات",
       setActive: () => setActivePage("ArticleComment"),
-      icon: Calendar,
+      icon: MessageCircle,
     },
     {
-      title: "Article Tag",
+      title: "تگ ها",
       setActive: () => setActivePage("articleTag"),
-      icon: Search,
+      icon: Tag,
     },
     {
-      title: "Author",
+      title: "نویسنده",
       setActive: () => setActivePage("author"),
-      icon: Settings,
+      icon: BookType,
     },
     {
-      title: "Editor",
+      title: "ویرایش گر",
       setActive: () => setActivePage("editor"),
-      icon: Server,
+      icon: FilePenLine,
     },
     {
-      title: "Translator",
+      title: "مترجم",
       setActive: () => setActivePage("translator"),
-      icon: IndentDecrease,
+      icon: BookType,
     },
   ];
 
   return (
-    <Sidebar side="left" dir="rtl" variant="sidebar">
+    <Sidebar side="right" dir="rtl" variant="sidebar">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>فهرست</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>

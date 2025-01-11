@@ -9,6 +9,7 @@ import { useNewTag } from "@/features/articleTag/hook/use-new-tag";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBulkDeleteTags } from "@/features/articleTag/api/use-bulk-delete";
+import { NewTagSheet } from "../sheet/new-tag-sheet";
 
 const ArticleTagTable = () => {
   const newArticle = useNewTag();
@@ -40,11 +41,11 @@ const ArticleTagTable = () => {
       {/* Card Component */}
       <Card className="border-none drop-shadow-sm">
         <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">Tags</CardTitle>
+          <CardTitle className="text-xl line-clamp-1">تگ ها</CardTitle>
           {/* Trigger Button */}
-          <Button onClick={newArticle.onOpen}>
+          <Button onClick={newArticle.onOpenTag}>
             <Plus className="size-4 mr-2" />
-            Add New
+            ایجاد
           </Button>
         </CardHeader>
         <CardContent>
@@ -59,6 +60,8 @@ const ArticleTagTable = () => {
             filterKey="title"
           />
         </CardContent>
+        {/* change this later */}
+        {/* {newArticle.isTagOpen && <NewTagSheet />} */}
       </Card>
     </div>
   );

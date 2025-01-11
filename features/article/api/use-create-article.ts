@@ -11,23 +11,8 @@ export const useCreateAccount = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
-      // try {
       const response = await client.api.article.$post({ json });
       return await response.json();
-
-      //   const data = await response.json();
-      //   if (!Array.isArray(data)) {
-      //     throw new Error("Expected response data to be an array");
-      //   }
-
-      //   const result = data.reduce((acc, item) => {
-      //     return acc;
-      //   }, []);
-      //   return result;
-      // } catch (error) {
-      //   console.error("Error in mutation:", error);
-      //   throw error;
-      // }
     },
     onSuccess: () => {
       toast.success("Article created");

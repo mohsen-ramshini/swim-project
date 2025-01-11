@@ -1,6 +1,5 @@
 "use client";
 
-import ArticleForm from "@/features/article/components/ArticleForm";
 import ArticleCommentsForm from "@/features/articleComments/components/ArticleCommentsForm";
 import ArticleTag from "@/features/articleTag/components/ArticleTag";
 import AuthorForm from "@/features/author/components/AuthorForm";
@@ -8,6 +7,7 @@ import EditorForm from "@/features/editor/components/EditorForm";
 import TranslatorForm from "@/features/translator/components/TranslatorForm";
 import { useAppContext } from "@/providers/Appcontext";
 import ArticleCategory from "@/features/articleCategory/components/ArticleCategory";
+import Article from "@/features/article/components/Article";
 
 export default function BlogForm() {
   const { activePage } = useAppContext();
@@ -15,7 +15,7 @@ export default function BlogForm() {
   const renderActivePage = () => {
     switch (activePage) {
       case "article":
-        return <ArticleForm />;
+        return <Article />;
       case "articleCategory":
         return <ArticleCategory />;
       case "ArticleComment":
@@ -29,13 +29,9 @@ export default function BlogForm() {
       case "translator":
         return <TranslatorForm />;
       default:
-        return <div className="text-center text-red-500">Page Not Found</div>;
+        return <div className="text-center text-red-500">صفحه پیدا نشد</div>;
     }
   };
 
-  return (
-    <section className="min-h-screen w-full flex flex-col bg-white shadow rounded-lg p-6">
-      {renderActivePage()}
-    </section>
-  );
+  return <section dir="rtl">{renderActivePage()}</section>;
 }

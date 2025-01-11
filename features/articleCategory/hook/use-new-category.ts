@@ -1,13 +1,13 @@
 import { create } from "zustand";
 
 type NewArticleState = {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
+  isCategoryOpen: boolean;
+  onOpenCategory: () => void;
+  onCloseCategory: () => void;
 };
 
 export const useNewCategory = create<NewArticleState>((set) => ({
-  isOpen: false,
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
+  isCategoryOpen: false,
+  onOpenCategory: () => set({ isCategoryOpen: true }),
+  onCloseCategory: () => set({ isCategoryOpen: false }),
 }));

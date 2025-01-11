@@ -44,7 +44,7 @@ export const columns: ColumnDef<ResponseType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Title
+          عنوان
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -58,7 +58,7 @@ export const columns: ColumnDef<ResponseType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Slug
+          اسلاگ
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -72,7 +72,7 @@ export const columns: ColumnDef<ResponseType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Active
+          فعال
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

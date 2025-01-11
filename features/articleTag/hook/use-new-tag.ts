@@ -1,13 +1,16 @@
 import { create } from "zustand";
 
-type NewArticleState = {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
+type NewTagState = {
+  isTagOpen: boolean;
+  onOpenTag: () => void;
+  onCloseTag: () => void;
 };
 
-export const useNewTag = create<NewArticleState>((set) => ({
-  isOpen: false,
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
+export const useNewTag = create<NewTagState>((set) => ({
+  isTagOpen: false,
+  onOpenTag: () => {
+    set({ isTagOpen: true });
+    console.log(`tag is opening`);
+  },
+  onCloseTag: () => set({ isTagOpen: false }),
 }));

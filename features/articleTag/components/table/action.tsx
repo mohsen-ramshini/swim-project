@@ -48,14 +48,14 @@ export const Actions = ({ id }: Props) => {
             onClick={() => onOpen(id)}
           >
             <Edit className="size-4 mr-2" />
-            Edit
+            ویرایش
           </DropdownMenuItem>
           <DropdownMenuItem
             disabled={deleteMutation.isPending}
             onClick={hadnleDelete}
           >
             <Trash className="size-4 mr-2" />
-            Delete
+            حذف
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -66,10 +66,10 @@ export const ArticleCategoryForm = ({
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>عنوان</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter the title"
+                      placeholder="عنوان را وارد کنید"
                       {...field}
                       disabled={disabled}
                     />
@@ -85,9 +85,9 @@ export const ArticleCategoryForm = ({
               name="slug"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Slug</FormLabel>
+                  <FormLabel>اسلاگ</FormLabel>
                   <FormControl>
-                    <Input placeholder="URL-friendly slug" {...field} />
+                    <Input placeholder="اسلاگ را وارد کنید" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,7 +100,7 @@ export const ArticleCategoryForm = ({
               name="isActive"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Active</FormLabel>
+                  <FormLabel className="px-2">فعال</FormLabel>
                   <FormControl>
                     <Checkbox
                       checked={field.value}
@@ -114,7 +114,7 @@ export const ArticleCategoryForm = ({
             />
 
             <Button className="w-full" disabled={disabled}>
-              {id ? "Save Changes" : "Create account"}
+              {id ? "ذخیره تغییرات" : "ایجاد دسته بندی"}
             </Button>
             {!!id && (
               <Button
@@ -125,7 +125,7 @@ export const ArticleCategoryForm = ({
                 variant="outline"
               >
                 <Trash className="size-4 mr-2"></Trash>
-                Delete Category
+                حذف دسته بندی
               </Button>
             )}
           </form>
