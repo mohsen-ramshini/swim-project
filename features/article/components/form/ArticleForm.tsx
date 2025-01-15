@@ -2,6 +2,7 @@
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -19,13 +20,41 @@ import { Trash } from "lucide-react";
 
 import { insertArticleSchema } from "@/db/schema/article";
 
+// Dynamically import CKEditor
+const CKEditor = dynamic(
+  () => import("@ckeditor/ckeditor5-react").then((mod) => mod.CKEditor),
+  {
+    ssr: false,
+  }
+);
+const ClassicEditor = dynamic(
+  () => import("@ckeditor/ckeditor5-build-classic"),
+  { ssr: false }
+);
+
+type FormFieldNames =
+  | "articleType"
+  | "title"
+  | "slug"
+  | "thumbnail"
+  | "excerpt"
+  | "content"
+  // | "isActive"
+  | "categoryId"
+  | "reference";
+// | "publishTime";
+
 const formSchema = insertArticleSchema.pick({
-  id: true,
+  articleType: true,
   title: true,
   slug: true,
+  thumbnail: true,
   excerpt: true,
   content: true,
-  isActive: true,
+  categoryId: true,
+  reference: true,
+  // publishTime: true,
+  // isActive: true,
 });
 
 type FormValues = z.input<typeof formSchema>;
@@ -48,12 +77,16 @@ export const ArticleForm = ({
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues || {
-      id: undefined,
+      articleType: 1,
       title: "",
       slug: "",
+      thumbnail: "",
       excerpt: "",
       content: "",
-      isActive: true,
+      categoryId: 1,
+      reference: "",
+      // publishTime: new Date(),
+      // isActive: true,
     },
   });
 
@@ -69,102 +102,86 @@ export const ArticleForm = ({
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-          {/* Title */}
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter the title"
-                    {...field}
-                    disabled={disabled}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {Object.keys(formSchema.shape).map((key) => {
+            if (key === "content") {
+              return (
+                <FormField
+                  key={key}
+                  control={form.control}
+                  name={key}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Content</FormLabel>
+                      <FormControl>
+                        <CKEditor
+                          editor={ClassicEditor}
+                          data={field.value}
+                          onChange={(event: any, editor: any) => {
+                            const data = editor.getData();
+                            field.onChange(data);
+                          }}
+                          disabled={disabled}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              );
+            }
 
-          {/* Slug */}
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Slug</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter the slug"
-                    {...field}
-                    disabled={disabled}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            // if (key === "isActive") {
+            //   return (
+            //     <FormField
+            //       key={key}
+            //       control={form.control}
+            //       name={key}
+            //       render={({ field }) => (
+            //         <FormItem>
+            //           <FormLabel>Active</FormLabel>
+            //           <FormControl>
+            //             <Checkbox
+            //               checked={field.value}
+            //               onCheckedChange={field.onChange}
+            //               ref={field.ref}
+            //               disabled={disabled}
+            //             />
+            //           </FormControl>
+            //           <FormMessage />
+            //         </FormItem>
+            //       )}
+            //     />
+            //   );
+            // }
 
-          {/* Excerpt */}
-          <FormField
-            control={form.control}
-            name="excerpt"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Excerpt</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter a short excerpt"
-                    {...field}
-                    disabled={disabled}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Content */}
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Content</FormLabel>
-                <FormControl>
-                  <textarea
-                    className="w-full p-2 border rounded"
-                    placeholder="Enter the content"
-                    {...field}
-                    disabled={disabled}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/* Is Active */}
-          <FormField
-            control={form.control}
-            name="isActive"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Active</FormLabel>
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    ref={field.ref}
-                    disabled={disabled}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            return (
+              <FormField
+                key={key}
+                control={form.control}
+                name={key as FormFieldNames}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{key}</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={`Enter ${key}`}
+                        {...field}
+                        disabled={disabled}
+                        value={
+                          key === "publishTime"
+                            ? field.value
+                              ? field.value.toString()
+                              : ""
+                            : field.value || ""
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            );
+          })}
 
           <Button className="w-full" disabled={disabled}>
             {id ? "Save Changes" : "Create Article"}

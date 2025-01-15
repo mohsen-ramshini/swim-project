@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^44.1.0",
+    "@ckeditor/ckeditor5-react": "^9.4.0",
     "@hono/zod-validator": "^0.4.2",
     "@hookform/resolvers": "^3.9.1",
     "@paralleldrive/cuid2": "^2.2.2",
@@ -35,6 +37,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "react-multi-date-picker": "^4.5.2",
+    "react-persian-datepicker": "^3.0.2",
     "react-use": "^17.6.0",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.5.5",

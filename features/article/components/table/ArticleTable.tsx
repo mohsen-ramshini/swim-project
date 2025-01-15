@@ -9,6 +9,7 @@ import { useNewArticle } from "@/features/article/hook/use-new-article";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBulkDeleteArticles } from "@/features/article/api/use-bulk-delete";
+import { NewArticleSheet } from "@/features/article/components/sheet/new-article-sheet";
 
 const ArticleTable = () => {
   const newArticle = useNewArticle();
@@ -60,6 +61,7 @@ const ArticleTable = () => {
           />
         </CardContent>
       </Card>
+      <NewArticleSheet />
     </div>
   );
 };
