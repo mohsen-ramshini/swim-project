@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { useOpenArticle } from "@/features/article/hook/use-open-article";
-import { ArticleForm } from "@/features/article/components/form/ArticleForm";
+// import { ArticleForm } from "@/features/article/components/form/ArticleForm";
 import { useGetArticle } from "@/features/article/api/use-get-article";
 import { useEditArticle } from "@/features/article/api/use-edit-article";
 import { useDeleteArticle } from "@/features/article/api/use-delete-article";
@@ -20,7 +20,7 @@ import { Loader2 } from "lucide-react";
 const formSchema = insertArticleSchema.pick({
   title: true,
   slug: true,
-  isActive: true,
+  // isActive: true,
 });
 
 type FormValues = z.input<typeof formSchema>;
@@ -40,13 +40,13 @@ export const EditArticleSheet = () => {
   const isPending = editMutation.isPending || deleteMutation.isPending;
   const isLoading = article.isLoading;
 
-  const onSubmit = (values: FormValues) => {
-    editMutation.mutate(values, {
-      onSuccess: () => {
-        onClose();
-      },
-    });
-  };
+  // const onSubmit = (values: FormValues) => {
+  //   editMutation.mutate(values, {
+  //     onSuccess: () => {
+  //       onClose();
+  //     },
+  //   });
+  // };
 
   const onDelete = async () => {
     const ok = await confirm();
@@ -81,7 +81,10 @@ export const EditArticleSheet = () => {
             <SheetTitle>Edit Article</SheetTitle>
             <SheetDescription>Edit</SheetDescription>
           </SheetHeader>
-          {isLoading ? (
+
+          {/* <ArticleForm /> */}
+
+          {/* {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <Loader2 className="size-4 text-muted-foreground animate-spin" />
             </div>
@@ -93,7 +96,7 @@ export const EditArticleSheet = () => {
               defaultValues={defaultValues}
               onDelete={onDelete}
             />
-          )}
+          )} */}
         </SheetContent>
       </Sheet>
     </>

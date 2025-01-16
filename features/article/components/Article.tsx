@@ -3,7 +3,7 @@ import ArticleTable from "./table/ArticleTable";
 
 const Article = () => {
   return (
-    <div>
+    <div className="overflow-y-auto">
       <ArticleTable />
     </div>
   );

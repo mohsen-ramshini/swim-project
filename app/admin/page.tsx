@@ -33,5 +33,9 @@ export default function BlogForm() {
     }
   };
 
-  return <section dir="rtl">{renderActivePage()}</section>;
+  return (
+    <section dir="rtl" className="overflow-y-auto">
+      {renderActivePage()}
+    </section>
+  );
 }

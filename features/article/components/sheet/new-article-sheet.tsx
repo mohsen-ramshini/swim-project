@@ -28,7 +28,7 @@
 
 import { z } from "zod";
 import { useNewArticle } from "@/features/article/hook/use-new-article";
-import { ArticleForm } from "@/features/article/components/form/ArticleForm";
+import ArticleForm from "@/features/article/components/form/ArticleForm";
 import { useCreateAccount } from "@/features/article/api/use-create-article";
 
 import { insertArticleSchema } from "@/db/schema/article";
@@ -74,14 +74,17 @@ export const NewArticleSheet = () => {
   };
 
   return (
-    <Sheet open={isArticleOpen} onOpenChange={onCloseArticle}>
-      <SheetContent className="space-y-4" side={"bottom"} dir="rtl">
-        <SheetHeader>
-          <SheetTitle>مقاله جدید</SheetTitle>
-          <SheetDescription>جزییات</SheetDescription>
-        </SheetHeader>
-        <ArticleForm onSubmit={onSubmit} />
-      </SheetContent>
-    </Sheet>
+    <div className="overflow-y-auto">
+      <Sheet open={isArticleOpen} onOpenChange={onCloseArticle}>
+        <SheetContent className="space-y-4" side={"bottom"} dir="rtl">
+          <SheetHeader>
+            <SheetTitle>مقاله جدید</SheetTitle>
+            <SheetDescription>جزییات</SheetDescription>
+          </SheetHeader>
+          {/* <ArticleForm onSubmit={onSubmit} /> */}
+          <ArticleForm />
+        </SheetContent>
+      </Sheet>
+    </div>
   );
 };

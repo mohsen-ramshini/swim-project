@@ -37,7 +37,7 @@ const ArticleTable = () => {
   }
 
   return (
-    <div>
+    <div className="overflow-y-auto">
       {/* Card Component */}
       <Card className="border-none drop-shadow-sm">
         <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">

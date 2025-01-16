@@ -7,11 +7,12 @@ const page = () => {
   const router = useRouter();
   const handleClick = () => {
     router.push("/admin");
+    console.log("clicked");
   };
   return (
     <div>
-      <Button onClick={handleClick}>Admin Section</Button>
       <div>Home Page</div>
+      <Button onClick={handleClick}>Admin Section</Button>
     </div>
   );
 };

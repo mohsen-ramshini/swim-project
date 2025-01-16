@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <AppSidebar />
 
         {/* Main content */}
-        <main className="flex-1 flex flex-col overflow-y-hidden ">
+        <main className="flex-1 flex flex-col overflow-y-auto ">
           <NavBar />
           <header className="bg-gray-100 shadow p-4">
             <SidebarTrigger className="text-gray-700" />
