@@ -1,18 +1,10 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import React from "react";
+import SwimBanner from "./components/SwimBanner";
 
 const page = () => {
-  const router = useRouter();
-  const handleClick = () => {
-    router.push("/admin");
-    console.log("clicked");
-  };
   return (
-    <div>
-      <div>Home Page</div>
-      <Button onClick={handleClick}>Admin Section</Button>
+    <div className="m-auto w-full bg-slate-400 flex ">
+      <SwimBanner />
     </div>
   );
 };

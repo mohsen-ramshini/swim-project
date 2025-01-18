@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import {
@@ -8,8 +9,16 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { Button } from "./ui/button";
+import { Home } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const NavBar = () => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/");
+  };
   return (
     <div className="relative flex items-center justify-between p-4">
       <NavigationMenu dir="rtl">
@@ -28,6 +37,15 @@ const NavBar = () => {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuTrigger>آیتم سوم</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <NavigationMenuLink>Link</NavigationMenuLink>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Button onClick={handleClick}>
+              صفحه اصلی
+              <Home />
+            </Button>
             <NavigationMenuContent>
               <NavigationMenuLink>Link</NavigationMenuLink>
             </NavigationMenuContent>

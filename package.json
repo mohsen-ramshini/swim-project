@@ -41,6 +41,7 @@
     "react-persian-datepicker": "^3.0.2",
     "react-use": "^17.6.0",
     "sonner": "^1.7.1",
+    "suneditor-react": "^3.6.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "textarea": "^0.3.0",
