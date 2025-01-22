@@ -1,3 +1,4 @@
+import Footer from "./components/Footer";
 import NavBar from "./components/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -8,10 +9,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="max-w-screen-xl">
         <NavBar />
         <Toaster />
         {children}
+        <Footer />
       </body>
     </html>
   );
