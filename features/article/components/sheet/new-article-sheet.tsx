@@ -76,10 +76,22 @@ export const NewArticleSheet = () => {
   return (
     <div className="overflow-y-auto">
       <Sheet open={isArticleOpen} onOpenChange={onCloseArticle}>
-        <SheetContent className="space-y-4" side={"bottom"} dir="rtl">
+        <SheetContent className="space-y-4 " side={"bottom"} dir="rtl">
           <SheetHeader>
-            <SheetTitle>مقاله جدید</SheetTitle>
-            <SheetDescription>جزییات</SheetDescription>
+            <SheetTitle
+              style={{
+                textAlign: "right",
+              }}
+            >
+              مقاله جدید
+            </SheetTitle>
+            <SheetDescription
+              style={{
+                textAlign: "right",
+              }}
+            >
+              جزییات
+            </SheetDescription>
           </SheetHeader>
           {/* <ArticleForm onSubmit={onSubmit} /> */}
           <ArticleForm />

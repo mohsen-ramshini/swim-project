@@ -560,7 +560,21 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
+
+import { Combobox } from "@/components/ComboBox";
 import TextEditor from "@/components/TextEditor";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface FormData {
   title: string;
@@ -570,7 +584,7 @@ interface FormData {
   content: string;
   categoryId: string;
   reference: string;
-  publishDate: any; // Replace `any` with the specific type from "react-multi-date-picker" if available
+  publishDate: any;
   publishTime: string;
   active: boolean;
   articleType: string;
@@ -591,7 +605,6 @@ const FormComponent: React.FC = () => {
     articleType: "",
   });
 
-  // Example categories
   const categories = [
     { id: 1, name: "اخبار" },
     { id: 2, name: "ورزشی" },
@@ -599,7 +612,6 @@ const FormComponent: React.FC = () => {
     { id: 4, name: "علمی" },
   ];
 
-  // Article types example
   const articleTypes = [
     { id: 1, name: "تحلیل" },
     { id: 2, name: "راهنما" },
@@ -642,20 +654,16 @@ const FormComponent: React.FC = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!formData.publishDate || !formData.publishTime) {
-      console.error("Please select a publish date and time.");
+    const { publishDate, publishTime, articleType } = formData;
+
+    if (!publishDate || !publishTime || !articleType) {
+      console.error("Please fill in all required fields.");
       return;
     }
 
-    const { publishDate, publishTime } = formData;
     const publishDateTime = new Date(
       `${publishDate.year}-${publishDate.month.number}-${publishDate.day}T${publishTime}`
     );
-
-    if (isNaN(publishDateTime.getTime())) {
-      console.error("Invalid publish date and time.");
-      return;
-    }
 
     const submittedData = {
       ...formData,
@@ -663,158 +671,173 @@ const FormComponent: React.FC = () => {
     };
 
     console.log("Submitted Data:", submittedData);
-
-    if (formData.thumbnail) {
-      const reader = new FileReader();
-      reader.readAsDataURL(formData.thumbnail);
-      console.log(reader);
-    }
   };
 
   return (
-    <div className="h-screen flex justify-center items-center bg-gray-100 rtl overflow-y-auto pt-3.5">
+    <div className="max-h-full flex justify-center items-center rtl overflow-y-auto">
       <form
         onSubmit={handleSubmit}
-        className="p-8 bg-white rounded-lg shadow-lg max-w-5xl mx-auto space-y-6 w-full rtl mt-80"
+        className="p-8 bg-white rounded-lg shadow-lg max-w-5xl mx-auto space-y-6 w-full rtl mt-80 overflow-y-auto max-h-screen"
+        style={{ maxHeight: "80vh", overflowY: "auto", direction: "rtl" }}
       >
         <div className="flex flex-wrap gap-6 rtl">
-          <div className="flex flex-wrap w-full gap-6 rtl">
-            <div className="w-full sm:w-1/4">
-              <label className="block mb-2 font-semibold text-gray-700 text-right">
-                نوع مقاله
-              </label>
-              <select
-                name="articleType"
-                value={formData.articleType}
-                onChange={handleInputChange}
-                className="border-gray-300 rounded-md w-full p-2 text-right focus:ring-2 focus:ring-blue-500 transition"
-              >
-                <option value="" disabled>
-                  انتخاب نوع مقاله
-                </option>
+          <div className="sm:w-1/3 rtl ml-2">
+            <Label className="block mb-2 font-semibold text-gray-700 text-right max-w-10 rtl">
+              نوع مقاله
+            </Label>
+            <Select
+              value={formData.articleType}
+              onValueChange={(value: string) =>
+                setFormData((prev) => ({ ...prev, articleType: value }))
+              }
+            >
+              <SelectTrigger style={{ direction: "rtl" }}>
+                <SelectValue placeholder="انتخاب نوع مقاله" />
+              </SelectTrigger>
+              <SelectContent style={{ direction: "rtl" }}>
                 {articleTypes.map((type) => (
-                  <option key={type.id} value={type.id}>
+                  <SelectItem key={type.id} value={String(type.id)}>
                     {type.name}
-                  </option>
+                  </SelectItem>
                 ))}
-              </select>
-            </div>
-            <div className="w-full sm:w-1/3">
-              <label className="block mb-2 font-semibold text-gray-700 text-right">
-                دسته‌بندی
-              </label>
-              <select
-                name="categoryId"
-                value={formData.categoryId}
-                onChange={handleInputChange}
-                className="border-gray-300 rounded-md w-full p-2 text-right focus:ring-2 focus:ring-blue-500 transition"
-              >
-                <option value="" disabled>
-                  انتخاب دسته‌بندی
-                </option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="w-full sm:w-1/4">
-              <label className="block mb-2 font-semibold text-gray-700 text-right">
-                عنوان
-              </label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-                placeholder="وارد کردن عنوان"
-                className="border-gray-300 rounded-md w-full p-2 text-right focus:ring-2 focus:ring-blue-500 transition"
-              />
-            </div>
+              </SelectContent>
+            </Select>
           </div>
 
-          <div className="flex flex-wrap w-full gap-6">
-            <div className="w-full sm:w-1/4">
-              <label className="block mb-2 font-semibold text-gray-700 text-right">
-                نامک
-              </label>
-              <input
-                type="text"
-                name="slug"
-                value={formData.slug}
-                onChange={handleInputChange}
-                placeholder="وارد کردن نامک"
-                className="border-gray-300 rounded-md w-full p-2 text-right focus:ring-2 focus:ring-blue-500 transition"
-              />
-            </div>
-            <div className="w-full sm:w-1/3">
-              <label className="block mb-2 font-semibold text-gray-700 text-right">
-                تصویر شاخص
-              </label>
-              <input
-                type="file"
-                name="thumbnail"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="border-gray-300 rounded-md w-full p-2 text-right focus:ring-2 focus:ring-blue-500 transition"
-              />
-            </div>
-            <div className="w-full sm:w-1/4">
-              <label className="block mb-2 font-semibold text-gray-700 text-right">
-                مرجع
-              </label>
-              <input
-                type="text"
-                name="reference"
-                value={formData.reference}
-                onChange={handleInputChange}
-                placeholder="وارد کردن مرجع"
-                className="border-gray-300 rounded-md w-full p-2 text-right focus:ring-2 focus:ring-blue-500 transition"
-              />
-            </div>
+          <div className="sm:w-1/3">
+            <Label className="block mb-2 font-semibold text-gray-700 text-right max-w-11">
+              دسته‌بندی
+            </Label>
+            <Select
+              onValueChange={(value: any) =>
+                setFormData((prev) => ({ ...prev, categoryId: value }))
+              }
+            >
+              <SelectTrigger style={{ direction: "rtl" }}>
+                <SelectValue placeholder="انتخاب دسته‌بندی" />
+              </SelectTrigger>
+              <SelectContent style={{ direction: "rtl" }}>
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={String(category.id)}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="sm:w-1/3">
+            <Label
+              htmlFor="title"
+              className="block mb-2 font-semibold text-gray-700 text-right"
+            >
+              عنوان
+            </Label>
+            <Input
+              id="title"
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+              placeholder="وارد کردن عنوان"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-6 rtl">
+          <div className="sm:w-1/3">
+            <Label
+              htmlFor="slug"
+              className="block mb-2 font-semibold text-gray-700 text-right"
+            >
+              نامک
+            </Label>
+            <Input
+              id="slug"
+              type="text"
+              name="slug"
+              value={formData.slug}
+              onChange={handleInputChange}
+              placeholder="وارد کردن نامک"
+            />
+          </div>
+
+          <div className="sm:w-1/3">
+            <Label
+              htmlFor="thumbnail"
+              className="block mb-2 font-semibold text-gray-700 text-right"
+            >
+              تصویر شاخص
+            </Label>
+            <Input
+              id="thumbnail"
+              type="file"
+              name="thumbnail"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </div>
+
+          <div className="sm:w-1/3">
+            <Label
+              htmlFor="reference"
+              className="block mb-2 font-semibold text-gray-700 text-right"
+            >
+              مرجع
+            </Label>
+            <Input
+              id="reference"
+              type="text"
+              name="reference"
+              value={formData.reference}
+              onChange={handleInputChange}
+              placeholder="وارد کردن مرجع"
+            />
           </div>
         </div>
 
         <div className="flex flex-wrap gap-6">
-          <div className="w-full sm:w-1/4">
-            <label
+          <div className="sm:w-1/3">
+            <Label
               htmlFor="active"
               className="block mb-2 font-semibold text-gray-700 text-right"
             >
               فعال
-            </label>
-            <input
-              type="checkbox"
-              name="active"
-              checked={formData.active}
-              onChange={handleInputChange}
+            </Label>
+            <Checkbox
               id="active"
-              className="border-gray-300 rounded-md w-3 p-2 text-right focus:ring-2 focus:ring-blue-500 transition relative -right-56"
+              checked={formData.active}
+              onCheckedChange={(checked) =>
+                setFormData((prev) => ({ ...prev, active: !!checked }))
+              }
             />
           </div>
-          <div className="w-full sm:w-1/3">
-            <label className="block mb-2 font-semibold text-gray-700 text-right">
+
+          <div className="sm:w-1/3">
+            <Label
+              htmlFor="publishTime"
+              className="block mb-2 font-semibold text-gray-700 text-right"
+            >
               زمان انتشار
-            </label>
-            <input
+            </Label>
+            <Input
+              id="publishTime"
               type="time"
               name="publishTime"
               value={formData.publishTime}
               onChange={handleInputChange}
-              className="border-gray-300 rounded-md w-full p-2 text-right focus:ring-2 focus:ring-blue-500 transition"
             />
           </div>
-          <div className="w-full sm:w-1/4">
-            <label className="block mb-2 font-semibold text-gray-700 text-right">
+
+          <div className="sm:w-1/3">
+            <Label className="block mb-2 font-semibold text-gray-700 text-right">
               تاریخ انتشار
-            </label>
+            </Label>
             <DatePicker
               calendar={persian}
               locale={persian_fa}
               value={formData.publishDate}
               onChange={handleDateChange}
-              className="border-gray-300 rounded-md w-full p-2 text-right focus:ring-2 focus:ring-blue-500 transition"
               placeholder="انتخاب تاریخ انتشار"
             />
           </div>
@@ -822,18 +845,19 @@ const FormComponent: React.FC = () => {
 
         <div className="flex flex-wrap gap-6">
           <div className="w-full">
-            <label className="block mb-2 font-semibold text-gray-700 text-right">
+            <Label className="block mb-2 font-semibold text-gray-700 text-right">
               چکیده
-            </label>
+            </Label>
             <TextEditor
               onChange={(value: any) => handleContentChange("excerpt", value)}
               content={formData.excerpt}
             />
           </div>
+
           <div className="w-full">
-            <label className="block mb-2 font-semibold text-gray-700 text-right">
+            <Label className="block mb-2 font-semibold text-gray-700 text-right">
               محتوا
-            </label>
+            </Label>
             <TextEditor
               onChange={(value: any) => handleContentChange("content", value)}
               content={formData.content}
@@ -841,12 +865,9 @@ const FormComponent: React.FC = () => {
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white rounded-md py-2 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 transition"
-        >
+        <Button type="submit" className="w-full bg-blue-600 text-white">
           ثبت مقاله
-        </button>
+        </Button>
       </form>
     </div>
   );

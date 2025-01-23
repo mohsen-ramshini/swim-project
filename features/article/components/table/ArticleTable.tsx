@@ -43,7 +43,11 @@ const ArticleTable = () => {
         <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
           <CardTitle className="text-xl line-clamp-1">مقالات</CardTitle>
           {/* Trigger Button */}
-          <Button size="sm" onClick={newArticle.onOpenArticle}>
+          <Button
+            size="sm"
+            onClick={newArticle.onOpenArticle}
+            className="sm:max-sm:54"
+          >
             ایجاد
             <Plus className="size-4 mr-2" />
           </Button>
