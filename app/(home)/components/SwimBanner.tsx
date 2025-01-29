@@ -4,7 +4,7 @@ import React from "react";
 
 const SwimBanner = () => {
   return (
-    <div className="m-auto">
+    <div className="m-auto w-full">
       <Image
         src="/static/images/main-banner.jpeg"
         alt="Logo"

@@ -10,8 +10,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"; // Import Shadcn Sheet
-import { Menu, X, User } from "lucide-react"; // Icons for mobile menu
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Menu, X, User } from "lucide-react";
 
 const NavBar = () => {
   const router = useRouter();
@@ -122,7 +122,7 @@ const NavBar = () => {
       <div className="hidden lg:inline-flex  items-center justify-center  bg-slate-800 rounded-sm  top-32 absolute left-10 right-10">
         <NavigationMenu
           dir="rtl"
-          className="flex justify-between p-5 min-w-full "
+          className="flex justify-between p-5 min-w-full"
         >
           <NavigationMenuList>
             <NavigationMenuItem className="pl-5 ">
@@ -153,7 +153,7 @@ const NavBar = () => {
               </div>
             </NavigationMenuItem>
           </NavigationMenuList>
-          <div className="ml-0 list-none flex gap-2 ">
+          <div className="ml-0 list-none flex gap-2 h-full bg-slate-600">
             <NavigationMenuItem className="h-full">
               <NavigationMenuTrigger className="text-base lg:text-sm bg-black h-full">
                 درباره ما

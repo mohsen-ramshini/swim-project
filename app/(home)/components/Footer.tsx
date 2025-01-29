@@ -1,6 +1,14 @@
+"use client";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const Footer = () => {
+  const [year, setYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
   return (
     <footer dir="rtl" className="bg-slate-800 text-white py-8">
       <div className="container mx-auto px-4">
@@ -92,8 +100,8 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <div className="mt-8 border-t border-slate-600 pt-4 text-center text-sm">
-          کپی رایت © {new Date().getFullYear()} : کلیه حقوق این سایت محفوظ و
-          متعلق به انجمن علوم نوین شنای ایران میباشد
+          کپی رایت © {year ? year : "2025"} : کلیه حقوق این سایت محفوظ و متعلق
+          به انجمن علوم نوین شنای ایران میباشد
         </div>
       </div>
     </footer>

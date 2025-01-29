@@ -8,8 +8,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="max-w-screen-xl">
+    <html lang="en" dir="rtl">
+      <body>
         <NavBar />
         <Toaster />
         {children}

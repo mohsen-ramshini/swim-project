@@ -28,7 +28,7 @@
 
 import { z } from "zod";
 import { useNewArticle } from "@/features/article/hook/use-new-article";
-import ArticleForm from "@/features/article/components/form/ArticleForm";
+import { ArticleForm } from "@/features/article/components/form/ArticleForm";
 import { useCreateAccount } from "@/features/article/api/use-create-article";
 
 import { insertArticleSchema } from "@/db/schema/article";
@@ -50,8 +50,8 @@ const formSchema = insertArticleSchema.pick({
   content: true,
   categoryId: true,
   reference: true,
-  // publishTime: true,
-  // isActive: true,
+  publishTime: true,
+  isActive: true,
 });
 
 type FormValues = z.input<typeof formSchema>;
@@ -93,8 +93,7 @@ export const NewArticleSheet = () => {
               جزییات
             </SheetDescription>
           </SheetHeader>
-          {/* <ArticleForm onSubmit={onSubmit} /> */}
-          <ArticleForm />
+          <ArticleForm onSubmit={onSubmit} />
         </SheetContent>
       </Sheet>
     </div>
