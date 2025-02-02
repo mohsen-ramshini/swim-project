@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
@@ -79,8 +79,16 @@ export const ArticleForm = ({
     },
   });
 
+  const [publishDate, setPublishDate] = useState<Date | null>(null);
+
   const handleFormSubmit = (values: FormValues) => {
-    onSubmit(values);
+    const combinedDateTime = publishDate
+      ? new Date(publishDate).toISOString().split("T")[0] +
+        "T" +
+        values.publishTime
+      : values.publishTime;
+
+    onSubmit({ ...values, publishTime: combinedDateTime });
   };
 
   const handleDelete = () => {
@@ -119,7 +127,11 @@ export const ArticleForm = ({
                   <FormItem>
                     <FormLabel>نوع مقاله</FormLabel>
                     <FormControl>
-                      <Select {...field} disabled={disabled}>
+                      <Select
+                        value={String(field.value)}
+                        onValueChange={(value) => field.onChange(Number(value))}
+                        disabled={disabled}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="انتخاب نوع مقاله" />
                         </SelectTrigger>
@@ -147,7 +159,11 @@ export const ArticleForm = ({
                   <FormItem>
                     <FormLabel>دسته‌بندی</FormLabel>
                     <FormControl>
-                      <Select {...field} disabled={disabled}>
+                      <Select
+                        value={String(field.value)} // Convert number to string
+                        onValueChange={(value) => field.onChange(Number(value))} // Convert string back to number
+                        disabled={disabled}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="انتخاب دسته‌بندی" />
                         </SelectTrigger>
@@ -225,9 +241,11 @@ export const ArticleForm = ({
                       <Input
                         id="thumbnail"
                         type="file"
-                        {...field}
                         accept="image/*"
                         disabled={disabled}
+                        onChange={(e) =>
+                          field.onChange(e.target.files?.[0] || null)
+                        }
                       />
                     </FormControl>
                     <FormMessage />
@@ -247,7 +265,8 @@ export const ArticleForm = ({
                     <FormControl>
                       <Input
                         placeholder="مرجع را وارد کنید"
-                        {...field}
+                        value={field.value ?? ""}
+                        onChange={field.onChange}
                         disabled={disabled}
                       />
                     </FormControl>
@@ -287,13 +306,16 @@ export const ArticleForm = ({
                 name="publishTime"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>زمان انتشار</FormLabel>
+                    <FormLabel>زمان و تاریخ انتشار</FormLabel>
                     <FormControl>
-                      <Input
-                        id="publishTime"
-                        type="time"
-                        {...field}
-                        disabled={disabled}
+                      <DatePicker
+                        calendar={persian}
+                        locale={persian_fa}
+                        value={field.value}
+                        onChange={(date) =>
+                          field.onChange(date ? new Date(date) : null)
+                        }
+                        placeholder="انتخاب تاریخ انتشار"
                       />
                     </FormControl>
                     <FormMessage />
@@ -314,8 +336,8 @@ export const ArticleForm = ({
                       <DatePicker
                         calendar={persian}
                         locale={persian_fa}
-                        value={field.value}
-                        onChange={field.onChange}
+                        value={publishDate}
+                        onChange={setPublishDate}
                         placeholder="انتخاب تاریخ انتشار"
                       />
                     </FormControl>

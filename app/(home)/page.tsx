@@ -1,10 +1,12 @@
 import React from "react";
-import SwimBanner from "./components/SwimBanner";
+import Hero from "./components/HeroSection";
+import Articles from "./components/articles/Articles";
 
 const page = () => {
   return (
-    <div className="m-auto w-full bg-slate-400 flex ">
-      <SwimBanner />
+    <div className="m-auto w-full h-full flex-col justify-center items-center ">
+      <Hero />
+      <Articles />
     </div>
   );
 };

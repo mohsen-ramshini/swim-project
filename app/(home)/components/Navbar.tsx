@@ -153,9 +153,9 @@ const NavBar = () => {
               </div>
             </NavigationMenuItem>
           </NavigationMenuList>
-          <div className="ml-0 list-none flex gap-2 h-full bg-slate-600">
+          <div className="ml-0 list-none flex gap-2 h-full ">
             <NavigationMenuItem className="h-full">
-              <NavigationMenuTrigger className="text-base lg:text-sm bg-black h-full">
+              <NavigationMenuTrigger className="text-base lg:text-sm  h-full">
                 درباره ما
               </NavigationMenuTrigger>
               <NavigationMenuContent></NavigationMenuContent>
