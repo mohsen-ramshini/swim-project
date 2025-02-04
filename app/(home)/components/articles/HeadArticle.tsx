@@ -13,24 +13,32 @@ interface Props {
 
 const HeadArticle: React.FC<Props> = ({ data }) => {
   return (
-    <aside className="w-full h-full mb-14">
-      <div className="m-auto w-[750px] h-[455px]  rounded-sm">
+    <aside className="w-full flex flex-col items-center lg:mb-5 lg:border-none border-b-2 mb-5 pb-10">
+      {/* Responsive Image Container */}
+      {/* Image */}
+      <div className="w-full h-[200px] xl:w-[750px] xl:h-[455px] rounded-sm">
         <Skeleton className="w-full h-full" />
-        {/* lazy loading - replace it with actual thumbnail */}
+        {/* Lazy loading - replace it with actual thumbnail */}
       </div>
 
-      <div className="flex flex-row-reverse  mt-5">
-        <div className="w-1/2">
-          <h3 className="text-3xl font-bold mb-5">{data.title}</h3>
-          <div className="mr-16">
+      {/* Content Section */}
+      <div className="flex flex-col lg:flex-row-reverse w-full mt-5 px-4">
+        {/* Title & Profile */}
+        <div className="lg:w-1/2 flex-col  lg:flex-row-reverse  text-right lg:text-right">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4">
+            {data.title}
+          </h3>
+          <div className="flex justify-end">
             <Profile />
           </div>
         </div>
-        <div className="w-1/2 ">
-          <div className="text-right">{data.content}</div>
-          <Button variant={"ghost"} className="relative -left-36">
-            بیشتر
-          </Button>
+
+        {/* Article Content & Button */}
+        <div className="lg:w-1/2 text-center lg:text-right mt-4 lg:mt-0">
+          <p className="text-right lg:text-sm md:text-base">{data.content}</p>
+          <div className="flex justify-center lg:justify-end mt-3">
+            <Button variant={"ghost"}>بیشتر</Button>
+          </div>
         </div>
       </div>
     </aside>

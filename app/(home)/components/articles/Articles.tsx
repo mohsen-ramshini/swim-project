@@ -127,30 +127,38 @@ const Articles = () => {
   const otherArticles = Artciles.slice(2);
 
   return (
-    <section className=" flex flex-col justify-center items-center w-full h-[1010px] min-h-screen p-4 mb-10">
-      <h2 className="relative right-10 lg:text-center text-black text-5xl my-4 font-extrabold">
+    <section className="flex flex-col justify-center items-center w-full min-h-screen p-4 mb-10 lg:h-[1010px] md:h-[900px]">
+      {/* Heading */}
+      <h2 className="text-black text-3xl sm:text-4xl lg:text-5xl font-extrabold my-4 text-center">
         آخرین مقالات
       </h2>
-      <div className="w-full ">
-        <Button variant={"ghost"}>
-          {" "}
+
+      {/* View All Button */}
+      <div className="w-full flex justify-center">
+        <Button variant={"ghost"} className="flex items-center gap-2">
           <ArrowLeftCircle /> مشاهده همه
         </Button>
       </div>
+
+      {/* Articles Section */}
       <div className="flex flex-col xl:flex-row justify-center items-center w-full gap-4 h-full bg-white">
-        {/* سایر مقالات */}
-        <div className=" w-full xl:w-1/2 text-center h-full p-4">
+        {/* Other Articles */}
+        <div className="w-full xl:w-1/2 text-center h-full p-4 space-y-4">
           {otherArticles.map((art) => (
             <ArticleInterface data={art} key={art.id} />
           ))}
         </div>
-        {/* بخش اصلی */}
-        <div className=" w-full xl:w-1/2 text-center h-full flex flex-col p-4 ">
+
+        {/* Main Article Section */}
+        <div className="w-full xl:w-1/2 text-center h-full flex flex-col p-4 space-y-4">
+          {/* Head Articles */}
           <div>
             {headArticles.map((art) => (
               <HeadArticle key={art.id} data={art} />
             ))}
           </div>
+
+          {/* Middle Articles */}
           <div>
             {middleArticle.map((art) => (
               <ArticleInterface key={art.id} data={art} />

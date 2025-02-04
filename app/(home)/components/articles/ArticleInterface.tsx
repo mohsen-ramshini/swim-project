@@ -14,9 +14,9 @@ interface Props {
 
 const ArticleInterface: React.FC<Props> = ({ data }) => {
   return (
-    <aside className="flex flex-row-reverse border-b-2 mb-3">
-      <div className="w-1/3">
-        <div className="m-auto w-[200px] h-[110px]  mb-5 rounded-sm">
+    <aside className="flex flex-col lg:flex-row-reverse border-b-2 mb-3 ">
+      <div className="w-full lg:w-1/3 mb-5 ">
+        <div className="w-full h-[200px] lg:m-auto lg:w-[200px] lg:h-[110px]  mb-5 rounded-sm">
           <Skeleton className="w-full h-full" />
           {/* lazy loading - replace it with actual thumbnail */}
         </div>
@@ -24,10 +24,10 @@ const ArticleInterface: React.FC<Props> = ({ data }) => {
           <Profile />
         </div>
       </div>
-      <div className="w-2/3 pb-10">
+      <div className="w-full lg:w-2/3 pb-10 text-center">
         <div className="text-2xl font-bold text-right pb-3">{data.title}</div>
         <div className="text-right">{data.content}</div>
-        <Button variant={"ghost"} className="relative -left-52">
+        <Button variant={"ghost"} className=" lg:relative lg:-left-52">
           بیشتر
         </Button>
       </div>

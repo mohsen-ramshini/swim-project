@@ -11,7 +11,8 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X, User, Phone } from "lucide-react";
+import { DialogTitle } from "@/components/ui/dialog";
 
 const NavBar = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="relative h-40 w-full flex items-center justify-between px-4 bg-slate-50 ">
+    <div className="relative h-20 lg:h-40 w-full flex items-center justify-between px-4 bg-slate-50 ">
       {/* Mobile Hamburger Menu */}
       <div className="absolute right-4 lg:hidden">
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -43,6 +44,7 @@ const NavBar = () => {
             </button>
           </SheetTrigger>
           <SheetContent side="right" className="p-4">
+            <DialogTitle></DialogTitle>
             <h2 className="text-lg font-bold text-center">منو</h2>
             <div className="flex flex-col space-y-4 mt-4">
               <Button variant="link">مقالات</Button>
@@ -50,22 +52,22 @@ const NavBar = () => {
               <Button variant="link">رویداد ها و اخبار</Button>
               <Button variant="link">دوره های آموزشی</Button>
               <Button variant="link">مشاوره و سوالات علمی</Button>
-              <Button variant="link">درباه ما</Button>
-              <Button variant="link">ناحیه کاربری</Button>
-              <Button variant="link" onClick={handleClick}>
+              <Button variant="link">درباره ما</Button>
+              <Button variant={"outline"}>ناحیه کاربری</Button>
+              <Button variant={"secondary"} onClick={handleClick}>
                 پنل ادمین
               </Button>
             </div>
           </SheetContent>
         </Sheet>
       </div>
-      {/* Logo - Centered on Mobile */}
-      <div className="absolute  right-0 transform -translate-x-1/2 ">
+      <div className="absolute left-1/2 transform -translate-x-1/2 md:left-auto md:right-0">
         <Image
           src="/static/images/logo.png"
           alt="Logo"
           width={220}
           height={30}
+          className="w-[130px] h-[50px] md:w-[200px] md:h-[70px] lg:w-[250px] lg:h-[80px]"
         />
       </div>
 
@@ -112,13 +114,20 @@ const NavBar = () => {
         پنل ادمین
       </Button>
 
-      {/* Contact Info - Visible on Desktop */}
       <div
-        className="hidden lg:inline-grid w-36 text-xl left-40 font-bold absolute"
+        className="absolute left-0 pl-4 md:pl-10 lg:pl-40 text-xl font-bold"
         dir="rtl"
       >
-        تماس بگیرید : <span dir="rtl">0903-234-2677</span>
+        <Button variant={"ghost"} size={"lg"}>
+          <Phone
+            style={{ width: 25, height: 25 }}
+            className="inline md:hidden"
+          />
+          <span className="hidden md:inline md:text-xl">تماس بگیرید :</span>
+          <span className="hidden md:inline md:text-xl">0903-234-2677</span>
+        </Button>
       </div>
+
       <div className="hidden lg:inline-flex  items-center justify-center  bg-slate-800 rounded-sm  top-32 absolute left-10 right-10">
         <NavigationMenu
           dir="rtl"
