@@ -1,9 +1,13 @@
-"use client";
-import Article from "@/features/article/components/Article";
+import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
+import ArticlesList from "./components/ArticlesList";
 
-const ArticlesList = () => {
-  return <section className="w-full h-full bg-slate-600 mt-56 mb-40"></section>;
+const page = () => {
+  return (
+    <section className="w-full h-full">
+      <ArticlesList />
+    </section>
+  );
 };
 
-export default ArticlesList;
+export default page;

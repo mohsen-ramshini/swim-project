@@ -13,6 +13,7 @@ import {
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Menu, X, User, Phone } from "lucide-react";
 import { DialogTitle } from "@/components/ui/dialog";
+import Link from "next/link";
 
 const NavBar = () => {
   const router = useRouter();
@@ -62,13 +63,15 @@ const NavBar = () => {
         </Sheet>
       </div>
       <div className="absolute left-1/2 transform -translate-x-1/2 md:left-auto md:right-0">
-        <Image
-          src="/static/images/logo.png"
-          alt="Logo"
-          width={220}
-          height={30}
-          className="w-[130px] h-[50px] md:w-[200px] md:h-[70px] lg:w-[250px] lg:h-[80px]"
-        />
+        <Link href={"/"}>
+          <Image
+            src="/static/images/logo.png"
+            alt="Logo"
+            width={220}
+            height={30}
+            className="w-[130px] h-[50px] md:w-[200px] md:h-[70px] lg:w-[250px] lg:h-[80px]"
+          />
+        </Link>
       </div>
 
       {/* Desktop Navigation */}

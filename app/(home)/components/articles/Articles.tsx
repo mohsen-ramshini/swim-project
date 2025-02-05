@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import HeadArticle from "./HeadArticle";
 import ArticleInterface from "./ArticleInterface";
 import { Button } from "@/components/ui/button";
 import { ArrowBigLeft, ArrowLeftCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Articles = () => {
   const Artciles = [
@@ -122,6 +124,8 @@ const Articles = () => {
     },
   ];
 
+  const router = useRouter();
+
   const headArticles = Artciles.slice(0, 1);
   const middleArticle = Artciles.slice(1, 2);
   const otherArticles = Artciles.slice(2);
@@ -135,7 +139,11 @@ const Articles = () => {
 
       {/* View All Button */}
       <div className="w-full flex justify-center">
-        <Button variant={"ghost"} className="flex items-center gap-2">
+        <Button
+          variant={"ghost"}
+          className="flex items-center gap-2"
+          onClick={() => router.push("/articles")}
+        >
           <ArrowLeftCircle /> مشاهده همه
         </Button>
       </div>
