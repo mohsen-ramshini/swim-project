@@ -51,6 +51,7 @@ export const NewItemSheet: React.FC<{
     mutation.mutate(values, {
       onSuccess: () => {
         onClose();
+        console.log(values);
       },
     });
   };

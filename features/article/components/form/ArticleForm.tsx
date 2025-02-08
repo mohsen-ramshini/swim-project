@@ -1,11 +1,11 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 import { Combobox } from "@/components/ComboBox";
 import TextEditor from "@/components/TextEditor";
@@ -32,20 +32,6 @@ import {
 
 import { insertArticleSchema } from "@/db/schema/article";
 import { Trash } from "lucide-react";
-
-interface FormData {
-  title: string;
-  slug: string;
-  thumbnail: File | null;
-  excerpt: string;
-  content: string;
-  categoryId: string;
-  reference: string;
-  publishDate: any;
-  publishTime: string;
-  active: boolean;
-  articleType: string;
-}
 
 const formSchema = insertArticleSchema.pick({
   articleType: true,
@@ -77,13 +63,7 @@ export const ArticleForm = ({
   onDelete,
   disabled,
 }: Props) => {
-  const {
-    handleSubmit,
-    control,
-    register,
-    setValue,
-    formState: { errors },
-  } = useForm<FormValues>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues || {
       articleType: 1,
@@ -99,8 +79,21 @@ export const ArticleForm = ({
     },
   });
 
+  const [publishDate, setPublishDate] = useState<Date | null>(null);
+
   const handleFormSubmit = (values: FormValues) => {
-    onSubmit(values);
+    if (publishDate && values.publishTime) {
+      const combinedDateTime = new Date(
+        publishDate.getFullYear(),
+        publishDate.getMonth(),
+        publishDate.getDate(),
+        new Date(values.publishTime).getHours(),
+        new Date(values.publishTime).getMinutes()
+      );
+      onSubmit({ ...values, publishTime: combinedDateTime });
+    } else {
+      onSubmit(values);
+    }
   };
 
   const handleDelete = () => {
@@ -121,243 +114,296 @@ export const ArticleForm = ({
     { id: 4, name: "آموزشی" },
   ];
 
-  // const handleInputChange = (
-  //   e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  // ) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files ? e.target.files[0] : null;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     thumbnail: file,
-  //   }));
-  // };
-
-  // const handleContentChange = (field: keyof FormData, value: string) => {
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [field]: value,
-  //   }));
-  // };
-
-  // const handleDateChange = (date: any) => {
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     publishDate: date,
-  //   }));
-  // };
-
-  // const handleSubmit = (e: FormEvent) => {
-  //   e.preventDefault();
-
-  //   const { publishDate, publishTime, articleType } = formData;
-
-  //   if (!publishDate || !publishTime || !articleType) {
-  //     console.error("Please fill in all required fields.");
-  //     return;
-  //   }
-
-  //   const publishDateTime = new Date(
-  //     `${publishDate.year}-${publishDate.month.number}-${publishDate.day}T${publishTime}`
-  //   );
-
-  //   const submittedData = {
-  //     ...formData,
-  //     publishDateTime,
-  //   };
-
-  //   console.log("Submitted Data:", submittedData);
-  // };
-
   return (
     <div className="max-h-full flex justify-center items-center rtl overflow-y-auto">
       <Form {...form}>
         <form
-          onSubmit={handleSubmit(handleFormSubmit)}
+          onSubmit={form.handleSubmit(handleFormSubmit)}
           className="p-8 bg-white rounded-lg shadow-lg max-w-5xl mx-auto space-y-6 w-full rtl mt-80 overflow-y-auto max-h-screen"
           style={{ maxHeight: "80vh", overflowY: "auto", direction: "rtl" }}
         >
           <div className="flex flex-wrap gap-6 rtl">
+            {/* Article Type */}
             <div className="sm:w-1/3 rtl ml-2">
-              <Label className="block mb-2 font-semibold text-gray-700 text-right max-w-10 rtl">
-                نوع مقاله
-              </Label>
-              <Select {...register("articleType")}>
-                <SelectTrigger style={{ direction: "rtl" }}>
-                  <SelectValue placeholder="انتخاب نوع مقاله" />
-                </SelectTrigger>
-                <SelectContent style={{ direction: "rtl" }}>
-                  {articleTypes.map((type) => (
-                    <SelectItem key={type.id} value={String(type.id)}>
-                      {type.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <FormField
+                control={form.control}
+                name="articleType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>نوع مقاله</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={String(field.value)}
+                        onValueChange={(value) => field.onChange(Number(value))}
+                        disabled={disabled}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="انتخاب نوع مقاله" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {articleTypes.map((type) => (
+                            <SelectItem key={type.id} value={String(type.id)}>
+                              {type.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
+            {/* Category */}
             <div className="sm:w-1/3">
-              <Label className="block mb-2 font-semibold text-gray-700 text-right max-w-11">
-                دسته‌بندی
-              </Label>
-              <Select {...register("categoryId")}>
-                <SelectTrigger style={{ direction: "rtl" }}>
-                  <SelectValue placeholder="انتخاب دسته‌بندی" />
-                </SelectTrigger>
-                <SelectContent style={{ direction: "rtl" }}>
-                  {categories.map((category) => (
-                    <SelectItem key={category.id} value={String(category.id)}>
-                      {category.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>دسته‌بندی</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={String(field.value)} // Convert number to string
+                        onValueChange={(value) => field.onChange(Number(value))} // Convert string back to number
+                        disabled={disabled}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="انتخاب دسته‌بندی" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {categories.map((category) => (
+                            <SelectItem
+                              key={category.id}
+                              value={String(category.id)}
+                            >
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
+            {/* Title */}
             <div className="sm:w-1/3">
-              <Label
-                htmlFor="title"
-                className="block mb-2 font-semibold text-gray-700 text-right"
-              >
-                عنوان
-              </Label>
-              <Input
-                id="title"
-                type="text"
-                {...register("title")}
-                placeholder="وارد کردن عنوان"
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>عنوان</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="عنوان را وارد کنید"
+                        {...field}
+                        disabled={disabled}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
           </div>
 
           <div className="flex flex-wrap gap-6 rtl">
+            {/* Slug */}
             <div className="sm:w-1/3">
-              <Label
-                htmlFor="slug"
-                className="block mb-2 font-semibold text-gray-700 text-right"
-              >
-                نامک
-              </Label>
-              <Input
-                id="slug"
-                type="text"
-                {...register("slug")}
-                placeholder="وارد کردن نامک"
+              <FormField
+                control={form.control}
+                name="slug"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>اسلاگ</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="اسلاگ را وارد کنید"
+                        {...field}
+                        disabled={disabled}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
+            {/* Thumbnail */}
             <div className="sm:w-1/3">
-              <Label
-                htmlFor="thumbnail"
-                className="block mb-2 font-semibold text-gray-700 text-right"
-              >
-                تصویر شاخص
-              </Label>
-              <Input
-                id="thumbnail"
-                type="file"
+              <FormField
+                control={form.control}
                 name="thumbnail"
-                accept="image/*"
-                onChange={handleFileChange}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>تصویر شاخص</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="thumbnail"
+                        type="file"
+                        accept="image/*"
+                        disabled={disabled}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            // Here you can either store a file URL or handle the file upload and get the URL
+                            const fileUrl = URL.createObjectURL(file); // Create a temporary URL for local usage
+                            field.onChange(fileUrl); // Pass the file URL (string) instead of the file object
+                          } else {
+                            field.onChange(null); // Handle case where no file is selected
+                          }
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
+            {/* Reference */}
             <div className="sm:w-1/3">
-              <Label
-                htmlFor="reference"
-                className="block mb-2 font-semibold text-gray-700 text-right"
-              >
-                مرجع
-              </Label>
-              <Input
-                id="reference"
-                type="text"
+              <FormField
+                control={form.control}
                 name="reference"
-                value={formData.reference}
-                onChange={handleInputChange}
-                placeholder="وارد کردن مرجع"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>مرجع</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="مرجع را وارد کنید"
+                        value={field.value ?? ""}
+                        onChange={field.onChange}
+                        disabled={disabled}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
           </div>
 
           <div className="flex flex-wrap gap-6">
+            {/* Is Active */}
             <div className="sm:w-1/3">
-              <Label
-                htmlFor="active"
-                className="block mb-2 font-semibold text-gray-700 text-right"
-              >
-                فعال
-              </Label>
-              <Checkbox
-                id="active"
-                checked={formData.active}
-                onCheckedChange={(checked) =>
-                  setFormData((prev) => ({ ...prev, active: !!checked }))
-                }
+              <FormField
+                control={form.control}
+                name="isActive"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="px-2">فعال</FormLabel>
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        ref={field.ref}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
+            {/* Publish Time */}
             <div className="sm:w-1/3">
-              <Label
-                htmlFor="publishTime"
-                className="block mb-2 font-semibold text-gray-700 text-right"
-              >
-                زمان انتشار
-              </Label>
-              <Input
-                id="publishTime"
-                type="time"
+              <FormField
+                control={form.control}
                 name="publishTime"
-                value={formData.publishTime}
-                onChange={handleInputChange}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>زمان و تاریخ انتشار</FormLabel>
+                    <FormControl>
+                      <DatePicker
+                        calendar={persian}
+                        locale={persian_fa}
+                        value={field.value}
+                        onChange={(date) =>
+                          field.onChange(date ? new Date(date.toDate()) : null)
+                        }
+                        placeholder="انتخاب تاریخ انتشار"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
-            <div className="sm:w-1/3">
-              <Label className="block mb-2 font-semibold text-gray-700 text-right">
-                تاریخ انتشار
-              </Label>
-              <DatePicker
-                calendar={persian}
-                locale={persian_fa}
-                value={formData.publishDate}
-                onChange={handleDateChange}
-                placeholder="انتخاب تاریخ انتشار"
+            {/* Publish Date */}
+            {/* <div className="sm:w-1/3">
+              <FormField
+                control={form.control}
+                name="publishDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>تاریخ انتشار</FormLabel>
+                    <FormControl>
+                      <DatePicker
+                        calendar={persian}
+                        locale={persian_fa}
+                        value={publishDate}
+                        onChange={setPublishDate}
+                        placeholder="انتخاب تاریخ انتشار"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
+            </div> */}
           </div>
 
-          <div className="flex flex-wrap gap-6">
-            <div className="w-full">
-              <Label className="block mb-2 font-semibold text-gray-700 text-right">
-                چکیده
-              </Label>
-              <TextEditor
-                onChange={(value: any) => handleContentChange("excerpt", value)}
-                content={formData.excerpt}
-              />
-            </div>
+          {/* Excerpt */}
+          <div className="w-full">
+            <FormField
+              control={form.control}
+              name="excerpt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>چکیده</FormLabel>
+                  <FormControl>
+                    <TextEditor
+                      onChange={field.onChange}
+                      content={field.value}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-            <div className="w-full">
-              <Label className="block mb-2 font-semibold text-gray-700 text-right">
-                محتوا
-              </Label>
-              <TextEditor
-                onChange={(value: any) => handleContentChange("content", value)}
-                content={formData.content}
-              />
-            </div>
+          {/* Content */}
+          <div className="w-full">
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>محتوا</FormLabel>
+                  <FormControl>
+                    <TextEditor
+                      onChange={field.onChange}
+                      content={field.value}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
           <Button className="w-full" disabled={disabled}>
             {id ? "ذخیره تغییرات" : "ایجاد مقاله"}
           </Button>
+
           {!!id && (
             <Button
               type="button"
@@ -367,7 +413,7 @@ export const ArticleForm = ({
               disabled={disabled}
             >
               <Trash className="size-4 mr-2" />
-              Delete Article
+              حذف مقاله
             </Button>
           )}
         </form>

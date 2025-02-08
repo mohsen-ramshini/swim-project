@@ -6,7 +6,7 @@ import { client } from "@/lib/hono";
 type RequestType = InferRequestType<typeof client.api.article.$post>["json"];
 type ResponseType = InferResponseType<typeof client.api.article.$post>;
 
-export const useCreateAccount = () => {
+export const useCreateArticle = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
