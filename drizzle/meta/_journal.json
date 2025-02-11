@@ -43,6 +43,13 @@
       "when": 1735382415098,
       "tag": "0005_nervous_morlocks",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1739094449608,
+      "tag": "0006_minor_grandmaster",
+      "breakpoints": true
     }
   ]
 }
