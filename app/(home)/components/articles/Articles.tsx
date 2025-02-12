@@ -7,12 +7,12 @@ import { ArrowBigLeft, ArrowLeftCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const Articles = () => {
-  const Artciles = [
+  const Articles = [
     {
       id: 1,
       articleType: 1,
       title: "مزیای شنا برای سلامتی",
-      slug: "http://helloworld.com",
+      slug: "swimming-advanteage",
       thumbnail:
         "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
       excerpt: "test",
@@ -31,7 +31,7 @@ const Articles = () => {
       id: 2,
       articleType: 1,
       title: "شنا برای مبتدیان",
-      slug: "http://helloworld.com",
+      slug: "swimming-for-begginers",
       thumbnail:
         "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
       excerpt: "test",
@@ -50,7 +50,7 @@ const Articles = () => {
       id: 3,
       articleType: 1,
       title: "شنا برای مبتدیان",
-      slug: "http://helloworld.com",
+      slug: "swimming-for-begginers",
       thumbnail:
         "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
       excerpt: "test",
@@ -69,7 +69,7 @@ const Articles = () => {
       id: 4,
       articleType: 1,
       title: "شنا برای مبتدیان",
-      slug: "http://helloworld.com",
+      slug: "swimming-for-begginers",
       thumbnail:
         "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
       excerpt: "test",
@@ -88,7 +88,7 @@ const Articles = () => {
       id: 5,
       articleType: 1,
       title: "شنا برای مبتدیان",
-      slug: "http://helloworld.com",
+      slug: "swimming-for-begginers",
       thumbnail:
         "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
       excerpt: "test",
@@ -107,7 +107,7 @@ const Articles = () => {
       id: 6,
       articleType: 1,
       title: "شنا برای مبتدیان",
-      slug: "http://helloworld.com",
+      slug: "swimming-for-begginers",
       thumbnail:
         "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
       excerpt: "test",
@@ -126,9 +126,9 @@ const Articles = () => {
 
   const router = useRouter();
 
-  const headArticles = Artciles.slice(0, 1);
-  const middleArticle = Artciles.slice(1, 2);
-  const otherArticles = Artciles.slice(2);
+  const headArticles = Articles.slice(0, 1);
+  const middleArticle = Articles.slice(1, 2);
+  const otherArticles = Articles.slice(2);
 
   return (
     <section className="flex flex-col justify-center items-center w-full min-h-screen p-4 mb-10 lg:h-[1010px] md:h-[900px]">

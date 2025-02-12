@@ -33,7 +33,7 @@ const ArticleInterface: React.FC<Props> = ({ data }) => {
         <Button
           variant={"ghost"}
           className=" lg:relative lg:-left-52"
-          onClick={() => router.push(`/articles/${data.id}`)}
+          onClick={() => router.push(`/articles/${data.slug}`)}
         >
           بیشتر
         </Button>

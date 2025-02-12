@@ -41,7 +41,7 @@ const HeadArticle: React.FC<Props> = ({ data }) => {
           <div className="flex justify-center lg:justify-end mt-3">
             <Button
               variant={"ghost"}
-              onClick={() => router.push(`/articles/${data.id}`)}
+              onClick={() => router.push(`/articles/${data.slug}`)}
             >
               بیشتر
             </Button>

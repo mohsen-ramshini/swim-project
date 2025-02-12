@@ -132,7 +132,7 @@ const Artciles = [
   },
 ];
 
-const ArticlesList = () => {
+const ArticlePagination = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(Artciles.length / ARTICLES_PER_PAGE);
 
@@ -224,4 +224,4 @@ const ArticlesList = () => {
   );
 };
 
-export default ArticlesList;
+export default ArticlePagination;

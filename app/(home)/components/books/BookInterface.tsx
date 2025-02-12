@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 // هوک برای تشخیص سایز صفحه
 const useMediaQuery = (query: string) => {
@@ -35,7 +37,6 @@ interface Props {
   slider: boolean;
 }
 
-// تابع تقسیم آرایه بر اساس تعداد آیتم‌ها در هر صفحه
 const chunkArray = (arr: Book[], size: number) => {
   return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
     arr.slice(i * size, i * size + size)
@@ -43,48 +44,76 @@ const chunkArray = (arr: Book[], size: number) => {
 };
 
 const BookInterface: React.FC<Props> = ({ data, slider }) => {
+  const [visibleCount, setVisibleCount] = useState(6);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const itemsPerSlide = isMobile ? 1 : 3;
   const groupedBooks = chunkArray(data, itemsPerSlide);
 
-  useEffect(() => {
-    console.log(isMobile);
-  }, [isMobile]);
+  const showMoreBooks = () => {
+    setVisibleCount((prev) => prev + 6);
+  };
+  const showLessBooks = () => {
+    setVisibleCount((prev) => (prev = 6));
+  };
+
   if (!slider) {
-    // نمایش همه کتاب‌ها بدون اسلایدر
     return (
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data.map((book) => (
-          <div key={book.id} className="w-full h-full p-2">
-            <div className="flex flex-col items-center p-4 h-full">
-              <div className="h-[250px] lg:h-4/5 w-full">
-                <Skeleton className="w-full h-full" />
-              </div>
-              <div className="w-full h-1/5 text-center">
-                <h3 className="w-full text-xl h-1/4 font-semibold my-2">
-                  {book.title}
-                </h3>
-                <p className="hidden lg:block text-sm h-1/4 text-gray-600">
-                  {book.description?.substring(0, 50) ?? "توضیحات موجود نیست"}
-                  ...
-                </p>
-                <div className="flex flex-col border-t-2">
-                  <div className="flex flex-row items-center justify-around opacity-90 text-gray-500">
-                    <p>تعداد صفحات</p>
-                    <p>قیمت</p>
+      <section className="flex flex-col justify-center items-center w-full h-full">
+        <div className="grid grid-cols-1 w-[350px] h-full md:w-[800px] md:grid-cols-2 lg:w-full lg:grid-cols-3 lg:h-full gap-4 mb-10">
+          {data.slice(0, visibleCount).map((book) => (
+            <Link href={`/books/${book.slug}`}>
+              <div key={book.id} className="w-full h-full p-2 lg:min-h-96">
+                <div className="flex flex-col items-center p-4 h-full mb-5 ">
+                  <div className="h-[250px] lg:h-4/5 w-full">
+                    <Skeleton className="w-full h-full" />
                   </div>
-                  <div className="flex flex-row items-center justify-around relative left-5">
-                    <p>{book.pageCount ?? "نامشخص"}</p>
-                    <p className="flex flex-row gap-2 items-baseline text-md h-1/4 font-bold mt-2">
-                      <span>تومان</span>
-                      {book.price ?? "نامشخص"}
+                  <div className="w-full h-1/5 text-center">
+                    <h3 className="w-full text-xl h-1/4 font-semibold my-4">
+                      {book.title}
+                    </h3>
+                    <p className="hidden lg:block text-sm h-1/4 text-gray-600 mb-2">
+                      {book.description?.substring(0, 50) ??
+                        "توضیحات موجود نیست"}
+                      ...
                     </p>
+                    <div className="flex flex-col border-t-2">
+                      <div className="flex flex-row items-center justify-around opacity-90 text-gray-500">
+                        <p>تعداد صفحات</p>
+                        <p>قیمت</p>
+                      </div>
+                      <div className="flex flex-row items-center justify-around relative left-5">
+                        <p>{book.pageCount ?? "نامشخص"}</p>
+                        <p className="flex flex-row gap-2 items-baseline text-md h-1/4 font-bold mt-2">
+                          <span>تومان</span>
+                          {book.price ?? "نامشخص"}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
+            </Link>
+          ))}
+        </div>
+        <div className="w-1/5 text-center mb-5">
+          {visibleCount < data.length ? (
+            <Button
+              onClick={showMoreBooks}
+              variant={"ghost"}
+              className="w-full px-12"
+            >
+              مشاهده بیشتر
+            </Button>
+          ) : (
+            <Button
+              onClick={showLessBooks}
+              variant={"ghost"}
+              className="w-full px-12"
+            >
+              مشاهده کمتر
+            </Button>
+          )}
+        </div>
       </section>
     );
   }
@@ -101,34 +130,39 @@ const BookInterface: React.FC<Props> = ({ data, slider }) => {
               )}
             >
               {bookGroup.map((book) => (
-                <Card key={book.id} className="w-full md:w-1/3 h-full p-2">
-                  <CardContent className="flex flex-col items-center p-4 h-full">
-                    <div className="h-[250px] lg:h-4/5 w-full">
-                      <Skeleton className="w-full h-full" />
-                    </div>
-                    <div className="w-full h-1/5 text-center">
-                      <h3 className="w-full text-xl h-1/4 font-semibold my-2">
-                        {book.title}
-                      </h3>
-                      <p className="hidden lg:block text-sm h-1/4 text-gray-600">
-                        ...{book.description.substring(0, 50)}
-                      </p>
-                      <div className="flex flex-col border-t-2">
-                        <div className="flex flex-row items-center justify-around opacity-90 text-gray-500">
-                          <p>تعداد صفحات</p>
-                          <p>قیمت</p>
-                        </div>
-                        <div className="flex flex-row items-center justify-around relative left-5">
-                          <p>{book.pageCount}</p>
-                          <p className="flex flex-row gap-2 items-baseline text-md h-1/4 font-bold mt-2">
-                            <span>تومان</span>
-                            {book.price}
-                          </p>
+                <Link
+                  href={`/books/${book.slug}`}
+                  className="w-full md:w-1/3 h-full p-2"
+                >
+                  <Card key={book.id} className="w-full h-full">
+                    <CardContent className="flex flex-col items-center p-4 h-full">
+                      <div className="h-[250px] lg:h-4/5 w-full">
+                        <Skeleton className="w-full h-full" />
+                      </div>
+                      <div className="w-full h-1/5 text-center">
+                        <h3 className="w-full text-xl h-1/4 font-semibold my-2">
+                          {book.title}
+                        </h3>
+                        <p className="hidden lg:block text-sm h-1/4 text-gray-600">
+                          ...{book.description.substring(0, 50)}
+                        </p>
+                        <div className="flex flex-col border-t-2">
+                          <div className="flex flex-row items-center justify-around opacity-90 text-gray-500">
+                            <p>تعداد صفحات</p>
+                            <p>قیمت</p>
+                          </div>
+                          <div className="flex flex-row items-center justify-around relative left-5">
+                            <p>{book.pageCount}</p>
+                            <p className="flex flex-row gap-2 items-baseline text-md h-1/4 font-bold mt-2">
+                              <span>تومان</span>
+                              {book.price}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </CarouselItem>
           ))}

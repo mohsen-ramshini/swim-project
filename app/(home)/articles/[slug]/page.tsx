@@ -3,20 +3,15 @@ import SingleArticleInterface from "../components/SingleArticleInterface";
 import { Skeleton } from "@/components/ui/skeleton";
 import Profile from "../../components/articles/Profile";
 
-interface Props {
-  params: { articleId: string };
-}
-
 const Articles = [
   {
     id: 1,
     articleType: 1,
     title: "مزیای شنا برای سلامتی",
-    slug: "http://helloworld.com",
+    slug: "swimming-advanteage",
     thumbnail:
       "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt:
-      "گروه فیزیوتراپی محلی به ساکنین سامرز پوینت درمانی اختصاصی ورزشی ارائه می دهد",
+    excerpt: "test",
     content:
       "شنا یک ورزش کم‌فشار است که تأثیر زیادی بر سلامت قلب و عروق، افزایش ظرفیت تنفسی و تقویت عضلات دارد. این ورزش به کاهش استرس، بهبود انعطاف‌پذیری و افزایش استقامت بدنی کمک می‌کند. همچنین برای افراد مبتلا به مشکلات مفصلی یا کمردرد، گزینه‌ای ایده‌آل است",
     categoryId: 1,
@@ -32,14 +27,13 @@ const Articles = [
     id: 2,
     articleType: 1,
     title: "شنا برای مبتدیان",
-    slug: "http://helloworld.com",
+    slug: "swimming-for-begginers",
     thumbnail:
       "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt:
-      "گروه فیزیوتراپی محلی به ساکنین سامرز پوینت درمانی اختصاصی ورزشی ارائه می دهد",
+    excerpt: "test",
     content:
       "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
-    categoryId: 1,
+    categoryId: 2,
     reference: "1",
     publishTime: new Date(),
     isActive: true,
@@ -52,11 +46,10 @@ const Articles = [
     id: 3,
     articleType: 1,
     title: "شنا برای مبتدیان",
-    slug: "http://helloworld.com",
+    slug: "swimming-for-begginers",
     thumbnail:
       "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt:
-      "گروه فیزیوتراپی محلی به ساکنین سامرز پوینت درمانی اختصاصی ورزشی ارائه می دهد.",
+    excerpt: "test",
     content:
       "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
     categoryId: 2,
@@ -72,11 +65,10 @@ const Articles = [
     id: 4,
     articleType: 1,
     title: "شنا برای مبتدیان",
-    slug: "http://helloworld.com",
+    slug: "swimming-for-begginers",
     thumbnail:
       "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt:
-      "گروه فیزیوتراپی محلی به ساکنین سامرز پوینت درمانی اختصاصی ورزشی ارائه می دهد.",
+    excerpt: "test",
     content:
       "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
     categoryId: 2,
@@ -92,11 +84,10 @@ const Articles = [
     id: 5,
     articleType: 1,
     title: "شنا برای مبتدیان",
-    slug: "http://helloworld.com",
+    slug: "swimming-for-begginers",
     thumbnail:
       "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt:
-      "گروه فیزیوتراپی محلی به ساکنین سامرز پوینت درمانی اختصاصی ورزشی ارائه می دهد.",
+    excerpt: "test",
     content:
       "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
     categoryId: 2,
@@ -112,11 +103,10 @@ const Articles = [
     id: 6,
     articleType: 1,
     title: "شنا برای مبتدیان",
-    slug: "http://helloworld.com",
+    slug: "swimming-for-begginers",
     thumbnail:
       "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt:
-      "گروه فیزیوتراپی محلی به ساکنین سامرز پوینت درمانی اختصاصی ورزشی ارائه می دهد.",
+    excerpt: "test",
     content:
       "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
     categoryId: 2,
@@ -131,7 +121,7 @@ const Articles = [
 ];
 
 interface Props {
-  params: { articleId: string };
+  params: { slug: string };
 }
 // TODO : remove this module and export it
 const getCategoryContentById = (cat: number) => {
@@ -148,11 +138,13 @@ const getCategoryContentById = (cat: number) => {
 };
 
 export default async function ArticlePage({ params }: Props) {
-  const articleId = Number(params.articleId);
-  if (isNaN(articleId)) return notFound();
+  const { slug } = await params;
 
-  const article = Articles.find((post) => post.id === articleId);
+  const article = Articles.find((post) => post.slug === slug);
   if (!article) return notFound();
+
+  const articleId = Number(article.id);
+  if (isNaN(articleId)) return notFound();
 
   const relatedArticles = Articles.filter(
     (item) => item.categoryId === article.categoryId && item.id !== articleId

@@ -56,7 +56,7 @@ const SingleArticleInterface: React.FC<Props> = ({ data }) => {
         {/* Add navigation to the button */}
         <Button
           variant="ghost"
-          onClick={() => router.push(`/articles/${data.id}`)}
+          onClick={() => router.push(`/articles/${data.slug}`)}
         >
           <ArrowLeft />
           ادامه
