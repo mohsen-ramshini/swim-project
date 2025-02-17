@@ -2,6 +2,8 @@ import React from "react";
 import Hero from "./components/HeroSection";
 import Articles from "./components/articles/Articles";
 import Books from "./components/books/Books";
+import Courses from "./components/courses/Courses";
+import News from "./components/news/News";
 
 const page = () => {
   return (
@@ -9,6 +11,8 @@ const page = () => {
       <Hero />
       <Articles />
       <Books />
+      <Courses />
+      <News />
     </div>
   );
 };

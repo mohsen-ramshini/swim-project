@@ -8,7 +8,7 @@ export const articleComments = pgTable("article_comments", {
     .references(() => articles.id)
     .notNull(),
   parentId: integer("parent_id"),
-  userId: integer("user_id").notNull(), // Foreign key to users table
+  userId: integer("user_id").notNull(),
   createDate: timestamp("create_date").defaultNow().notNull(),
   text: text("text").notNull(),
 });

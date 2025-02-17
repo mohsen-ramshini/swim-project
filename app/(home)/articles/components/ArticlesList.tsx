@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const ArticlesList = () => {
   return (
-    <section className="w-full h-full flex flex-col  my-10">
+    <section className="w-full h-full flex flex-col my-10">
       <h1 className="mt-14 mr-16 text-black font-extrabold text-5xl text-right ">
         مقالات
       </h1>

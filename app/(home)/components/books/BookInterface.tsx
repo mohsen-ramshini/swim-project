@@ -1,5 +1,5 @@
 "use client";
-import { insertBookSchema } from "@/db/schema/book";
+import { insertBookSchema } from "@/db/schema/book/book";
 import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { Card, CardContent } from "@/components/ui/card";
@@ -123,7 +123,7 @@ const BookInterface: React.FC<Props> = ({ data, slider }) => {
         <CarouselContent className="w-full h-full lg:h-[550px]">
           {groupedBooks.map((bookGroup, index) => (
             <CarouselItem
-              key={index}
+              key={bookGroup.length > 0 ? bookGroup[0].id : `group-${index}`}
               className={cn(
                 "flex justify-center items-center h-full gap-2",
                 isMobile ? "w-full" : "w-1/3"

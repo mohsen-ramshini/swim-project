@@ -1,10 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeftCircle, Share2 } from "lucide-react";
+import BookDetails from "@/app/(home)/components/books/BookDetails";
+import Comments from "@/app/(home)/components/comments/Comments";
 import { notFound } from "next/navigation";
-import Profile from "../../components/articles/Profile";
-import BookInterface from "../../components/books/BookInterface";
-import BookDetails from "../../components/books/BookDetails";
 
 const books = [
   {
@@ -336,67 +332,11 @@ export default async function BookPage({
   const bookId = Number(book.id);
   if (isNaN(bookId)) return notFound();
 
-  //   const relatedArticles = books.filter(
-  //     (item) => item.categoryId === article.categoryId && item.id !== articleId
-  //   );
-
   return (
     <section className="w-full lg:h-[1750px] flex flex-col mt-10 justify-center items-center">
-      <h2 className="text-5xl font-extrabold my-10">مشخصات کتاب</h2>
-      <div className=" w-11/12 h-full">
-        <div className="h-1/6 mb-20">
-          <BookDetails data={book} />
-        </div>
-        <div className=" h-2/6 text-right">{book.description}</div>
-        <div className=" h-1/6 flex flex-col justify-start items-end">
-          <div className="flex flex-row justify-between items-baseline  w-full">
-            <Button variant={"ghost"}>
-              مشاهده همه <ArrowLeftCircle />
-            </Button>
-            <h6>نظرات کاربران</h6>
-          </div>
-          <div className="w-full h-full flex flex-row-reverse justify-start items-center gap-2">
-            <div className="h-full h max-w-60 ">
-              <div>
-                <Profile />
-              </div>
-              <div className="text-xs text-right">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-                ullam expedita laborum ad fuga nulla error unde? Molestiae
-                quibusdam enim ipsa saepe quidem ratione, fugit harum rerum
-                totam vel a!
-              </div>
-            </div>
-            <div className="h-full h max-w-60">
-              <div>
-                <Profile />
-              </div>
-              <div className="text-xs text-right">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-                ullam expedita laborum ad fuga nulla error unde? Molestiae
-                quibusdam enim ipsa saepe quidem ratione, fugit harum rerum
-                totam vel a!
-              </div>
-            </div>
-            <div className="h-full h max-w-60">
-              <div>
-                <Profile />
-              </div>
-              <div className="text-xs text-right">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-                ullam expedita laborum ad fuga nulla error unde? Molestiae
-                quibusdam enim ipsa saepe quidem ratione, fugit harum rerum
-                totam vel a!
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className=" h-2/6">
-          <h6>
-            <BookInterface data={books} slider={true} />
-          </h6>
-        </div>
-      </div>
+      <BookDetails data={book} />
+      {/* <Comments data={book.bookComments} slider={false}/>  */}
+      <Comments book={book} slider={false} />
     </section>
   );
 }
