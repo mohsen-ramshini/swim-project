@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
-import ArticlesList from "./components/ArticlesList";
+import ArticlesList from "../components/articles/ArticlesList";
 
 const page = () => {
   return (

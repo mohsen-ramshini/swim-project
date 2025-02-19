@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import SingleArticleInterface from "../components/SingleArticleInterface";
+import SingleArticleInterface from "../../components/articles/SingleArticleInterface";
 import { Skeleton } from "@/components/ui/skeleton";
 import Profile from "../../components/articles/Profile";
 

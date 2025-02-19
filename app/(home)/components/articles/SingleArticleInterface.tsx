@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { z } from "zod";
-import Profile from "../../components/articles/Profile";
+import Profile from "./Profile";
 
 type Article = z.infer<typeof insertArticleSchema>;
 
