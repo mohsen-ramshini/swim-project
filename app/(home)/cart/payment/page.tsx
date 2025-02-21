@@ -9,22 +9,22 @@ import OrderSummery from "../../components/cart/OrderSummery";
 const page = () => {
   const router = useRouter();
   return (
-    <section className="w-full h-screen my-10 flex flex-col justify-center items-center">
-      <div className="w-full h-1/4">
+    <section className="w-full h-full my-10 flex flex-col justify-center items-center">
+      <div className="w-full h-full">
         <ShoppingStageBar activeStage={3} />
       </div>
-      <div className="bg-yellow-400 w-full h-2/4">
+      <div className="bg-yellow-400 w-full h-[800px]">
         <div className=" w-full h-full flex justify-center">
           <div className=" w-4/5 h-full flex flex-row-reverse ">
             <div className="h-full w-4/5  flex justify-center items-center">
-              <div className="border-2 rounded-sm w-full h-full flex flex-col justify-center items-center overflow-auto">
-                <h2 className="relative bottom-10 text-4xl font-extrabold h-1/5 mt-24">
+              <div className="border-2 rounded-sm w-full h-full  flex flex-col justify-start items-center overflow-hidden">
+                <h2 className=" text-4xl font-extrabold w-full text-center ">
                   پرداخت
                 </h2>
-                <div className="h-full w-full">
+                <div className="w-full">
                   <PaymentAgreement />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col items-center overflow-auto">
                   <h5 className="my-5 text-xl">خلاصه سفارش شما</h5>
                   <div>
                     <OrderSummery />
@@ -32,7 +32,7 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="h-full w-1/5 flex justify-end mr-5 ">
+            <div className="h-full w-1/5 flex justify-end mr-5 max-h-[500px]">
               <div className=" w-full h-full flex justify-center items-center ">
                 <div className="h-full w-full">
                   <div className="h-4/5 border-2 rounded-sm w-full  flex justify-center items-center ">

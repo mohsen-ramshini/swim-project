@@ -68,14 +68,16 @@ type Book = z.infer<typeof insertBookSchema>;
 
 interface Props {
   book: Book[];
+  controller: boolean;
 }
 
-const ProductInterface: React.FC<Props> = ({ book }) => {
+const ProductInterface: React.FC<Props> = ({ book, controller }) => {
   const [itemCount, setItemCount] = useState<number>(0);
 
   const handleCount = (count: number) => {
     setItemCount(count);
   };
+
   return (
     <section className="w-full h-2/3 flex flex-col">
       {book.length === 0 ? (
@@ -102,21 +104,28 @@ const ProductInterface: React.FC<Props> = ({ book }) => {
                 </div>
               </div>
             </div>
+
             {/* Price & Counter */}
-            <div className="w-1/3 flex justify-end">
-              <div className="flex flex-row-reverse items-baseline gap-2">
-                <div className="font-bold">{b.price} تومان</div>
-                <div>
-                  <ItemCounter counter={handleCount} />
+            {controller ? (
+              <div className="w-1/3 flex justify-end bg-blue-500">
+                <div className="flex flex-row-reverse items-baseline gap-2">
+                  <div className="font-bold">{b.price} تومان</div>
+                  <div>
+                    <ItemCounter counter={handleCount} />
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="w-1/3 flex justify-end">
+                <div className="font-bold">{b.price} تومان</div>
+              </div>
+            )}
           </div>
         ))
       )}
 
       {/* Delete All Button */}
-      {book.length > 0 && (
+      {book.length > 0 && controller && (
         <div className="w-full h-1/3 flex justify-center items-end my-10">
           <Button variant={"destructive"}>
             <Trash />

@@ -42,7 +42,7 @@ const PaymentAgreement = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="p-6 bg-white rounded-lg shadow-md space-y-4 rtl h-full"
+        className="p-6  rounded-lg  space-y-4 rtl h-full"
       >
         <FormField
           name="onlinePayment"

@@ -136,32 +136,6 @@ const AddressForm = () => {
           />
 
           <FormField
-            name="province"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem className="rtl flex flex-col justify-end ">
-                <FormLabel className="text-right">استان</FormLabel>
-                <FormControl>
-                  <select
-                    {...field}
-                    onChange={(e) => setSelectedProvince(e.target.value)}
-                    className="input w-full p-2 border rounded-md text-right"
-                  >
-                    {statesLoading && <option>در حال بارگذاری...</option>}
-                    {statesError && <option>Error loading states</option>}
-                    {states?.map((state: any) => (
-                      <option key={state.id} value={state.id}>
-                        {state.name}
-                      </option>
-                    ))}
-                  </select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
             name="city"
             control={form.control}
             render={({ field }) => (
@@ -177,6 +151,32 @@ const AddressForm = () => {
                     {cities?.map((city: any) => (
                       <option key={city.id} value={city.id}>
                         {city.name}
+                      </option>
+                    ))}
+                  </select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="province"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="rtl flex flex-col justify-end ">
+                <FormLabel className="text-right">استان</FormLabel>
+                <FormControl>
+                  <select
+                    {...field}
+                    onChange={(e) => setSelectedProvince(e.target.value)}
+                    className="input w-full p-2 border rounded-md text-right"
+                  >
+                    {statesLoading && <option>در حال بارگذاری...</option>}
+                    {statesError && <option>Error loading states</option>}
+                    {/* <option value="">یک استان را انتخاب کنید</option> */}
+                    {states?.map((state: any) => (
+                      <option key={state.id} value={state.id}>
+                        {state.name}
                       </option>
                     ))}
                   </select>
