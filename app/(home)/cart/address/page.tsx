@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import ShoppingStageBar from "../../components/cart/ShoppingStageBar";
+import ShoppingStageBar from "../../../../components/cart/ShoppingStageBar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import AddressForm from "../../components/cart/AddressForm";
+import AddressForm from "../../../../components/cart/AddressForm";
 
 const page = () => {
   const router = useRouter();

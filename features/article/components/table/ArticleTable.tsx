@@ -40,18 +40,20 @@ const ArticleTable = () => {
     <div className="overflow-y-auto">
       {/* Card Component */}
       <Card className="border-none drop-shadow-sm">
-        <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">مقالات</CardTitle>
+        <CardHeader className="w-full flex flex-row items-baseline justify-between lg:items-center">
+          <CardTitle className="w-11/12 text-xl line-clamp-1">مقالات</CardTitle>
           {/* Trigger Button */}
+          <div className="w-[200px] sm:w-1/2 lg:w-1/3 xl:w-3/4"></div>
           <Button
             size="sm"
             onClick={newArticle.onOpenArticle}
-            className="sm:max-sm:54"
+            className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4"
           >
             ایجاد
             <Plus className="size-4 mr-2" />
           </Button>
         </CardHeader>
+
         <CardContent>
           <DataTable
             columns={columns}

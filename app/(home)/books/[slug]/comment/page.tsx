@@ -1,5 +1,5 @@
-import BookDetails from "@/app/(home)/components/books/BookDetails";
-import Comments from "@/app/(home)/components/comments/Comments";
+import BookDetails from "@/components/books/BookDetails";
+import Comments from "@/components/comments/Comments";
 import { notFound } from "next/navigation";
 
 const books = [

@@ -43,7 +43,7 @@ export const NewArticleSheet = () => {
     mutation.mutate(values, {
       onSuccess: () => {
         onCloseArticle();
-        console.log("Success:", values);
+        console.log("Success artilce sent:", values);
       },
       onError: (error) => {
         console.error("Mutation error:", error);

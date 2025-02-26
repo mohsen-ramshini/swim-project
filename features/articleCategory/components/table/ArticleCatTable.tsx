@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Plus } from "lucide-react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { useGetArticles } from "@/features/articleCategory/api/use-get-categories";
+import { useGetCategories } from "@/features/articleCategory/api/use-get-categories";
 import { useNewCategory } from "../../hook/use-new-category";
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,7 +13,7 @@ import { useBulkDeleteCategories } from "../../api/use-bulk-delete";
 const ArticleCatTable = () => {
   const newArticle = useNewCategory();
   const deleteCategories = useBulkDeleteCategories();
-  const articleCat = useGetArticles();
+  const articleCat = useGetCategories();
   const Categories = articleCat.data || [];
 
   const isDisabled = articleCat.isLoading || deleteCategories.isPending;

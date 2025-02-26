@@ -45,11 +45,17 @@ export const ArticleCategoryForm = ({
 }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues,
+    defaultValues: defaultValues || {
+      id: 0,
+      title: "",
+      slug: "",
+      isActive: false,
+    },
   });
 
   const handleSubmit = (values: FormValues) => {
     onSubmit(values);
+    console.log(values);
   };
   const handleDelete = () => {
     onDelete?.();

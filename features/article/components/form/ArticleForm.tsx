@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
@@ -7,8 +7,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 
-import { Combobox } from "@/components/ComboBox";
-import TextEditor from "@/components/TextEditor";
+import { Combobox } from "@/components/appLayout/ComboBox";
+import TextEditor from "@/components/modules/TextEditor";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,6 +32,7 @@ import {
 
 import { insertArticleSchema } from "@/db/schema/article";
 import { Trash } from "lucide-react";
+import { useGetCategories } from "@/features/articleCategory/api/use-get-categories";
 
 const formSchema = insertArticleSchema.pick({
   articleType: true,
@@ -42,7 +43,7 @@ const formSchema = insertArticleSchema.pick({
   content: true,
   categoryId: true,
   reference: true,
-  publishTime: true,
+  // publishTime: true,
   isActive: true,
 });
 
@@ -74,38 +75,40 @@ export const ArticleForm = ({
       content: "",
       categoryId: 1,
       reference: "",
-      publishTime: new Date(),
+      // publishTime: new Date(),
       isActive: true,
     },
   });
 
+  const { data: categories, isLoading, isError } = useGetCategories();
+
   const [publishDate, setPublishDate] = useState<Date | null>(null);
 
   const handleFormSubmit = (values: FormValues) => {
-    if (publishDate && values.publishTime) {
-      const combinedDateTime = new Date(
-        publishDate.getFullYear(),
-        publishDate.getMonth(),
-        publishDate.getDate(),
-        new Date(values.publishTime).getHours(),
-        new Date(values.publishTime).getMinutes()
-      );
-      onSubmit({ ...values, publishTime: combinedDateTime });
-    } else {
-      onSubmit(values);
-    }
+    // if (publishDate && values.publishTime) {
+    //   const combinedDateTime = new Date(
+    //     publishDate.getFullYear(),
+    //     publishDate.getMonth(),
+    //     publishDate.getDate(),
+    //     new Date(values.publishTime).getHours(),
+    //     new Date(values.publishTime).getMinutes()
+    //   );
+    //   onSubmit({ ...values, publishTime: combinedDateTime });
+    // console.log("publishTime type:", typeof values.publishTime); // Should be "object"
+    // console.log("publishTime value:", values.publishTime);
+    // console.log(
+    //   "publishTime instanceof Date:",
+    //   values.publishTime instanceof Date
+    // );
+
+    onSubmit(values);
+
+    console.log(values);
   };
 
   const handleDelete = () => {
     onDelete?.();
   };
-
-  const categories = [
-    { id: 1, name: "اخبار" },
-    { id: 2, name: "ورزشی" },
-    { id: 3, name: "فرهنگی" },
-    { id: 4, name: "علمی" },
-  ];
 
   const articleTypes = [
     { id: 1, name: "تحلیل" },
@@ -173,14 +176,20 @@ export const ArticleForm = ({
                           <SelectValue placeholder="انتخاب دسته‌بندی" />
                         </SelectTrigger>
                         <SelectContent>
-                          {categories.map((category) => (
-                            <SelectItem
-                              key={category.id}
-                              value={String(category.id)}
-                            >
-                              {category.name}
-                            </SelectItem>
-                          ))}
+                          {isLoading ? (
+                            <SelectItem value="">در حال بارگذاری...</SelectItem>
+                          ) : isError ? (
+                            <SelectItem value="">خطا در بارگذاری</SelectItem>
+                          ) : (
+                            categories?.map((category) => (
+                              <SelectItem
+                                key={category.id}
+                                value={String(category.id)}
+                              >
+                                {category.title}
+                              </SelectItem>
+                            ))
+                          )}
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -312,7 +321,7 @@ export const ArticleForm = ({
             </div>
 
             {/* Publish Time */}
-            <div className="sm:w-1/3">
+            {/* <div className="sm:w-1/3">
               <FormField
                 control={form.control}
                 name="publishTime"
@@ -334,7 +343,7 @@ export const ArticleForm = ({
                   </FormItem>
                 )}
               />
-            </div>
+            </div> */}
 
             {/* Publish Date */}
             {/* <div className="sm:w-1/3">

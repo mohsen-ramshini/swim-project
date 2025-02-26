@@ -2,19 +2,25 @@ import { Hono } from "hono";
 import { db } from "@/db/drizzle";
 import { articles, insertArticleSchema } from "@/db/schema/article";
 import { zValidator } from "@hono/zod-validator";
-import { title } from "process";
 import { z } from "zod";
 import { and, eq, inArray } from "drizzle-orm";
 
 const app = new Hono()
   .get("/", async (c) => {
-    console.log("object");
+    console.log("article");
 
     const data = await db
       .select({
         id: articles.id,
+        articleType: articles.articleType,
         title: articles.title,
         slug: articles.slug,
+        thumbnail: articles.thumbnail,
+        excerpt: articles.excerpt,
+        content: articles.content,
+        categoryId: articles.categoryId,
+        createdBy: articles.createdBy,
+        createdAt: articles.createdAt,
         isActive: articles.isActive,
       })
       .from(articles);

@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import ShoppingStageBar from "../../components/cart/ShoppingStageBar";
+import ShoppingStageBar from "../../../../components/cart/ShoppingStageBar";
 import { Button } from "@/components/ui/button";
 import { Check, CircleCheck, CircleX } from "lucide-react";
 import { useRouter } from "next/navigation";
-import OrderSummery from "../../components/cart/OrderSummery";
+import OrderSummery from "../../../../components/cart/OrderSummery";
 
 const page = () => {
   const router = useRouter();

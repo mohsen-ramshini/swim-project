@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import ShoppingStageBar from "../../components/cart/ShoppingStageBar";
+import ShoppingStageBar from "../../../../components/cart/ShoppingStageBar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import PaymentAgreement from "../../components/cart/PaymentAgreement";
-import OrderSummery from "../../components/cart/OrderSummery";
+import PaymentAgreement from "../../../../components/cart/PaymentAgreement";
+import OrderSummery from "../../../../components/cart/OrderSummery";
 
 const page = () => {
   const router = useRouter();

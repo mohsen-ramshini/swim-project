@@ -7,8 +7,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Combobox } from "@/components/ComboBox";
-import TextEditor from "@/components/TextEditor";
+import { Combobox } from "@/components/appLayout/ComboBox";
+import TextEditor from "@/components/modules/TextEditor";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

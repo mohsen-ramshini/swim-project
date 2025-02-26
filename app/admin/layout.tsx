@@ -1,7 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/AppSidebar";
+import { AppSidebar } from "@/components/appLayout/AppSidebar";
 import { SheetProvider } from "@/providers/sheet-provider";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/appLayout/NavBar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

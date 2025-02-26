@@ -11,14 +11,34 @@ export const useCreateArticle = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
-      const response = await client.api.article.$post({ json });
+      // Add required fields
+      const enrichedJson = {
+        ...json,
+        createdBy: 1, // Replace with actual user ID
+        // createdAt: new Date(),
+        modifiedBy: null, // Optional
+        // modifiedAt: new Date(),
+      };
+
+      console.log("Final request body:", JSON.stringify(enrichedJson));
+
+      const response = await client.api.article.$post({ json: enrichedJson });
+
+      if (!response.ok) {
+        console.log(response);
+        const errorText = await response.text();
+        console.error("Error Response:", errorText);
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
       return await response.json();
     },
     onSuccess: () => {
       toast.success("Article created");
       queryClient.invalidateQueries({ queryKey: ["articles"] });
     },
-    onError: () => {
+    onError: (error) => {
+      console.error("Mutation error:", error);
       toast.error("Failed to create article");
     },
   });

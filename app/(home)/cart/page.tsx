@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
-import ShoppingStageBar from "../components/cart/ShoppingStageBar";
-import BookDetails from "../components/books/BookDetails";
-import ProductInterface from "../components/cart/ProductInterface";
+import ShoppingStageBar from "../../../components/cart/ShoppingStageBar";
+import BookDetails from "@/components/books/BookDetails";
+import ProductInterface from "../../../components/cart/ProductInterface";
 import { Button } from "@/components/ui/button";
-import BookInterface from "../components/books/BookInterface";
+import BookInterface from "@/components/books/BookInterface";
 import { useRouter } from "next/navigation";
+import HeroSection from "@/components/hero/HeroSection";
 
 const books = [
   {
@@ -160,7 +161,13 @@ const books = [
 const page = () => {
   const router = useRouter();
   return (
-    <section className="w-full h-screen my-10 flex flex-col justify-center items-center">
+    <section className="w-full h-full  flex flex-col justify-center items-center">
+      <HeroSection
+        imageSourse={"banner-three.jpg"}
+        width={2048}
+        height={300}
+        dialog={"سلام"}
+      />
       <div className="w-full h-1/4">
         <ShoppingStageBar activeStage={1} />
       </div>
@@ -170,7 +177,7 @@ const page = () => {
             <h2 className="relative bottom-10 text-4xl font-extrabold">
               سبد خرید
             </h2>
-            <ProductInterface book={books.slice(0, 4)} />
+            <ProductInterface book={books.slice(0, 4)} controller={true} />
           </div>
         </div>
         <div className="h-full w-1/5 flex justify-end mr-5 ">

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import NewsSingleInterface from "@/app/(home)/components/news/NewsSingleInterface";
+import NewsSingleInterface from "@/components/news/NewsSingleInterface";
 import { Skeleton } from "@/components/ui/skeleton";
 import Profile from "../../components/articles/Profile";
 

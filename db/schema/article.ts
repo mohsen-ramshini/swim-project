@@ -22,7 +22,7 @@ export const articles = pgTable("articles", {
     .references(() => articleCategories.id)
     .notNull(),
   reference: text("reference"),
-  publishTime: timestamp("publish_time").notNull(),
+  publishTime: timestamp("publish_time").defaultNow().notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   createdBy: serial("created_by").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
