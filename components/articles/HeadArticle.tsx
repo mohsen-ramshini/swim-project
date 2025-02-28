@@ -5,6 +5,7 @@ import { z } from "zod";
 import { insertArticleSchema } from "@/db/schema/article";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
+import useContentParser from "@/hooks/use-content-parser";
 
 type Article = z.infer<typeof insertArticleSchema>;
 
@@ -14,6 +15,7 @@ interface Props {
 
 const HeadArticle: React.FC<Props> = ({ data }) => {
   const router = useRouter();
+  const content = useContentParser(data.excerpt, true);
   return (
     <aside className="w-full flex flex-col items-center lg:mb-5 lg:border-none border-b-2 pb-2  ">
       {/* Responsive Image Container */}
@@ -42,7 +44,7 @@ const HeadArticle: React.FC<Props> = ({ data }) => {
 
         {/* Article Content & Button */}
         <div className="lg:w-1/2 text-center lg:text-right mt-4 lg:mt-0 ">
-          <p className="text-right lg:text-sm md:text-base ">{data.content}</p>
+          <p className="text-right lg:text-sm md:text-base ">{content}</p>
           <div className="flex justify-center lg:justify-start items-center mt-3">
             <Button
               variant={"ghost"}

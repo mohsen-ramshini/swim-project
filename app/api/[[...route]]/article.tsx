@@ -19,6 +19,10 @@ const app = new Hono()
         excerpt: articles.excerpt,
         content: articles.content,
         categoryId: articles.categoryId,
+        reference: articles.reference,
+        publishTime: articles.publishTime,
+        modifiedBy: articles.modifiedBy,
+        modifiedAt: articles.modifiedAt,
         createdBy: articles.createdBy,
         createdAt: articles.createdAt,
         isActive: articles.isActive,
@@ -26,6 +30,93 @@ const app = new Hono()
       .from(articles);
     return c.json({ data });
   })
+  .get(
+    "/article/:categoryId",
+    zValidator(
+      "param",
+      z.object({
+        categoryId: z.string(),
+      })
+    ),
+    async (c) => {
+      const { categoryId } = c.req.valid("param");
+
+      // Convert categoryId to a number
+      const numericCategoryId = parseInt(categoryId, 10);
+
+      if (isNaN(numericCategoryId)) {
+        return c.json({ error: "Invalid category ID" }, 400);
+      }
+
+      // Query the database for articles with the specified categoryId
+      const data = await db
+        .select({
+          id: articles.id,
+          articleType: articles.articleType,
+          title: articles.title,
+          slug: articles.slug,
+          thumbnail: articles.thumbnail,
+          excerpt: articles.excerpt,
+          content: articles.content,
+          categoryId: articles.categoryId,
+          reference: articles.reference,
+          publishTime: articles.publishTime,
+          modifiedBy: articles.modifiedBy,
+          modifiedAt: articles.modifiedAt,
+          createdBy: articles.createdBy,
+          createdAt: articles.createdAt,
+          isActive: articles.isActive,
+        })
+        .from(articles)
+        .where(eq(articles.categoryId, numericCategoryId)); // Filter by category ID
+
+      // Check if any articles were found
+      if (data.length === 0) {
+        return c.json({ error: "No articles found for this category" }, 404);
+      }
+
+      return c.json({ data });
+    }
+  )
+  .get(
+    "/slug/:slug",
+    zValidator(
+      "param",
+      z.object({
+        slug: z.string(),
+      })
+    ),
+    async (c) => {
+      const { slug } = c.req.valid("param");
+
+      const [data] = await db
+        .select({
+          id: articles.id,
+          articleType: articles.articleType,
+          title: articles.title,
+          slug: articles.slug,
+          thumbnail: articles.thumbnail,
+          excerpt: articles.excerpt,
+          content: articles.content,
+          categoryId: articles.categoryId,
+          reference: articles.reference,
+          publishTime: articles.publishTime,
+          modifiedBy: articles.modifiedBy,
+          modifiedAt: articles.modifiedAt,
+          createdBy: articles.createdBy,
+          createdAt: articles.createdAt,
+          isActive: articles.isActive,
+        })
+        .from(articles)
+        .where(eq(articles.slug, slug));
+
+      if (!data) {
+        return c.json({ error: "Not found" }, 404);
+      }
+
+      return c.json({ data });
+    }
+  )
   .get(
     "/:id",
     zValidator(
