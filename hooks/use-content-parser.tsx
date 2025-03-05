@@ -80,7 +80,7 @@
 // };
 
 // export default useParsedContent;
-import { createElement, useMemo, useState } from "react";
+import { createElement, useEffect, useMemo, useState } from "react";
 import parse, { domToReact } from "html-react-parser";
 
 // Function to extract plain text from parsed content
@@ -155,7 +155,7 @@ const useParsedContent = (
   }, [textContent, sliceLength, trim, keepStyle]);
 
   // Set content after parsing and trimming
-  useMemo(() => {
+  useEffect(() => {
     setContent(trimmedContent);
   }, [trimmedContent]);
 

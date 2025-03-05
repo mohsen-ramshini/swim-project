@@ -2,6 +2,7 @@ import "./globals.css";
 import { QueryProvider } from "@/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { AppProvider } from "@/providers/Appcontext";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import localFont from "next/font/local";
 const font = localFont({
@@ -60,6 +61,7 @@ export default function RootLayout({
           <QueryProvider>
             <Toaster />
             {children}
+            <ReactQueryDevtools initialIsOpen={true} />
           </QueryProvider>
         </AppProvider>
       </body>

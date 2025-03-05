@@ -4,6 +4,8 @@ import { articles, insertArticleSchema } from "@/db/schema/article";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { and, eq, inArray } from "drizzle-orm";
+import ArticleCategory from "@/features/articleCategory/components/ArticleCategory";
+import { articleCategories } from "@/db/schema/articleCategory";
 
 const app = new Hono()
   .get("/", async (c) => {
@@ -31,24 +33,37 @@ const app = new Hono()
     return c.json({ data });
   })
   .get(
-    "/article/:categoryId",
+    "/category/:categoryId",
     zValidator(
       "param",
       z.object({
-        categoryId: z.string(),
+        categoryId: z.string().optional(),
       })
     ),
     async (c) => {
       const { categoryId } = c.req.valid("param");
 
-      // Convert categoryId to a number
-      const numericCategoryId = parseInt(categoryId, 10);
+      if (!categoryId) {
+        return c.json({ error: "Missing category ID" }, 400);
+      }
 
+      // تبدیل categoryId به عدد
+      const numericCategoryId = parseInt(categoryId, 10);
       if (isNaN(numericCategoryId)) {
         return c.json({ error: "Invalid category ID" }, 400);
       }
 
-      // Query the database for articles with the specified categoryId
+      // بررسی اینکه آیا این دسته‌بندی وجود دارد
+      const categoryExists = await db
+        .select()
+        .from(articleCategories)
+        .where(eq(articleCategories.id, numericCategoryId));
+
+      if (categoryExists.length === 0) {
+        return c.json({ error: "Category not found" }, 404);
+      }
+
+      // دریافت مقالات مرتبط با این دسته‌بندی
       const data = await db
         .select({
           id: articles.id,
@@ -68,9 +83,8 @@ const app = new Hono()
           isActive: articles.isActive,
         })
         .from(articles)
-        .where(eq(articles.categoryId, numericCategoryId)); // Filter by category ID
+        .where(eq(articles.categoryId, numericCategoryId));
 
-      // Check if any articles were found
       if (data.length === 0) {
         return c.json({ error: "No articles found for this category" }, 404);
       }
@@ -141,9 +155,20 @@ const app = new Hono()
 
       const [data] = await db
         .select({
-          id: articles,
+          id: articles.id,
+          articleType: articles.articleType,
           title: articles.title,
           slug: articles.slug,
+          thumbnail: articles.thumbnail,
+          excerpt: articles.excerpt,
+          content: articles.content,
+          categoryId: articles.categoryId,
+          reference: articles.reference,
+          publishTime: articles.publishTime,
+          modifiedBy: articles.modifiedBy,
+          modifiedAt: articles.modifiedAt,
+          createdBy: articles.createdBy,
+          createdAt: articles.createdAt,
           isActive: articles.isActive,
         })
         .from(articles)

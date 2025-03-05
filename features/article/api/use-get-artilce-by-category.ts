@@ -3,18 +3,22 @@ import { client } from "@/lib/hono";
 
 export const useGetArticlesByCategory = (categoryId: number) => {
   return useQuery({
-    enabled: !!categoryId,
-    queryKey: ["articles", { categoryId }],
+    queryKey: ["articles", categoryId],
+    enabled: typeof categoryId === "number" && categoryId > 0,
     queryFn: async () => {
       if (!categoryId) throw new Error("Category ID is required");
 
-      const response = await client.api.article.$get(categoryId.toString());
+      // Construct the correct URL with categoryId
+      const response = await client.api.article.category[":categoryId"].$get({
+        param: { categoryId: categoryId.toString() },
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch articles");
+        throw new Error(`Failed to fetch articles: ${response.statusText}`);
       }
 
-      const { data } = await response.json();
+      const data = await response.json();
+      console.log(`fetching : ${data.data}`);
       return data;
     },
   });

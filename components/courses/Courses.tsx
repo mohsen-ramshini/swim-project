@@ -10,8 +10,8 @@ const CourseList: React.FC = () => {
   const router = useRouter();
 
   return (
-    <section className="w-full h-full flex flex-col">
-      <div className="flex flex-row-reverse justify-between my-5 px-2">
+    <section className="w-full h-full flex flex-col justify-center items-center ">
+      <div className="w-full flex flex-row-reverse justify-between my-5 px-2">
         <h2 className="font-extrabold text-3xl lg:text-5xl">دوره ها</h2>
         <Button
           variant={"ghost"}
@@ -22,7 +22,7 @@ const CourseList: React.FC = () => {
           دیدن همه
         </Button>
       </div>
-      <div>
+      <div className=" w-4/5">
         <CoursesInterface />
       </div>
     </section>
