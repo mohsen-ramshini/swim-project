@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { insertAuthorSchema } from "@/db/schema/author";
+import { insertAuthorSchema } from "@/db/schema/article/author";
 
 const formSchema = insertAuthorSchema.pick({
   id: true,

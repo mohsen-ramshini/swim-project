@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Trash } from "lucide-react";
 
-import { insertArticleSchema } from "@/db/schema/article";
+import { insertArticleSchema } from "@/db/schema/article/article";
 
 // Dynamically import CKEditor
 // const CKEditor = dynamic(
@@ -58,8 +58,8 @@ const formSchema = insertArticleSchema.pick({
   content: true,
   categoryId: true,
   reference: true,
-//   publishTime: true,
-//   isActive: true,
+  //   publishTime: true,
+  //   isActive: true,
 });
 
 type FormValues = z.input<typeof formSchema>;

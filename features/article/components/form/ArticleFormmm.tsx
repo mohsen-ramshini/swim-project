@@ -30,7 +30,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { insertArticleSchema } from "@/db/schema/article";
+import { insertArticleSchema } from "@/db/schema/article/article";
 import { Trash } from "lucide-react";
 
 interface FormData {

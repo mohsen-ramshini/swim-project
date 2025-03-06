@@ -3,7 +3,7 @@ import { db } from "@/db/drizzle";
 import {
   articleComments,
   insertArticleCommentsSchema,
-} from "@/db/schema/articleComments";
+} from "@/db/schema/article/articleComments";
 import { zValidator } from "@hono/zod-validator";
 
 const app = new Hono()

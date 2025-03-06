@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { db } from "@/db/drizzle";
-import { authors, insertAuthorSchema } from "@/db/schema/author";
+import { authors, insertAuthorSchema } from "@/db/schema/article/author";
 import { zValidator } from "@hono/zod-validator";
 import { title } from "process";
 

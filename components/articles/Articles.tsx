@@ -8,7 +8,7 @@ import { ArrowBigLeft, ArrowLeftCircle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
-import { insertArticleSchema } from "@/db/schema/article";
+import { insertArticleSchema } from "@/db/schema/article/article";
 import { z } from "zod";
 
 type ArticleInterface = z.infer<typeof insertArticleSchema>;

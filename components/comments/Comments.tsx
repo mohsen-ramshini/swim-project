@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { insertArticleCommentsSchema } from "@/db/schema/articleComments";
+import { insertArticleCommentsSchema } from "@/db/schema/article/articleComments";
 import { z } from "zod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";

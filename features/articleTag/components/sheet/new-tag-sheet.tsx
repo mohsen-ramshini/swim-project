@@ -54,7 +54,7 @@
 //     </Sheet>
 //   );
 // };
-import { insertArticleTagSchema } from "@/db/schema/articleTag";
+import { insertArticleTagSchema } from "@/db/schema/article/articleTag";
 import { useNewTag } from "@/features/articleTag/hook/use-new-tag";
 import { useCreateTag } from "@/features/articleTag/api/use-create-tag";
 import { ArticleTagForm } from "@/features/articleTag/components/form/ArticleTagForm";

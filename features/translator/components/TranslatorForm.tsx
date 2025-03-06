@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { insertTranslatorSchema } from "@/db/schema/translator";
+import { insertTranslatorSchema } from "@/db/schema/article/translator";
 
 const formSchema = insertTranslatorSchema.pick({
   id: true,

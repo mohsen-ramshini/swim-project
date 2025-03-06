@@ -1,4 +1,4 @@
-import { insertArticleCommentsSchema } from "@/db/schema/articleComments";
+import { insertArticleCommentsSchema } from "@/db/schema/article/articleComments";
 import React, { useState } from "react";
 import { z } from "zod";
 

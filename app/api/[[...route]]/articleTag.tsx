@@ -1,6 +1,9 @@
 import { Hono } from "hono";
 import { db } from "@/db/drizzle";
-import { articleTags, insertArticleTagSchema } from "@/db/schema/articleTag";
+import {
+  articleTags,
+  insertArticleTagSchema,
+} from "@/db/schema/article/articleTag";
 import { zValidator } from "@hono/zod-validator";
 import { and, eq, inArray } from "drizzle-orm";
 

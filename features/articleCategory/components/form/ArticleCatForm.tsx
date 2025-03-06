@@ -16,7 +16,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { insertArticleCategoriesSchema } from "@/db/schema/articleCategory";
+import { insertArticleCategoriesSchema } from "@/db/schema/article/articleCategory";
 import { Trash } from "lucide-react";
 
 const formSchema = insertArticleCategoriesSchema.pick({

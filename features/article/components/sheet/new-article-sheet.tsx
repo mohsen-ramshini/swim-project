@@ -3,7 +3,7 @@ import { useNewArticle } from "@/features/article/hook/use-new-article";
 import { ArticleForm } from "@/features/article/components/form/ArticleForm";
 import { useCreateArticle } from "@/features/article/api/use-create-article";
 
-import { insertArticleSchema } from "@/db/schema/article";
+import { insertArticleSchema } from "@/db/schema/article/article";
 import {
   Sheet,
   SheetContent,

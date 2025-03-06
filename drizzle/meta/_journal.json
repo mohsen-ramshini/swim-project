@@ -57,6 +57,13 @@
       "when": 1740561935581,
       "tag": "0007_pretty_adam_destine",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1741244774269,
+      "tag": "0008_mean_stellaris",
+      "breakpoints": true
     }
   ]
 }

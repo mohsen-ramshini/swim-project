@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { insertEditorsSchema } from "@/db/schema/editor";
+import { insertEditorsSchema } from "@/db/schema/article/editor";
 
 const formSchema = insertEditorsSchema.pick({
   id: true,

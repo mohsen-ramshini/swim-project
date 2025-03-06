@@ -7,7 +7,7 @@ import { useEditTag } from "@/features/articleTag/api/use-edit-tag";
 import { useDeleteTag } from "@/features/articleTag/api/use-delete-tag";
 
 import { useConfirm } from "@/hooks/use-confirm";
-import { insertArticleTagSchema } from "@/db/schema/articleTag";
+import { insertArticleTagSchema } from "@/db/schema/article/articleTag";
 import {
   Sheet,
   SheetContent,

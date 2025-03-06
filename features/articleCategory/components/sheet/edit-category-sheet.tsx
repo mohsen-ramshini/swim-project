@@ -7,7 +7,7 @@ import { useEditCategory } from "@/features/articleCategory/api/use-edit-categor
 import { useDeleteCategory } from "@/features/articleCategory/api/use-delete-category";
 
 import { useConfirm } from "@/hooks/use-confirm";
-import { insertArticleCategoriesSchema } from "@/db/schema/articleCategory";
+import { insertArticleCategoriesSchema } from "@/db/schema/article/articleCategory";
 import {
   Sheet,
   SheetContent,

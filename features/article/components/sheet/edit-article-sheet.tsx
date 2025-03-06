@@ -7,7 +7,7 @@ import { useEditArticle } from "@/features/article/api/use-edit-article";
 import { useDeleteArticle } from "@/features/article/api/use-delete-article";
 
 import { useConfirm } from "@/hooks/use-confirm";
-import { insertArticleSchema } from "@/db/schema/article";
+import { insertArticleSchema } from "@/db/schema/article/article";
 import {
   Sheet,
   SheetContent,

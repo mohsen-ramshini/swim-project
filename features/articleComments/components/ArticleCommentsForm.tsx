@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 
 import { Textarea } from "@/components/ui/textarea";
-import { insertArticleCommentsSchema } from "@/db/schema/articleComments";
+import { insertArticleCommentsSchema } from "@/db/schema/article/articleComments";
 
 const formSchema = insertArticleCommentsSchema.pick({
   text: true,

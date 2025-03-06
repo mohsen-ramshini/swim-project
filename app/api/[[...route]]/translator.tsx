@@ -1,6 +1,9 @@
 import { Hono } from "hono";
 import { db } from "@/db/drizzle";
-import { translators, insertTranslatorSchema } from "@/db/schema/translator";
+import {
+  translators,
+  insertTranslatorSchema,
+} from "@/db/schema/article/translator";
 import { zValidator } from "@hono/zod-validator";
 import { title } from "process";
 

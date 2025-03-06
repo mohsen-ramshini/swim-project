@@ -77,9 +77,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
   });
 
   return (
-    <div className="w-full lg:w-4/5 h-4/5 mt-10 shadow-lg p-5">
+    <div className="w-full lg:w-4/5 h-4/5 mt-10 shadow-lg p-5 bg-white rounded-lg">
       <div className="w-full h-2/5 flex flex-col justify-center items-center">
-        <h1 className=" text-4xl xl:text-5xl font-extrabold py-10 text-white">
+        <h1 className=" text-4xl xl:text-5xl font-extrabold py-1 mb-10">
           انجمن شنای ایران
         </h1>
         <Image
@@ -101,7 +101,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem className="text-right rtl py-5">
-                  <FormLabel className="text-lg lg:text-2xl text-white">
+                  <FormLabel className="text-lg lg:text-2xl">
                     شماره همراه
                     <Phone size={35} className="inline pl-2" />
                   </FormLabel>
@@ -123,7 +123,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg lg:text-2xl text-white">
+                  <FormLabel className="text-lg lg:text-2xl">
                     رمز عبور
                     <Lock size={35} className="inline pl-2" />
                   </FormLabel>
@@ -147,9 +147,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem className="py-5">
-                    <FormLabel className="text-2xl text-white">
-                      تأیید رمز عبور
-                    </FormLabel>
+                    <FormLabel className="text-2xl">تأیید رمز عبور</FormLabel>
                     <FormControl>
                       <Input
                         type="password"

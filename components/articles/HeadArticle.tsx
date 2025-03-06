@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
-import { insertArticleSchema } from "@/db/schema/article";
+import { insertArticleSchema } from "@/db/schema/article/article";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import useContentParser from "@/hooks/use-content-parser";

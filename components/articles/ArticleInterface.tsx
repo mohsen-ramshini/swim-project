@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { insertArticleSchema } from "@/db/schema/article";
+import { insertArticleSchema } from "@/db/schema/article/article";
 import { z } from "zod";
 import parse, { domToReact } from "html-react-parser";
 import Profile from "./Profile";

@@ -1,11 +1,11 @@
 import { Hono } from "hono";
 import { db } from "@/db/drizzle";
-import { articles, insertArticleSchema } from "@/db/schema/article";
+import { articles, insertArticleSchema } from "@/db/schema/article/article";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { and, eq, inArray } from "drizzle-orm";
 import ArticleCategory from "@/features/articleCategory/components/ArticleCategory";
-import { articleCategories } from "@/db/schema/articleCategory";
+import { articleCategories } from "@/db/schema/article/articleCategory";
 
 const app = new Hono()
   .get("/", async (c) => {

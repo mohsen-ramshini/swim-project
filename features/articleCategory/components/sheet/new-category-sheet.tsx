@@ -50,7 +50,7 @@
 //     </Sheet>
 //   );
 // };
-import { insertArticleCategoriesSchema } from "@/db/schema/articleCategory";
+import { insertArticleCategoriesSchema } from "@/db/schema/article/articleCategory";
 import { useNewCategory } from "@/features/articleCategory/hook/use-new-category";
 import { useCreateCategory } from "@/features/articleCategory/api/use-create-article-cat";
 import { ArticleCategoryForm } from "@/features/articleCategory/components/form/ArticleCatForm";
