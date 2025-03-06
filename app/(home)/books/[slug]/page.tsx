@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeftCircle, Share2 } from "lucide-react";
 import { notFound } from "next/navigation";
-import Profile from "../../components/articles/Profile";
-import BookInterface from "../../components/books/BookInterface";
-import BookDetails from "../../components/books/BookDetails";
+import Profile from "@/components/articles/Profile";
+import BookInterface from "@/components/books/BookInterface";
+import BookDetails from "@/components/books/BookDetails";
 
 const books = [
   {
@@ -358,7 +358,7 @@ export default async function BookPage({
           <div className="w-full h-full flex flex-row-reverse justify-start items-center gap-2">
             <div className="h-full h max-w-60 ">
               <div>
-                <Profile />
+                <Profile fullName="محسن رامشینی" size="lg" />
               </div>
               <div className="text-xs text-right">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
@@ -369,7 +369,7 @@ export default async function BookPage({
             </div>
             <div className="h-full h max-w-60">
               <div>
-                <Profile />
+                <Profile fullName="محسن رامشینی" size="lg" />
               </div>
               <div className="text-xs text-right">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
@@ -380,7 +380,7 @@ export default async function BookPage({
             </div>
             <div className="h-full h max-w-60">
               <div>
-                <Profile />
+                <Profile fullName="محسن رامشینی" size="lg" />
               </div>
               <div className="text-xs text-right">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam

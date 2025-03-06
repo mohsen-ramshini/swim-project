@@ -8,6 +8,7 @@ import TranslatorForm from "@/features/translator/components/TranslatorForm";
 import { useAppContext } from "@/providers/Appcontext";
 import ArticleCategory from "@/features/articleCategory/components/ArticleCategory";
 import Article from "@/features/article/components/Article";
+import Book from "@/features/book/component/book";
 
 export default function BlogForm() {
   const { activePage } = useAppContext();
@@ -28,6 +29,8 @@ export default function BlogForm() {
         return <EditorForm />;
       case "translator":
         return <TranslatorForm />;
+      case "book":
+        return <Book />;
       default:
         return <div className="text-center text-red-500">صفحه پیدا نشد</div>;
     }

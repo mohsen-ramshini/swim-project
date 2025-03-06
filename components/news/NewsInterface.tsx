@@ -53,10 +53,10 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
   if (!slider) {
     return (
       <aside className="w-full h-full flex flex-col justify-center items-center">
-        <div className="w-4/5 h-full  ">
-          {news.map((news) => (
+        <div className="w-4/5 h-full">
+          {news.map((newsItem) => (
             <div
-              key={news.id}
+              key={newsItem.id}
               className="flex flex-row-reverse border-b-2 min-h-44 my-5"
             >
               <div className="w-1/5 mb-2">
@@ -64,13 +64,15 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
               </div>
               <div className="w-4/5 h-[176px] flex flex-col mr-5">
                 <div className="w-full h-1/3 text-right font-semibold text-2xl">
-                  {news.title}
+                  {newsItem.title}
                 </div>
-                <div className="w-full h-1/3 text-right ">{news.excerpt}</div>
-                <div className="flex items-start w-full h-1/3 ">
+                <div className="w-full h-1/3 text-right">
+                  {newsItem.excerpt}
+                </div>
+                <div className="flex items-start w-full h-1/3">
                   <Button
                     variant={"ghost"}
-                    onClick={() => router.push(`/news/${news.slug}`)}
+                    onClick={() => router.push(`/news/${newsItem.slug}`)}
                   >
                     مشاهده
                   </Button>
@@ -84,29 +86,30 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
   }
 
   return (
-    <aside className="w-full h-full flex flex-col ">
+    <aside className="w-full h-full flex flex-col">
       <Carousel className="w-full h-full">
         <CarouselContent className="w-full h-full lg:h-[550px]">
           {groupedNews.map((newsGroup, index) => (
             <CarouselItem
-              key={newsGroup.length > 0 ? newsGroup[0].id : `group-${index}`}
+              key={`group-${index}`}
               className={cn(
                 "flex justify-center items-center h-full gap-2",
                 isMobile ? "w-full" : "w-1/3"
               )}
             >
-              {newsGroup.map((news) => (
+              {newsGroup.map((newsItem) => (
                 <Link
-                  href={`/news/${news.slug}`}
+                  key={newsItem.id}
+                  href={`/news/${newsItem.slug}`}
                   className="w-full md:w-1/3 h-full p-2"
                 >
-                  <Card key={news.id} className="w-full h-full ">
+                  <Card className="w-full h-full">
                     <CardContent className="flex flex-col items-center p-4 h-full">
-                      <div className="h-5/6 w-full ">
+                      <div className="h-5/6 w-full">
                         <Skeleton className="w-full h-full" />
                       </div>
                       <div className="h-1/6 w-full text-right mt-5 font-semibold text-2xl">
-                        {news.title}
+                        {newsItem.title}
                       </div>
                     </CardContent>
                   </Card>

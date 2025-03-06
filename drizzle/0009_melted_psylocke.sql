@@ -1,0 +1,1 @@
+ALTER TABLE "books" ALTER COLUMN "publish_time" SET DEFAULT now();

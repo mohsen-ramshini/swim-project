@@ -20,7 +20,7 @@ export const books = pgTable("books", {
   editionNo: integer("edition_no").notNull(),
   state: text("state").notNull(),
   pageCount: integer("page_count").notNull(),
-  publishTime: timestamp("publish_time").notNull(),
+  publishTime: timestamp("publish_time").defaultNow().notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   createdBy: serial("created_by").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

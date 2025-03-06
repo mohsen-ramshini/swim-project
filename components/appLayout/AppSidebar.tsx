@@ -7,6 +7,10 @@ import {
   Tag,
   BookType,
   FilePenLine,
+  BookOpen,
+  FolderOpen,
+  Radio,
+  FileText,
 } from "lucide-react";
 
 import {
@@ -29,52 +33,86 @@ import {
 
 import { useAppContext } from "@/providers/Appcontext";
 
-// head item
-const headItem = {
-  title: "مقالات",
-  url: "#",
-  icon: Newspaper,
-};
-
 export function AppSidebar() {
   const { setActivePage } = useAppContext();
 
-  // Menu items
-  const subItems = [
+  // Head items
+  const headItems = [
     {
       title: "مقالات",
-      setActive: () => setActivePage("article"),
-      icon: BookPlus,
+      url: "#",
+      icon: Newspaper,
+      subItems: [
+        {
+          title: "مقالات",
+          setActive: () => setActivePage("article"),
+          icon: BookPlus,
+        },
+        {
+          title: "دسته بندی مقالات",
+          setActive: () => setActivePage("articleCategory"),
+          icon: Inbox,
+        },
+        {
+          title: "نظرات",
+          setActive: () => setActivePage("ArticleComment"),
+          icon: MessageCircle,
+        },
+        {
+          title: "تگ ها",
+          setActive: () => setActivePage("articleTag"),
+          icon: Tag,
+        },
+        {
+          title: "نویسنده",
+          setActive: () => setActivePage("author"),
+          icon: BookType,
+        },
+        {
+          title: "ویرایش گر",
+          setActive: () => setActivePage("editor"),
+          icon: FilePenLine,
+        },
+        {
+          title: "مترجم",
+          setActive: () => setActivePage("translator"),
+          icon: BookType,
+        },
+      ],
     },
     {
-      title: "دسته بندی مقالات",
-      setActive: () => setActivePage("articleCategory"),
-      icon: Inbox,
+      title: "کتاب‌ها",
+      url: "#",
+      icon: BookOpen,
+      subItems: [
+        {
+          title: "افزودن کتاب",
+          setActive: () => setActivePage("book"),
+          icon: BookPlus,
+        },
+        {
+          title: "دسته بندی کتاب‌ها",
+          setActive: () => setActivePage("bookCategory"),
+          icon: FolderOpen,
+        },
+      ],
     },
     {
-      title: "نظرات",
-      setActive: () => setActivePage("ArticleComment"),
-      icon: MessageCircle,
-    },
-    {
-      title: "تگ ها",
-      setActive: () => setActivePage("articleTag"),
-      icon: Tag,
-    },
-    {
-      title: "نویسنده",
-      setActive: () => setActivePage("author"),
-      icon: BookType,
-    },
-    {
-      title: "ویرایش گر",
-      setActive: () => setActivePage("editor"),
-      icon: FilePenLine,
-    },
-    {
-      title: "مترجم",
-      setActive: () => setActivePage("translator"),
-      icon: BookType,
+      title: "اخبار",
+      url: "#",
+      icon: Radio,
+      subItems: [
+        {
+          title: "آخرین اخبار",
+          setActive: () => setActivePage("latestNews"),
+          icon: FileText,
+        },
+        {
+          title: "دسته بندی اخبار",
+          setActive: () => setActivePage("newsCategory"),
+          icon: FolderOpen,
+        },
+      ],
     },
   ];
 
@@ -85,28 +123,30 @@ export function AppSidebar() {
           <SidebarGroupLabel>فهرست</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <SidebarMenuButton asChild>
-                      <a href={headItem.url}>
-                        <headItem.icon />
-                        <span>{headItem.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    {subItems.map((item) => (
-                      <DropdownMenuItem key={item.title} dir="rtl" asChild>
-                        <a onClick={item.setActive}>
-                          <item.icon />
-                          <span>{item.title}</span>
+              {headItems.map((headItem) => (
+                <SidebarMenuItem key={headItem.title}>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <SidebarMenuButton asChild>
+                        <a href={headItem.url}>
+                          <headItem.icon />
+                          <span>{headItem.title}</span>
                         </a>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </SidebarMenuItem>
+                      </SidebarMenuButton>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      {headItem.subItems.map((item) => (
+                        <DropdownMenuItem key={item.title} dir="rtl" asChild>
+                          <a onClick={item.setActive}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </a>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
