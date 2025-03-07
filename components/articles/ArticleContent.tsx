@@ -12,6 +12,7 @@ import { useEffect, useMemo, useState } from "react";
 import { UseGetCategory } from "@/features/articleCategory/api/use-get-category";
 import { useGetCategories } from "@/features/articleCategory/api/use-get-categories";
 import { useGetArticles } from "@/features/article/api/use-get-articles";
+import LoadingComponent from "../appLayout/LoadingComponent";
 
 interface Props {
   slug: string;
@@ -64,17 +65,7 @@ export default function ArticleContent({ slug }: Props) {
   }, [fetchedArticles]);
 
   if (isLoading) {
-    return (
-      <div className="max-w-screen-3xl mx-auto w-full pb-10 mt-20">
-        <Card className="border-none drop-shadow-sm">
-          <CardContent>
-            <div className="h-[500px] w-full flex items-center justify-center">
-              <Loader2 className="w-6 h-6 text-slate-300 animate-spin" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
+    <LoadingComponent />;
   }
   if (error || !article) return notFound();
 

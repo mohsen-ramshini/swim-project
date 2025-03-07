@@ -103,8 +103,8 @@ export function AppSidebar() {
       icon: Radio,
       subItems: [
         {
-          title: "آخرین اخبار",
-          setActive: () => setActivePage("latestNews"),
+          title: "افزودن اخبار",
+          setActive: () => setActivePage("news"),
           icon: FileText,
         },
         {
