@@ -8,11 +8,12 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { z } from "zod";
 import Profile from "../../components/articles/Profile";
+import { insertNewsSchema } from "@/db/schema/news/news";
 
-type Article = z.infer<typeof insertArticleSchema>;
+type News = z.infer<typeof insertNewsSchema>;
 
 interface Props {
-  data: Article;
+  data: News;
 }
 
 const getCategoryContentById = (cat: number) => {
@@ -30,7 +31,6 @@ const getCategoryContentById = (cat: number) => {
 
 const NewsSingleInterface: React.FC<Props> = ({ data }) => {
   const router = useRouter();
-  const Category = getCategoryContentById(data.categoryId);
 
   return (
     <aside className="flex flex-col w-full h-15 mt-15 mt-16">
@@ -39,12 +39,10 @@ const NewsSingleInterface: React.FC<Props> = ({ data }) => {
           <div className="text-gray-400 font-thin">date</div>
           <div className="font-extrabold text-3xl">{data.title}</div>
           <div className="flex justify-end">
-            <div className="w-32 h-12 flex justify-center items-center rounded-md bg-slate-300 opacity-80 my-5 font-semibold text-lg">
-              {Category}
-            </div>
+            <div className="w-32 h-12 flex justify-center items-center rounded-md bg-slate-300 opacity-80 my-5 font-semibold text-lg"></div>
           </div>
           <div className="w-full lg:block ">
-            <Profile />
+            <Profile fullName="محسن رامشینی" size="lg" />
           </div>
         </div>
         <div className="w-full h-[180px] mb-5 lg:mb-0 lg:w-1/4 lg:h-[120px] rounded-sm">

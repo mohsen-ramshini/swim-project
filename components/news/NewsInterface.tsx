@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -11,13 +11,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { z } from "zod";
-import { insertArticleSchema } from "@/db/schema/article/article";
-import News from "./News";
+import { insertNewsSchema } from "@/db/schema/news/news";
+import NewsContent from "./NewsContent";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-type News = z.infer<typeof insertArticleSchema>;
+type News = z.infer<typeof insertNewsSchema>;
 
 interface Props {
   news: News[];
@@ -27,7 +26,7 @@ interface Props {
 const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const media = window.matchMedia(query);
     setMatches(media.matches);
     const listener = () => setMatches(media.matches);
@@ -52,33 +51,10 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
 
   if (!slider) {
     return (
-      <aside className="w-full h-full flex flex-col justify-center items-center">
-        <div className="w-4/5 h-full">
+      <aside className="w-full h-auto flex flex-col items-center">
+        <div className="w-full max-w-3xl">
           {news.map((newsItem) => (
-            <div
-              key={newsItem.id}
-              className="flex flex-row-reverse border-b-2 min-h-44 my-5"
-            >
-              <div className="w-1/5 mb-2">
-                <Skeleton className="h-full w-full" />
-              </div>
-              <div className="w-4/5 h-[176px] flex flex-col mr-5">
-                <div className="w-full h-1/3 text-right font-semibold text-2xl">
-                  {newsItem.title}
-                </div>
-                <div className="w-full h-1/3 text-right">
-                  {newsItem.excerpt}
-                </div>
-                <div className="flex items-start w-full h-1/3">
-                  <Button
-                    variant={"ghost"}
-                    onClick={() => router.push(`/news/${newsItem.slug}`)}
-                  >
-                    مشاهده
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <NewsContent news={newsItem} key={newsItem.id} />
           ))}
         </div>
       </aside>
@@ -86,29 +62,29 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
   }
 
   return (
-    <aside className="w-full h-full flex flex-col">
-      <Carousel className="w-full h-full">
-        <CarouselContent className="w-full h-full lg:h-[550px]">
+    <aside className="w-full h-auto flex flex-col">
+      <Carousel className="w-full h-auto">
+        <CarouselContent className="w-full h-auto lg:h-[550px]">
           {groupedNews.map((newsGroup, index) => (
             <CarouselItem
               key={`group-${index}`}
               className={cn(
-                "flex justify-center items-center h-full gap-2",
-                isMobile ? "w-full" : "w-1/3"
+                "flex justify-center items-center h-auto gap-4 px-2",
+                isMobile ? "w-full flex-col" : "w-1/3"
               )}
             >
               {newsGroup.map((newsItem) => (
                 <Link
                   key={newsItem.id}
                   href={`/news/${newsItem.slug}`}
-                  className="w-full md:w-1/3 h-full p-2"
+                  className="w-full md:w-1/2 lg:w-1/3 p-2"
                 >
-                  <Card className="w-full h-full">
-                    <CardContent className="flex flex-col items-center p-4 h-full">
-                      <div className="h-5/6 w-full">
-                        <Skeleton className="w-full h-full" />
+                  <Card className="w-full h-auto shadow-md rounded-lg overflow-hidden">
+                    <CardContent className="flex flex-col items-center p-4">
+                      <div className="w-full h-48 md:h-64 lg:h-72">
+                        <Skeleton className="w-full h-full rounded-md" />
                       </div>
-                      <div className="h-1/6 w-full text-right mt-5 font-semibold text-2xl">
+                      <div className="w-full text-right mt-4 font-semibold text-lg md:text-xl">
                         {newsItem.title}
                       </div>
                     </CardContent>

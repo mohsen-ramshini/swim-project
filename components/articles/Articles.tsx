@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 import { insertArticleSchema } from "@/db/schema/article/article";
 import { z } from "zod";
+import LoadingComponent from "../appLayout/LoadingComponent";
 
 type ArticleInterface = z.infer<typeof insertArticleSchema>;
 
@@ -64,17 +65,7 @@ const Articles = () => {
   }, [isMobile, normalizedArticles]);
 
   if (isLoading) {
-    return (
-      <div className="max-w-screen-3xl mx-auto w-full pb-10 ">
-        <Card className="border-none drop-shadow-sm">
-          <CardContent>
-            <div className="h-[500px] w-full flex items-center justify-center">
-              <Loader2 className="w-6 h-6 text-slate-300 animate-spin" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
+    <LoadingComponent />;
   }
 
   return (

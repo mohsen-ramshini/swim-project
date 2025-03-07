@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import NewsInterface from "./NewsInterface";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -13,136 +13,35 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import NewsSingleInterface from "./NewsSingleInterface";
+import { useGetNews } from "@/features/news/api/use-get-news";
 
 const ARTICLES_PER_PAGE = 4;
 
-const Articles = [
-  {
-    id: 1,
-    articleType: 1,
-    title: "مزیای شنا برای سلامتی",
-    slug: "swimming-advanteage",
-    thumbnail:
-      "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt: "test",
-    content:
-      "شنا یک ورزش کم‌فشار است که تأثیر زیادی بر سلامت قلب و عروق، افزایش ظرفیت تنفسی و تقویت عضلات دارد. این ورزش به کاهش استرس، بهبود انعطاف‌پذیری و افزایش استقامت بدنی کمک می‌کند. همچنین برای افراد مبتلا به مشکلات مفصلی یا کمردرد، گزینه‌ای ایده‌آل است",
-    categoryId: 1,
-    reference: "1",
-    publishTime: new Date(),
-    isActive: true,
-    createdBy: 12,
-    createdAt: new Date(),
-    modifiedBy: 12,
-    modifiedAt: new Date(),
-  },
-  {
-    id: 2,
-    articleType: 1,
-    title: "شنا برای مبتدیان",
-    slug: "swimming-for-begginers",
-    thumbnail:
-      "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt: "test",
-    content:
-      "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
-    categoryId: 2,
-    reference: "1",
-    publishTime: new Date(),
-    isActive: true,
-    createdBy: 12,
-    createdAt: new Date(),
-    modifiedBy: 12,
-    modifiedAt: new Date(),
-  },
-  {
-    id: 3,
-    articleType: 1,
-    title: "شنا برای مبتدیان",
-    slug: "swimming-for-begginers",
-    thumbnail:
-      "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt: "test",
-    content:
-      "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
-    categoryId: 2,
-    reference: "1",
-    publishTime: new Date(),
-    isActive: true,
-    createdBy: 12,
-    createdAt: new Date(),
-    modifiedBy: 12,
-    modifiedAt: new Date(),
-  },
-  {
-    id: 4,
-    articleType: 1,
-    title: "شنا برای مبتدیان",
-    slug: "swimming-for-begginers",
-    thumbnail:
-      "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt: "test",
-    content:
-      "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
-    categoryId: 2,
-    reference: "1",
-    publishTime: new Date(),
-    isActive: true,
-    createdBy: 12,
-    createdAt: new Date(),
-    modifiedBy: 12,
-    modifiedAt: new Date(),
-  },
-  {
-    id: 5,
-    articleType: 1,
-    title: "شنا برای مبتدیان",
-    slug: "swimming-for-begginers",
-    thumbnail:
-      "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt: "test",
-    content:
-      "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
-    categoryId: 2,
-    reference: "1",
-    publishTime: new Date(),
-    isActive: true,
-    createdBy: 12,
-    createdAt: new Date(),
-    modifiedBy: 12,
-    modifiedAt: new Date(),
-  },
-  {
-    id: 6,
-    articleType: 1,
-    title: "شنا برای مبتدیان",
-    slug: "swimming-for-begginers",
-    thumbnail:
-      "https://www.swimacademy.ir/_next/image?url=https%3A%2F%2Fbend.swimacademy.ir%2Fmedia%2Fuploads%2Fimages%2Fproducts%2Fvrpxwwbwtrjq0sw6ubxp.jpg&w=1920&q=75",
-    excerpt: "test",
-    content:
-      "شنا دارای چهار سبک اصلی است: کرال سینه، کرال پشت، قورباغه، و پروانه. هر یک از این سبک‌ها تکنیک‌های خاصی دارند که برای بهبود سرعت و کارایی نیاز به تمرین مداوم دارند. یادگیری درست حرکات دست، پا و تنفس از مهم‌ترین اصول در بهبود مهارت‌های شنا است.",
-    categoryId: 2,
-    reference: "1",
-    publishTime: new Date(),
-    isActive: true,
-    createdBy: 12,
-    createdAt: new Date(),
-    modifiedBy: 12,
-    modifiedAt: new Date(),
-  },
-];
-
 const NewsPagination = () => {
+  const { data: News = [], isLoading, isError } = useGetNews();
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(Articles.length / ARTICLES_PER_PAGE);
-
+  const totalPages = Math.ceil(News.length / ARTICLES_PER_PAGE);
   const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
-  const paginatedArticles = Articles.slice(
+
+  const normalizedArticles = useMemo(() => {
+    return (
+      News?.map((article) => ({
+        ...article,
+        createdAt: new Date(article.createdAt),
+        modifiedAt: article.modifiedAt
+          ? new Date(article.modifiedAt)
+          : undefined,
+        publishTime: article.publishDate
+          ? new Date(article.publishDate)
+          : undefined,
+      })) || []
+    );
+  }, [News]);
+
+  const paginatedArticles = normalizedArticles.slice(
     startIndex,
     startIndex + ARTICLES_PER_PAGE
   );
-
   return (
     <section className="w-full h-full flex flex-col">
       <div className="w-full h-full flex flex-row-reverse">

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import NewsSingleInterface from "@/components/news/NewsSingleInterface";
 import { Skeleton } from "@/components/ui/skeleton";
-import Profile from "../../components/articles/Profile";
+import Profile from "@/components/articles/Profile";
 
 const Articles = [
   {
@@ -172,7 +172,7 @@ export default async function ArticlePage({ params }: Props) {
           </div>
         </div>
         <div className="w-2/3">
-          <Profile />
+          <Profile fullName="محسن رامشینی" size="lg" />
           <div className="text-right font-bold text-2xl lg:text-3xl my-5">
             {article.excerpt}
           </div>
