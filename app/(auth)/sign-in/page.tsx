@@ -8,7 +8,7 @@ const page = () => {
   };
   return (
     <section className="w-full h-screen flex flex-col justify-center items-center bg-secondary">
-      <div className="w-4/5 lg:w-2/5 h-full  flex justify-center items-center">
+      <div className="w-5/6 lg:w-2/5 h-full  flex justify-center items-center">
         <AuthForm isLogin={true} onSubmit={handleSubmit} />
       </div>
     </section>

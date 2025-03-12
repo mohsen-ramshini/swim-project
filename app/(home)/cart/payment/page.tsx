@@ -55,10 +55,10 @@ const Page = () => {
                 </p>
               </div>
               <Button
-                className="w-full mt-6 lg:mt-10"
+                className="w-full mt-6 lg:mt-10 text-xl"
                 onClick={() => router.push("/cart/status")}
               >
-                ادامه ثبت سفارش
+                پرداخت
               </Button>
             </div>
           </div>

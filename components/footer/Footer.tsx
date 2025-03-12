@@ -14,14 +14,14 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-center sm:justify-between">
           {/* Logo Section */}
-          <div className="w-full sm:w-1/3 mb-4 sm:mb-0 text-center">
+          {/* <div className="w-full flex jus sm:w-1/3 mb-4 sm:mb-0 text-center">
             <Image
               src="/static/images/logo.png"
               alt="Logo"
               width={220}
               height={30}
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Links Section (دسترسی سریع and لینک های مرتبط) */}

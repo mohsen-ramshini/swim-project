@@ -111,8 +111,10 @@ const ArticlePagination = () => {
 
         {/* دسته‌بندی‌ها */}
         <div className="w-full lg:w-1/4 flex flex-col justify-start items-center lg:block">
-          <aside className="w-full h-56 mt-20">
-            <h3 className="text-center font-semibold text-4xl">دسته بندی ها</h3>
+          <aside className="w-full h-56 mr-10">
+            <h3 className="hidden lg:block text-center font-semibold text-4xl">
+              دسته بندی ها
+            </h3>
             <div className="w-full p-10 text-right">
               <ul>
                 {categories.map((category) => (

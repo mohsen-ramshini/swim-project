@@ -64,18 +64,18 @@ export default function ArticleContent({ slug }: Props) {
   if (error || !article) return notFound();
 
   return (
-    <section className="w-full">
+    <section className="w-full mt-20">
       <div className="w-full pt-20 text-center m-auto flex flex-col items-center">
-        <div className="w-3/4 lg:w-2/3">
-          <h1 className="font-extrabold text-3xl lg:text-5xl">
-            {article.title}
-          </h1>
+        <div className="w-3/4 lg:w-2/3 flex flex-col-reverse ">
           <div className="w-full flex justify-center">
-            <div className="w-24 h-12 lg:w-36 lg:h-16 flex justify-center items-center rounded-md bg-slate-300 opacity-80 my-5 font-semibold text-md lg:text-xl">
+            <div className="w-24 h-12 lg:w-32 lg:h-14 flex justify-center items-center rounded-md bg-slate-300 opacity-80 my-5 font-semibold text-md lg:text-sm ">
               {category}
             </div>
           </div>
-          <div className="w-full h-[200px] lg:w-[550px] lg:h-[250px] m-auto">
+          <h1 className="font-extrabold text-3xl lg:text-5xl mt-16">
+            {article.title}
+          </h1>
+          <div className="w-full h-[200px] lg:w-[960px] lg:h-[450px] m-auto">
             <Skeleton className="w-full h-full" />
           </div>
         </div>

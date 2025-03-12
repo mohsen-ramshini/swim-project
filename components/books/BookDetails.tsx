@@ -21,7 +21,7 @@ const BookDetails: React.FC<Props> = ({ data }) => {
         <div className="mr-5 w-1/2 text-right">
           <h4 className="text-3xl">{data.title}</h4>
           <div>
-            <p>نویسنده : {"data"}</p>
+            <p>نویسنده : {data.author}</p>
             <p>مترجم : دکتر مرتضی</p>
             <p>انتشارات : راه نوین</p>
             <p>دسته‌بندی : بیومکانیک شنا</p>

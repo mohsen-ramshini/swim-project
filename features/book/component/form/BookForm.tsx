@@ -33,6 +33,7 @@ const formSchema = insertBookSchema.pick({
   slug: true,
   thumbnail: true,
   description: true,
+  author: true,
   bookComments: true,
   price: true,
   ISBN: true,
@@ -67,6 +68,7 @@ export const BookForm = ({
       title: "",
       slug: "",
       thumbnail: "",
+      author: "",
       description: "",
       bookComments: "",
       price: 0,
@@ -84,22 +86,6 @@ export const BookForm = ({
   const [publishDate, setPublishDate] = useState<Date | null>(null);
 
   const handleFormSubmit = (values: FormValues) => {
-    // if (publishDate && values.publishTime) {
-    //   const combinedDateTime = new Date(
-    //     publishDate.getFullYear(),
-    //     publishDate.getMonth(),
-    //     publishDate.getDate(),
-    //     new Date(values.publishTime).getHours(),
-    //     new Date(values.publishTime).getMinutes()
-    //   );
-    //   onSubmit({ ...values, publishTime: combinedDateTime });
-    // console.log("publishTime type:", typeof values.publishTime); // Should be "object"
-    // console.log("publishTime value:", values.publishTime);
-    // console.log(
-    //   "publishTime instanceof Date:",
-    //   values.publishTime instanceof Date
-    // );
-
     onSubmit(values);
 
     console.log(values);

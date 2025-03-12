@@ -9,6 +9,7 @@ import Editor from "./editor";
 import Translator from "./translator";
 import Book from "./book";
 import News from "./news";
+import Creator from "./creator";
 import { HTTPException } from "hono/http-exception";
 
 // export const runtime = "edge";
@@ -32,7 +33,8 @@ const routes = app
   .route("/translator", Translator)
   .route("/article", Article)
   .route("/book", Book)
-  .route("/news", News);
+  .route("/news", News)
+  .route("/creator", Creator);
 
 export const GET = handle(app);
 export const POST = handle(app);

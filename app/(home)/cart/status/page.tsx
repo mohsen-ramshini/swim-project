@@ -9,7 +9,7 @@ import HeroSection from "@/components/hero/HeroSection";
 
 const page = () => {
   const router = useRouter();
-  const success = true;
+  const success = false;
   return (
     <section className="w-full h-full  flex flex-col justify-center items-center">
       <HeroSection imageSourse={"banner-three.jpg"} width={1920} height={680} />
@@ -25,7 +25,7 @@ const page = () => {
               <CircleX size={55} color="white" />
             )}
           </div>
-          <h2 className="text-4xl font-bold mb-10 text-center">
+          <h2 className=" text-2xl lg:text-4xl font-bold mb-10 text-center">
             {success ? (
               <p> پرداخت شما با موفقیت انجام شد</p>
             ) : (

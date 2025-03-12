@@ -62,7 +62,7 @@ const ProductInterface: React.FC<Props> = ({ book, controller }) => {
       {/* دکمه حذف همه */}
       {book.length > 0 && controller && (
         <div className="w-full flex justify-center items-center my-5">
-          <Button variant={"destructive"} className="w-full md:w-auto">
+          <Button variant={"ghost"} className="w-full md:w-auto">
             <Trash />
             حذف همه
           </Button>

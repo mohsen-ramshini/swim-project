@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 
 import { client } from "@/lib/hono";
 
-export const useGetArticles = () => {
+export const useGetCreators = () => {
   const query = useQuery({
-    queryKey: ["author"],
+    queryKey: ["creators"],
     queryFn: async () => {
-      const response = await client.api.author.$get();
+      const response = await client.api.creator.$get();
 
       if (!response.ok) {
         throw new Error("Failed to fetch articles");
@@ -16,4 +16,5 @@ export const useGetArticles = () => {
       return data;
     },
   });
+  return query;
 };

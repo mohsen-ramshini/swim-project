@@ -18,6 +18,7 @@ const formSchema = insertBookSchema.pick({
   slug: true,
   thumbnail: true,
   description: true,
+  author: true,
   bookComments: true,
   price: true,
   ISBN: true,
@@ -40,7 +41,7 @@ export const NewBookSheet = () => {
   const mutation = useCreateBook();
 
   const onSubmit = (values: FormValues) => {
-    console.log("Submitting values:", values); // Log form values before mutation
+    console.log("Submitting values:", values);
 
     mutation.mutate(values, {
       onSuccess: () => {

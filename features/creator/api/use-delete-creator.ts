@@ -4,26 +4,26 @@ import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.category)[":id"]["$delete"]
+  (typeof client.api.creator)[":id"]["$delete"]
 >;
 
-export const useDeleteCategory = (id?: string) => {
+export const useDeleteCreator = (id?: string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error>({
     mutationFn: async () => {
-      const response = await client.api.category[":id"]["$delete"]({
+      const response = await client.api.creator[":id"]["$delete"]({
         param: { id },
       });
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Article Category deleted");
-      queryClient.invalidateQueries({ queryKey: ["category", { id }] });
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      toast.success("creator deleted");
+      queryClient.invalidateQueries({ queryKey: ["creator", { id }] });
+      queryClient.invalidateQueries({ queryKey: ["creators"] });
     },
     onError: () => {
-      toast.error("Failed to delete article category");
+      toast.error("Failed to delete article");
     },
   });
 

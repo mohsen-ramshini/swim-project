@@ -82,25 +82,7 @@ export const ArticleForm = ({
 
   const { data: categories, isLoading, isError } = useGetCategories();
 
-  const [publishDate, setPublishDate] = useState<Date | null>(null);
-
   const handleFormSubmit = (values: FormValues) => {
-    // if (publishDate && values.publishTime) {
-    //   const combinedDateTime = new Date(
-    //     publishDate.getFullYear(),
-    //     publishDate.getMonth(),
-    //     publishDate.getDate(),
-    //     new Date(values.publishTime).getHours(),
-    //     new Date(values.publishTime).getMinutes()
-    //   );
-    //   onSubmit({ ...values, publishTime: combinedDateTime });
-    // console.log("publishTime type:", typeof values.publishTime); // Should be "object"
-    // console.log("publishTime value:", values.publishTime);
-    // console.log(
-    //   "publishTime instanceof Date:",
-    //   values.publishTime instanceof Date
-    // );
-
     onSubmit(values);
 
     console.log(values);
@@ -122,7 +104,7 @@ export const ArticleForm = ({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleFormSubmit)}
-          className="p-8 bg-white rounded-lg shadow-lg max-w-5xl mx-auto space-y-6 w-full rtl mt-80 overflow-y-auto max-h-screen"
+          className="p-8 bg-white rounded-lg shadow-lg max-w-6xl mx-auto space-y-6 w-full rtl mt-80 overflow-y-auto max-h-screen"
           style={{ maxHeight: "80vh", overflowY: "auto", direction: "rtl" }}
         >
           <div className="flex flex-wrap gap-6 rtl">
@@ -136,7 +118,7 @@ export const ArticleForm = ({
                     <FormLabel>نوع مقاله</FormLabel>
                     <FormControl>
                       <Select
-                        value={String(field.value)}
+                        value={String(field.value || 1)} // 1 به عنوان مقدار پیش‌فرض
                         onValueChange={(value) => field.onChange(Number(value))}
                         disabled={disabled}
                       >
@@ -168,8 +150,8 @@ export const ArticleForm = ({
                     <FormLabel>دسته‌بندی</FormLabel>
                     <FormControl>
                       <Select
-                        value={String(field.value)} // Convert number to string
-                        onValueChange={(value) => field.onChange(Number(value))} // Convert string back to number
+                        value={String(field.value || 1)} // 1 به عنوان مقدار پیش‌فرض
+                        onValueChange={(value) => field.onChange(Number(value))}
                         disabled={disabled}
                       >
                         <SelectTrigger>

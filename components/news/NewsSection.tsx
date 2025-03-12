@@ -66,8 +66,8 @@ const NewsSection: React.FC<Props> = ({ slug }) => {
     <div>
       {" "}
       <div className="w-full pt-20 text-center m-auto flex flex-col items-center">
-        <div className="w-3/4 lg:w-2/3">
-          <div className="flex flex-col justify-center items-center mb-14">
+        <div className="w-3/4 lg:w-2/3 mt-20">
+          <div className="flex flex-col-reverse  justify-center items-center mb-14">
             <span className="text-gray-400 font-medium text-xl lg:text-2xl">
               {News?.date ? formatJalaliDate(News.date) : "تاریخ نامشخص"} تاریخ
               انتشار
@@ -75,7 +75,7 @@ const NewsSection: React.FC<Props> = ({ slug }) => {
             <h1 className="font-extrabold text-3xl lg:text-5xl mb-10">
               {News.title}
             </h1>
-            <div className="w-full h-[200px] lg:w-[550px] lg:h-[250px] m-auto">
+            <div className="w-full h-[200px] lg:w-[960px] lg:h-[450px] m-auto my-10">
               <Skeleton className="w-full h-full" />
             </div>
           </div>

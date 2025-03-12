@@ -12,12 +12,7 @@ const Page = () => {
 
   return (
     <section className="w-full h-full">
-      <HeroSection
-        imageSourse={"banner-one.jpg"}
-        width={2048}
-        height={500}
-        dialog={"سلام"}
-      />
+      <HeroSection imageSourse={"banner-one.jpg"} width={2048} height={500} />
       <div className="w-full">
         <ProfileForm onSubmit={handleLog} />
       </div>
