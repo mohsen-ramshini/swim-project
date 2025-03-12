@@ -12,6 +12,7 @@ export const books = pgTable("books", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
+  author: text("author").notNull(),
   thumbnail: text("thumbnail"),
   description: text("description").notNull(),
   bookComments: text("book_comments"),

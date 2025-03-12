@@ -161,30 +161,25 @@ const books = [
 const page = () => {
   const router = useRouter();
   return (
-    <section className="w-full h-full  flex flex-col justify-center items-center">
-      <HeroSection
-        imageSourse={"banner-three.jpg"}
-        width={2048}
-        height={300}
-        dialog={"سلام"}
-      />
-      <div className="w-full h-1/4">
+    <section className="w-full h-full flex flex-col justify-center items-center">
+      <HeroSection imageSourse={"banner-three.jpg"} width={1920} height={680} />
+      <div className="hidden md:block w-full h-1/4">
         <ShoppingStageBar activeStage={1} />
       </div>
-      <div className=" w-4/5 h-2/4 flex flex-row-reverse ">
-        <div className="h-full w-4/5  flex justify-center items-center">
+      <h2 className="relative bottom-10 text-4xl md:text-5xl font-extrabold mt-16">
+        سبد خرید
+      </h2>
+      <div className="w-full flex flex-col justify-center md:flex-row-reverse my-20 px-4 md:px-0">
+        <div className="h-full w-full md:w-3/5 flex justify-center items-center ">
           <div className="border-2 rounded-sm w-full h-full flex flex-col justify-center items-center overflow-auto">
-            <h2 className="relative bottom-10 text-4xl font-extrabold">
-              سبد خرید
-            </h2>
             <ProductInterface book={books.slice(0, 4)} controller={true} />
           </div>
         </div>
-        <div className="h-full w-1/5 flex justify-end mr-5 ">
-          <div className=" w-full h-full flex justify-center items-center ">
+        <div className="h-full w-full md:w-1/5 flex justify-end mt-4 md:mt-0 md:mr-5">
+          <div className="w-full h-full flex justify-center items-center">
             <div className="h-full w-full">
-              <div className="h-4/5 border-2 rounded-sm w-full  flex justify-center items-center ">
-                <div className="w-10/12 h-5/6  flex flex-col justify-center items-center">
+              <div className="h-4/5 border-2 rounded-sm w-full flex justify-center items-center">
+                <div className="w-10/12 h-5/6 flex flex-col justify-center items-center">
                   <div className="w-full h-4/5 border-b-2 mb-1">
                     <p className="w-full h-1/4 text-right">جمع کل</p>
                     <p className="w-full h-1/4 text-center">price</p>
@@ -197,7 +192,7 @@ const page = () => {
                   </div>
                 </div>
               </div>
-              <div className="h-1/5 w-full  flex justify-center items-end">
+              <div className="h-1/5 w-full flex justify-center items-end mt-2">
                 <Button
                   className="w-full"
                   onClick={() => router.push("/cart/address")}
@@ -208,10 +203,6 @@ const page = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className=" w-full h-1/4 flex flex-col justify-center items-center">
-        <h5>سایر کتاب ها</h5>
-        <div>{/* <BookInterface data={books} slider={true} /> */}</div>
       </div>
     </section>
   );

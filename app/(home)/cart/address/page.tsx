@@ -4,59 +4,63 @@ import ShoppingStageBar from "../../../../components/cart/ShoppingStageBar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import AddressForm from "../../../../components/cart/AddressForm";
+import HeroSection from "@/components/hero/HeroSection";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
+
   return (
-    <section className="w-full h-screen my-10 flex flex-col justify-center items-center">
-      <div className="w-full h-1/4">
+    <section className="w-full flex flex-col items-center">
+      {/* بخش بنر */}
+      <HeroSection imageSourse={"banner-three.jpg"} width={1920} height={680} />
+
+      {/* نوار مراحل خرید */}
+      <div className="hidden md:block w-full h-1/4">
         <ShoppingStageBar activeStage={2} />
       </div>
-      <div className=" w-full h-2/4 flex justify-center">
-        <div className=" w-4/5 h-full flex flex-row-reverse ">
-          <div className="h-full w-4/5  flex justify-center items-center">
-            <div className="border-2 rounded-sm w-full h-full flex flex-col justify-center items-center overflow-auto">
-              <h2 className="relative bottom-10 text-4xl font-extrabold h-1/5 mt-24">
-                ثبت نشانی
-              </h2>
-              <div className="h-full w-full">
-                <AddressForm />
-              </div>
+
+      {/* فرم آدرس و سبد خرید */}
+      <div className="w-full md:w-4/5 flex flex-col md:flex-row-reverse justify-center  my-10 ">
+        {/* فرم ثبت نشانی */}
+        <div className="w-full md:w-4/5 flex mb-6 justify-center md:mb-0 ">
+          <div className="border-2 rounded-sm w-full md:w-4/5 flex flex-col justify-center items-center p-6">
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
+              ثبت نشانی
+            </h2>
+            <div className="w-full">
+              <AddressForm />
             </div>
           </div>
-          <div className="h-full w-1/5 flex justify-end mr-5 ">
-            <div className=" w-full h-full flex justify-center items-center ">
-              <div className="h-full w-full">
-                <div className="h-4/5 border-2 rounded-sm w-full  flex justify-center items-center ">
-                  <div className="w-10/12 h-5/6  flex flex-col justify-center items-center">
-                    <div className="w-full h-4/5 border-b-2 mb-1">
-                      <p className="w-full h-1/4 text-right">جمع کل</p>
-                      <p className="w-full h-1/4 text-center">price</p>
-                      <p className="w-full h-1/4 text-right">تخفیف</p>
-                      <p className="w-full h-1/4 text-center">0</p>
-                    </div>
-                    <div className="w-full h-1/5">
-                      <p className="text-right">مبلغ قابل پرداخت</p>
-                      <p className="text-center">price</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="h-1/5 w-full  flex justify-center items-end">
-                  <Button
-                    className="w-full"
-                    onClick={() => router.push("/cart/payment")}
-                  >
-                    ادامه ثبت سفارش
-                  </Button>
-                </div>
+        </div>
+
+        {/* بخش خلاصه پرداخت */}
+        <div className="w-full md:w-1/5 flex  order-last md:order-none">
+          <div className="w-full flex flex-col items-center">
+            <div className="border-2 rounded-sm w-full p-4">
+              <div className="w-full border-b-2 pb-3 mb-3">
+                <p className="text-right">جمع کل</p>
+                <p className="text-center font-bold">price</p>
+                <p className="text-right mt-2">تخفیف</p>
+                <p className="text-center">0</p>
               </div>
+              <div className="w-full">
+                <p className="text-right">مبلغ قابل پرداخت</p>
+                <p className="text-center font-bold">price</p>
+              </div>
+            </div>
+            <div className="w-full flex justify-center items-center mt-4">
+              <Button
+                className="w-full"
+                onClick={() => router.push("/cart/payment")}
+              >
+                ادامه ثبت سفارش
+              </Button>
             </div>
           </div>
         </div>
       </div>
-      <div className="bg-green-500 w-full h-1/4">box3</div>
     </section>
   );
 };
 
-export default page;
+export default Page;

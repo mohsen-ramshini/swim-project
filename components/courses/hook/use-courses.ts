@@ -32,7 +32,10 @@ interface Course {
 }
 
 const fetchCourses = async (): Promise<Course[]> => {
-  const response = await fetch("https://bend.swimacademy.ir/api/lms/courses/");
+  const slug = "انجمن_علوم_نوین_شنای_ایران";
+  const response = await fetch(
+    `https://bend.swimacademy.ir/api/lms/courses/?organizer=${slug}`
+  );
 
   if (!response.ok) {
     throw new Error(`HTTP Error: ${response.status}`);

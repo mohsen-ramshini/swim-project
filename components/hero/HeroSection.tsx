@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 interface Props {
-  dialog: string;
+  dialog?: string;
   imageSourse: string;
   width: number;
   height: number;
@@ -24,7 +24,7 @@ const HeroSection: React.FC<Props> = ({
         height={height}
         className="w-full h-full"
       />
-      <DialogContent dialog={dialog} />
+      {dialog && <DialogContent dialog={dialog} />}
     </div>
   );
 };

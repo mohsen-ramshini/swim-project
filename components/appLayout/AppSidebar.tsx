@@ -64,19 +64,9 @@ export function AppSidebar() {
           icon: Tag,
         },
         {
-          title: "نویسنده",
-          setActive: () => setActivePage("author"),
-          icon: BookType,
-        },
-        {
-          title: "ویرایش گر",
-          setActive: () => setActivePage("editor"),
+          title: "پدیدآورنده",
+          setActive: () => setActivePage("creator"),
           icon: FilePenLine,
-        },
-        {
-          title: "مترجم",
-          setActive: () => setActivePage("translator"),
-          icon: BookType,
         },
       ],
     },
@@ -106,11 +96,6 @@ export function AppSidebar() {
           title: "افزودن اخبار",
           setActive: () => setActivePage("news"),
           icon: FileText,
-        },
-        {
-          title: "دسته بندی اخبار",
-          setActive: () => setActivePage("newsCategory"),
-          icon: FolderOpen,
         },
       ],
     },

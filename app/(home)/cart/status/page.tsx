@@ -1,20 +1,22 @@
 "use client";
 import React from "react";
-import ShoppingStageBar from "../../../../components/cart/ShoppingStageBar";
+import ShoppingStageBar from "@/components/cart/ShoppingStageBar";
 import { Button } from "@/components/ui/button";
 import { Check, CircleCheck, CircleX } from "lucide-react";
 import { useRouter } from "next/navigation";
-import OrderSummery from "../../../../components/cart/OrderSummery";
+import OrderSummery from "@/components/cart/OrderSummery";
+import HeroSection from "@/components/hero/HeroSection";
 
 const page = () => {
   const router = useRouter();
   const success = true;
   return (
-    <section className="w-full h-full my-10 flex flex-col justify-center items-center">
-      <div className="w-full h-1/4">
+    <section className="w-full h-full  flex flex-col justify-center items-center">
+      <HeroSection imageSourse={"banner-three.jpg"} width={1920} height={680} />
+      <div className="hidden md:block w-full h-1/4">
         <ShoppingStageBar activeStage={4} />
       </div>
-      <div className="w-4/5 h-3/4 flex flex-col justify-start items-center">
+      <div className="w-4/5 h-3/4 flex flex-col justify-center items-center">
         <div className="flex flex-col w-full justify-center items-center my-10">
           <div className="rounded-full bg-secondary w-20 h-20 flex justify-center items-center mb-10">
             {success ? (
@@ -23,7 +25,7 @@ const page = () => {
               <CircleX size={55} color="white" />
             )}
           </div>
-          <h2 className="text-4xl font-bold mb-10">
+          <h2 className="text-4xl font-bold mb-10 text-center">
             {success ? (
               <p> پرداخت شما با موفقیت انجام شد</p>
             ) : (

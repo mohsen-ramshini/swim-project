@@ -16,30 +16,44 @@ import { useRouter } from "next/navigation";
 const NavBar = () => {
   const router = useRouter();
 
+  const handleRouting = (route: string, url: boolean) => {
+    if (url) {
+      window.open(route, "_blank");
+    } else {
+      router.push(route.startsWith("/") ? route : `/${route}`);
+    }
+  };
+
   const handleClick = () => {
     router.push("/");
   };
   return (
-    <div className="relative flex items-center justify-between p-4">
+    <div className="relative w-full flex items-center justify-between p-4">
       <NavigationMenu dir="rtl">
-        <NavigationMenuList className="flex space-x-4">
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>آیتم اول</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <NavigationMenuLink>Link</NavigationMenuLink>
-            </NavigationMenuContent>
+        <NavigationMenuList className="flex  justify-center">
+          <NavigationMenuItem
+            style={{ backgroundColor: "black", borderRadius: 5, marginLeft: 5 }}
+            onClick={() => handleRouting("/articles", false)}
+          >
+            <div className="group inline-flex h-9 w-max items-center justify-center px-4 py-2 text-base lg:text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-white cursor-pointer">
+              مقالات
+            </div>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>آیتم دوم</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <NavigationMenuLink>Link</NavigationMenuLink>
-            </NavigationMenuContent>
+          <NavigationMenuItem
+            onClick={() => handleRouting("/books", false)}
+            style={{ backgroundColor: "black", borderRadius: 5 }}
+          >
+            <div className="group inline-flex h-9 w-max items-center justify-center px-4 py-2 text-base lg:text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-white cursor-pointer">
+              کتاب ها
+            </div>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>آیتم سوم</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <NavigationMenuLink>Link</NavigationMenuLink>
-            </NavigationMenuContent>
+          <NavigationMenuItem
+            onClick={() => handleRouting("/news", false)}
+            style={{ backgroundColor: "black", borderRadius: 5 }}
+          >
+            <div className="group inline-flex h-9 w-max items-center justify-center px-4 py-2 text-base lg:text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-white cursor-pointer">
+              اخبار
+            </div>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Button onClick={handleClick}>

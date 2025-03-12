@@ -6,8 +6,8 @@ const page = () => {
     <section className="w-full h-full">
       <HeroSection
         imageSourse={"banner-one.jpg"}
-        width={20480}
-        height={500}
+        width={1920}
+        height={680}
         dialog={"سلام"}
       />
       <ArticlesList />

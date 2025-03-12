@@ -43,23 +43,15 @@ const chunkArray = (arr: Book[], size: number) => {
 };
 
 const BookInterface: React.FC<Props> = ({ data, slider }) => {
-  const [visibleCount, setVisibleCount] = useState(6);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const itemsPerSlide = isMobile ? 1 : 3;
   const groupedBooks = chunkArray(data, itemsPerSlide);
 
-  const showMoreBooks = () => {
-    setVisibleCount((prev) => prev + 6);
-  };
-  const showLessBooks = () => {
-    setVisibleCount(6);
-  };
-
   if (!slider) {
     return (
-      <section className="flex flex-col justify-center items-center w-full h-full">
+      <section className="flex flex-col justify-center items-center w-full h-full my-20">
         <div className="grid grid-cols-1 w-[350px] h-full md:w-[800px] md:grid-cols-2 lg:w-full lg:grid-cols-3 lg:h-full gap-4 mb-10">
-          {data.slice(0, visibleCount).map((book) => (
+          {data.map((book) => (
             <Link key={book.id} href={`/books/${book.slug}`}>
               <div className="w-full h-full p-2 lg:min-h-96">
                 <div className="flex flex-col items-center p-4 h-full mb-5">
@@ -93,27 +85,6 @@ const BookInterface: React.FC<Props> = ({ data, slider }) => {
               </div>
             </Link>
           ))}
-        </div>
-        <div className="w-1/5 text-center mb-5">
-          {visibleCount < data.length ? (
-            <Button
-              onClick={showMoreBooks}
-              variant={"ghost"}
-              className="w-full px-12"
-            >
-              مشاهده بیشتر
-            </Button>
-          ) : (
-            data.length !== 6 && (
-              <Button
-                onClick={showLessBooks}
-                variant={"ghost"}
-                className="w-full px-12"
-              >
-                مشاهده کمتر
-              </Button>
-            )
-          )}
         </div>
       </section>
     );

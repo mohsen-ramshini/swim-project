@@ -1,12 +1,8 @@
 "use client";
 import React, { useMemo, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import NewsInterface from "./NewsInterface";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -14,6 +10,7 @@ import {
 } from "@/components/ui/pagination";
 import NewsSingleInterface from "./NewsSingleInterface";
 import { useGetNews } from "@/features/news/api/use-get-news";
+import LoadingComponent from "../appLayout/LoadingComponent";
 
 const ARTICLES_PER_PAGE = 4;
 
@@ -31,9 +28,10 @@ const NewsPagination = () => {
         modifiedAt: article.modifiedAt
           ? new Date(article.modifiedAt)
           : undefined,
-        publishTime: article.publishDate
+        publishDate: article.publishDate
           ? new Date(article.publishDate)
           : undefined,
+        date: article.date ? new Date(article.date) : undefined,
       })) || []
     );
   }, [News]);
@@ -42,54 +40,30 @@ const NewsPagination = () => {
     startIndex,
     startIndex + ARTICLES_PER_PAGE
   );
+
   return (
     <section className="w-full h-full flex flex-col">
       <div className="w-full h-full flex flex-row-reverse">
         <div className="w-full lg:w-3/4 flex flex-col justify-center items-center">
           <div className="w-3/4">
-            {paginatedArticles.map((article) => (
-              <NewsSingleInterface key={article.id} data={article} />
-            ))}
+            {isLoading ? (
+              <LoadingComponent />
+            ) : (
+              paginatedArticles.map((article) => (
+                <NewsSingleInterface key={article.id} data={article} />
+              ))
+            )}
           </div>
         </div>
-        <div className="w-1/4 flex flex-col justify-start items-center hidden lg:block">
+        <div className="w-1/4 lg:flex flex-col justify-start items-center hidden ">
           <aside className="w-full h-56 mt-20">
-            <h3 className="text-center font-semibold text-4xl">دسته بندی ها</h3>
-            <div className="w-full p-10 text-right">
-              <ul>
-                <li>
-                  <label htmlFor="news" className="mr-1 text-gray-500 text-xl">
-                    اخبار
-                  </label>
-                  <Checkbox id="news" />
-                </li>
-                <li>
-                  <label
-                    htmlFor="anatomy"
-                    className="mr-1 text-gray-500 text-xl"
-                  >
-                    آناتومی شنا
-                  </label>
-                  <Checkbox id="anatomy" />
-                </li>
-                <li>
-                  <label
-                    htmlFor="fitness"
-                    className="mr-1 text-gray-500 text-xl"
-                  >
-                    بدنسازی شنا
-                  </label>
-                  <Checkbox id="fitness" />
-                </li>
-              </ul>
-            </div>
             <div className="w-full h-full rounded-sm bg-blue-400 text-center text-3xl font-bold">
               <div className="pt-5 text-white">با ما تماس بگیرید</div>
             </div>
           </aside>
         </div>
       </div>
-      <div className="bg-white flex justify-center mt-4">
+      <div className="bg-white flex justify-center my-4">
         <Pagination>
           <PaginationContent className="flex flex-row-reverse">
             <PaginationItem>

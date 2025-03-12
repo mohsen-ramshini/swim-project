@@ -7,8 +7,8 @@ const page = () => {
     <section className="w-full h-full flex flex-col">
       <HeroSection
         imageSourse={"banner-four.jpg"}
-        width={20480}
-        height={500}
+        width={1920}
+        height={680}
         dialog={"سلام"}
       />
       <h1 className="mt-14 mr-16 text-black font-extrabold text-5xl text-right ">

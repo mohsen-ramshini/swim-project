@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { insertBookSchema } from "@/db/schema/book/book";
-import { Share2 } from "lucide-react";
+import { Book, Share2 } from "lucide-react";
 import React from "react";
 import { z } from "zod";
 
@@ -21,7 +21,7 @@ const BookDetails: React.FC<Props> = ({ data }) => {
         <div className="mr-5 w-1/2 text-right">
           <h4 className="text-3xl">{data.title}</h4>
           <div>
-            <p>نویسنده : دکتر مرتضی</p>
+            <p>نویسنده : {"data"}</p>
             <p>مترجم : دکتر مرتضی</p>
             <p>انتشارات : راه نوین</p>
             <p>دسته‌بندی : بیومکانیک شنا</p>

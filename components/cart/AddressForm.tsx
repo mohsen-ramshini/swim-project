@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -13,6 +13,74 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+const provinces = [
+  "آذربایجان شرقی",
+  "آذربایجان غربی",
+  "اردبیل",
+  "اصفهان",
+  "البرز",
+  "ایلام",
+  "بوشهر",
+  "تهران",
+  "چهارمحال و بختیاری",
+  "خراسان جنوبی",
+  "خراسان رضوی",
+  "خراسان شمالی",
+  "خوزستان",
+  "زنجان",
+  "سمنان",
+  "سیستان و بلوچستان",
+  "فارس",
+  "قزوین",
+  "قم",
+  "کردستان",
+  "کرمان",
+  "کرمانشاه",
+  "کهگیلویه و بویراحمد",
+  "گلستان",
+  "گیلان",
+  "لرستان",
+  "مازندران",
+  "مرکزی",
+  "هرمزگان",
+  "همدان",
+  "یزد",
+];
+
+const cities: Record<string, string[]> = {
+  "آذربایجان شرقی": ["تبریز", "مراغه", "مرند", "اهر", "سراب"],
+  "آذربایجان غربی": ["ارومیه", "خوی", "میاندوآب", "مهاباد", "سلماس"],
+  اردبیل: ["اردبیل", "مشگین‌شهر", "پارس‌آباد", "خلخال"],
+  اصفهان: ["اصفهان", "کاشان", "خمینی‌شهر", "نجف‌آباد", "شاهین‌شهر"],
+  البرز: ["کرج", "نظرآباد", "ساوجبلاغ", "فردیس", "اشتهارد"],
+  ایلام: ["ایلام", "دهلران", "آبدانان", "مهران"],
+  بوشهر: ["بوشهر", "دشتستان", "گناوه", "دیر"],
+  تهران: ["تهران", "ری", "اسلامشهر", "شهریار", "دماوند"],
+  "چهارمحال و بختیاری": ["شهرکرد", "فارسان", "بروجن"],
+  "خراسان جنوبی": ["بیرجند", "قائنات", "فردوس"],
+  "خراسان رضوی": ["مشهد", "نیشابور", "سبزوار", "تربت‌حیدریه"],
+  "خراسان شمالی": ["بجنورد", "شیروان", "اسفراین"],
+  خوزستان: ["اهواز", "آبادان", "خرمشهر", "دزفول", "شادگان"],
+  زنجان: ["زنجان", "ابهر", "خدابنده"],
+  سمنان: ["سمنان", "شاهرود", "دامغان"],
+  "سیستان و بلوچستان": ["زاهدان", "چابهار", "ایرانشهر"],
+  فارس: ["شیراز", "مرودشت", "کازرون"],
+  قزوین: ["قزوین", "تاکستان", "آبیک"],
+  قم: ["قم"],
+  کردستان: ["سنندج", "سقز", "مریوان"],
+  کرمان: ["کرمان", "سیرجان", "رفسنجان"],
+  کرمانشاه: ["کرمانشاه", "اسلام‌آباد غرب", "هرسین"],
+  "کهگیلویه و بویراحمد": ["یاسوج", "دوگنبدان"],
+  گلستان: ["گرگان", "گنبدکاووس", "علی‌آباد کتول"],
+  گیلان: ["رشت", "لاهیجان", "انزلی"],
+  لرستان: ["خرم‌آباد", "بروجرد", "دورود"],
+  مازندران: ["ساری", "بابل", "آمل"],
+  مرکزی: ["اراک", "ساوه", "خمین"],
+  هرمزگان: ["بندرعباس", "قشم", "کیش"],
+  همدان: ["همدان", "ملایر", "نهاوند"],
+  یزد: ["یزد", "میبد", "اردکان"],
+};
 
 const formSchema = z.object({
   firstName: z.string().min(2, "نام باید حداقل دو کاراکتر باشد"),
@@ -30,18 +98,7 @@ const formSchema = z.object({
 type AddressFormValues = z.infer<typeof formSchema>;
 
 const AddressForm = () => {
-  const {
-    data: states,
-    isLoading: statesLoading,
-    error: statesError,
-  } = useStates();
-  const [selectedProvince, setSelectedProvince] = React.useState<string>("");
-  const {
-    data: cities,
-    isLoading: citiesLoading,
-    error: citiesError,
-  } = useCities(selectedProvince);
-
+  const [selectedProvince, setSelectedProvince] = useState<string>("");
   const form = useForm<AddressFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,14 +120,14 @@ const AddressForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className=" w-full h-full flex flex-wrap gap-4 p-6 rounded-lg shadow-lg rtl"
+        className="w-full h-full flex flex-col gap-4 p-4 md:p-6 rounded-lg shadow-lg rtl"
       >
-        <div className="grid grid-cols-3 gap-4 w-full rtl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
           <FormField
             name="phoneNumber"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="rtl flex flex-col justify-end ">
+              <FormItem className="flex flex-col">
                 <FormLabel className="text-right">شماره همراه</FormLabel>
                 <FormControl>
                   <input
@@ -87,7 +144,7 @@ const AddressForm = () => {
             name="lastName"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="rtl flex flex-col justify-end ">
+              <FormItem className="flex flex-col">
                 <FormLabel className="text-right">نام خانوادگی</FormLabel>
                 <FormControl>
                   <input
@@ -99,11 +156,12 @@ const AddressForm = () => {
               </FormItem>
             )}
           />
+
           <FormField
             name="firstName"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="rtl flex flex-col justify-end ">
+              <FormItem className="flex flex-col">
                 <FormLabel className="text-right">نام</FormLabel>
                 <FormControl>
                   <input
@@ -117,12 +175,12 @@ const AddressForm = () => {
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-4 w-full rtl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
           <FormField
             name="postalCode"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="rtl flex flex-col justify-end ">
+              <FormItem className="flex flex-col">
                 <FormLabel className="text-right">کد پستی</FormLabel>
                 <FormControl>
                   <input
@@ -134,49 +192,50 @@ const AddressForm = () => {
               </FormItem>
             )}
           />
-
           <FormField
             name="city"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="rtl flex flex-col justify-end ">
+              <FormItem className="rtl flex flex-col justify-end">
                 <FormLabel className="text-right">شهر</FormLabel>
                 <FormControl>
                   <select
                     {...field}
                     className="input w-full p-2 border rounded-md text-right"
                   >
-                    {citiesLoading && <option>Loading cities...</option>}
-                    {citiesError && <option>Error loading cities</option>}
-                    {cities?.map((city: any) => (
-                      <option key={city.id} value={city.id}>
-                        {city.name}
-                      </option>
-                    ))}
+                    <option value="">یک شهر را انتخاب کنید</option>
+                    {selectedProvince &&
+                      cities[selectedProvince]?.map((city) => (
+                        <option key={city} value={city}>
+                          {city}
+                        </option>
+                      ))}
                   </select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             name="province"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="rtl flex flex-col justify-end ">
+              <FormItem className="rtl flex flex-col justify-end">
                 <FormLabel className="text-right">استان</FormLabel>
                 <FormControl>
                   <select
                     {...field}
-                    onChange={(e) => setSelectedProvince(e.target.value)}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setSelectedProvince(e.target.value);
+                    }}
                     className="input w-full p-2 border rounded-md text-right"
                   >
-                    {statesLoading && <option>در حال بارگذاری...</option>}
-                    {statesError && <option>Error loading states</option>}
-                    {/* <option value="">یک استان را انتخاب کنید</option> */}
-                    {states?.map((state: any) => (
-                      <option key={state.id} value={state.id}>
-                        {state.name}
+                    <option value="">یک استان را انتخاب کنید</option>
+                    {provinces.map((province) => (
+                      <option key={province} value={province}>
+                        {province}
                       </option>
                     ))}
                   </select>
@@ -187,12 +246,12 @@ const AddressForm = () => {
           />
         </div>
 
-        <div className="w-full rtl">
+        <div className="w-full">
           <FormField
             name="fullAddress"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="rtl flex flex-col justify-end ">
+              <FormItem className="flex flex-col">
                 <FormLabel className="text-right">آدرس کامل</FormLabel>
                 <FormControl>
                   <textarea
@@ -208,7 +267,7 @@ const AddressForm = () => {
 
         <Button
           type="submit"
-          className="w-full py-3 mt-4 bg-green-500 text-white rounded-md hover:bg-green-600 rtl"
+          className="w-full py-3 mt-4 bg-green-500 text-white rounded-md hover:bg-green-600"
         >
           ثبت
         </Button>

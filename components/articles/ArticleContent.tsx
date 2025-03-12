@@ -18,29 +18,38 @@ interface Props {
   slug: string;
 }
 
-const getCategoryContentById = (cat: number) => {
-  switch (cat) {
-    case 1:
-      return "بدنسازی شنا";
-    case 2:
-      return "آناتومی شنا";
-    case 3:
-      return "تغذیه";
-    default:
-      return "بدون دسته بندی";
-  }
+const defaultArticles = {
+  articleType: 0,
+  title: "",
+  slug: "",
+  thumbnail: "",
+  excerpt: "",
+  content: "",
+  categoryId: 0,
+  reference: "",
+  publishTime: new Date(),
+  isActive: true,
+  createdBy: 0,
+  createdAt: new Date(),
+  modifiedBy: 0,
+  modifiedAt: new Date(),
 };
-
 export default function ArticleContent({ slug }: Props) {
   const [category, setCategory] = useState<string>();
   const { data: fetchedArticles = [] } = useGetArticles();
-  const { data: article, isLoading, error } = useGetArticleBySlug(slug);
+  const {
+    data: article = defaultArticles,
+    isLoading,
+    error,
+  } = useGetArticleBySlug(slug);
+
   const categoryId = article?.categoryId ?? 0;
   const { data: categories } = useGetCategories();
   const excerpt = useContentParser(article?.excerpt ?? "", false);
   const content = useContentParser(article?.content ?? "", false);
 
-  console.log("mounte");
+  console.log(`fetched article ${article}`);
+  console.log("Slug received in ArticlePage:", slug);
 
   useEffect(() => {
     setCategory(
@@ -48,21 +57,6 @@ export default function ArticleContent({ slug }: Props) {
     );
     console.log(`related articles : ${categoryId}`);
   }, [categories, article]);
-
-  const normalizedArticles = useMemo(() => {
-    return (
-      fetchedArticles?.map((article) => ({
-        ...article,
-        createdAt: new Date(article.createdAt),
-        modifiedAt: article.modifiedAt
-          ? new Date(article.modifiedAt)
-          : undefined,
-        publishTime: article.publishTime
-          ? new Date(article.publishTime)
-          : undefined,
-      })) || []
-    );
-  }, [fetchedArticles]);
 
   if (isLoading) {
     <LoadingComponent />;

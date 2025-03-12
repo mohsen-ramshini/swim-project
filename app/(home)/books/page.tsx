@@ -23,8 +23,8 @@ const Books = () => {
     <section className="h-full w-full flex flex-col justify-center items-center">
       <HeroSection
         imageSourse={"banner-two.jpg"}
-        width={2048}
-        height={500}
+        width={1920}
+        height={680}
         dialog={"سلام"}
       />
       <h2 className="text-5xl font-extrabold my-20">همه کتاب ها</h2>

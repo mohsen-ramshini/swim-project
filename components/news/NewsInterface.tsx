@@ -52,7 +52,7 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
   if (!slider) {
     return (
       <aside className="w-full h-auto flex flex-col items-center">
-        <div className="w-full max-w-3xl">
+        <div className="w-full max-w-5xl">
           {news.map((newsItem) => (
             <NewsContent news={newsItem} key={newsItem.id} />
           ))}

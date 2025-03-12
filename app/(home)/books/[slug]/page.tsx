@@ -13,11 +13,6 @@ export default async function BookPage({
   params: { slug: string };
 }) {
   const { slug } = await params;
-  // const book = books.find((post) => post.slug === slug);
-  // if (!book) return notFound();
-
-  // const bookId = Number(book.id);
-  // if (isNaN(bookId)) return notFound();
 
   return (
     <section className="w-full lg:h-[1750px] flex flex-col mt-10">

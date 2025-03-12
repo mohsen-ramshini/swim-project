@@ -15,15 +15,20 @@ import { Menu, X, User, Phone } from "lucide-react";
 import { DialogTitle } from "@/components/ui/dialog";
 import Link from "next/link";
 import DropdownProfile from "../user/DropdownProfile";
+import { boolean } from "drizzle-orm/mysql-core";
+
+const SwimAcademyCoursesURL = "https://www.swimacademy.ir/courses";
 
 const NavBar = () => {
   const router = useRouter();
-  // const [isMounted, setIsMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleClick = () => {
-    router.push("/admin");
-    console.log("clicked");
+  const handleRouting = (route: string, url: boolean) => {
+    if (url) {
+      window.open(route, "_blank");
+    } else {
+      router.push(`/${route}`);
+    }
   };
 
   return (
@@ -43,14 +48,77 @@ const NavBar = () => {
             <DialogTitle></DialogTitle>
             <h2 className="text-lg font-bold text-center">منو</h2>
             <div className="flex flex-col space-y-4 mt-4">
-              <Button variant="link">مقالات</Button>
-              <Button variant="link">کتب و نشریات</Button>
-              <Button variant="link">رویداد ها و اخبار</Button>
-              <Button variant="link">دوره های آموزشی</Button>
-              <Button variant="link">مشاوره و سوالات علمی</Button>
-              <Button variant="link">درباره ما</Button>
-              <Button variant={"outline"}>ناحیه کاربری</Button>
-              <Button variant={"secondary"} onClick={handleClick}>
+              <Button
+                onClick={() => {
+                  handleRouting("articles", false);
+                  setIsMenuOpen(false);
+                }}
+                variant={"ghost"}
+              >
+                مقالات
+              </Button>
+              <Button
+                onClick={() => {
+                  handleRouting("books", false);
+                  setIsMenuOpen(false);
+                }}
+                variant={"ghost"}
+              >
+                کتب و نشریات
+              </Button>
+              <Button
+                onClick={() => {
+                  handleRouting("news", false);
+                  setIsMenuOpen(false);
+                }}
+                variant={"ghost"}
+              >
+                رویداد ها و اخبار
+              </Button>
+              <Button
+                onClick={() => {
+                  handleRouting(SwimAcademyCoursesURL, true);
+                  setIsMenuOpen(false);
+                }}
+                variant={"ghost"}
+              >
+                دوره های آموزشی
+              </Button>
+              <Button
+                onClick={() => {
+                  handleRouting("articles", false);
+                  setIsMenuOpen(false);
+                }}
+                variant={"ghost"}
+              >
+                مشاوره و سوالات علمی
+              </Button>
+              <Button
+                onClick={() => {
+                  handleRouting("articles", false);
+                  setIsMenuOpen(false);
+                }}
+                variant={"ghost"}
+              >
+                درباره ما
+              </Button>
+              <Button
+                variant={"outline"}
+                onClick={() => {
+                  handleRouting("profile", false);
+                  setIsMenuOpen(false);
+                }}
+              >
+                ناحیه کاربری
+              </Button>
+              <Button
+                variant={"secondary"}
+                onClick={() => {
+                  handleRouting("articles", false);
+                  setIsMenuOpen(false);
+                }}
+                style={{ color: "white" }}
+              >
                 پنل ادمین
               </Button>
             </div>
@@ -64,7 +132,7 @@ const NavBar = () => {
             alt="Logo"
             width={220}
             height={30}
-            className="w-[130px] h-[50px] md:w-[200px] md:h-[70px] lg:w-[250px] lg:h-[80px]"
+            className="w-[130px] h-[50px] md:w-[200px] md:h-[70px] lg:w-[230px] lg:h-[80px]"
           />
         </Link>
       </div>
@@ -73,7 +141,10 @@ const NavBar = () => {
       <div className="hidden lg:flex items-center justify-between max-w-xl absolute top-0 left-48 ">
         <NavigationMenu dir="rtl">
           <NavigationMenuList>
-            <NavigationMenuItem className="pl-5">
+            <NavigationMenuItem
+              className="pl-5"
+              onClick={() => handleRouting("admin", false)}
+            >
               <div className="group inline-flex h-9 w-max items-center justify-center px-2 py-2 text-sm font-small transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-black cursor-pointer">
                 همکاران ما
               </div>
@@ -90,7 +161,9 @@ const NavBar = () => {
                 فراخوان همکاری
               </div>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem
+              onClick={() => handleRouting("articles", false)}
+            >
               <div className="group inline-flex h-9 w-max items-center justify-center px-2 py-2 text-sm font-small transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-black cursor-pointer">
                 بلاگ
               </div>
@@ -104,26 +177,20 @@ const NavBar = () => {
         </NavigationMenu>
       </div>
 
-      {/* Admin Panel Button - Visible on Desktop */}
-      <Button
-        onClick={handleClick}
-        className="hidden lg:inline-flex absolute left-5"
-      >
-        پنل ادمین
-      </Button>
-
       <div
         className="absolute left-0 pl-4 md:pl-10 lg:pl-40 text-xl font-bold"
         dir="rtl"
       >
-        <Button variant={"ghost"} size={"lg"}>
-          <Phone
-            style={{ width: 25, height: 25 }}
-            className="inline md:hidden"
-          />
-          <span className="hidden md:inline md:text-xl">تماس بگیرید :</span>
-          <span className="hidden md:inline md:text-xl">0903-234-2677</span>
-        </Button>
+        <a href="tel:09032342677">
+          <Button variant={"ghost"} size={"lg"}>
+            <Phone
+              style={{ width: 25, height: 25 }}
+              className="inline md:hidden"
+            />
+            <span className="hidden md:inline md:text-xl">تماس بگیرید :</span>
+            <span className="hidden md:inline md:text-xl">0903-234-2677</span>
+          </Button>
+        </a>
       </div>
 
       <div className="hidden lg:inline-flex  items-center justify-center  bg-slate-800 rounded-sm  top-32 absolute left-10 right-10">
@@ -132,36 +199,46 @@ const NavBar = () => {
           className="flex justify-between p-5 min-w-full"
         >
           <NavigationMenuList>
-            <NavigationMenuItem className="pl-5 ">
+            <NavigationMenuItem
+              className="pl-5"
+              onClick={() => handleRouting("articles", false)}
+            >
               <NavigationMenuTrigger className="text-base lg:text-sm">
                 مقالات
               </NavigationMenuTrigger>
               <NavigationMenuContent></NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem onClick={() => handleRouting("books", false)}>
               <NavigationMenuTrigger className="text-base lg:text-sm">
                 کتب و نشریات
               </NavigationMenuTrigger>
               <NavigationMenuContent></NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem onClick={() => handleRouting("news", false)}>
               <div className="group inline-flex h-9 w-max items-center justify-center px-4 py-2 text-base lg:text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-white cursor-pointer">
                 رویدادها و اخبار
               </div>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem
+              onClick={() => handleRouting(SwimAcademyCoursesURL, true)}
+            >
               <div className="group inline-flex h-9 w-max items-center justify-center px-4 py-2 text-base lg:text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-white cursor-pointer">
                 دوره‌های آموزشی
               </div>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem
+              onClick={() => handleRouting("articles", false)}
+            >
               <div className="group inline-flex h-9 w-max items-center justify-center px-4 py-2 text-base lg:text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-white cursor-pointer">
                 مشاوره و سوالات علمی
               </div>
             </NavigationMenuItem>
           </NavigationMenuList>
           <div className="ml-0 list-none flex gap-2 h-full ">
-            <NavigationMenuItem className="h-full">
+            <NavigationMenuItem
+              className="h-full relative top-2"
+              onClick={() => handleRouting("articles", false)}
+            >
               <NavigationMenuTrigger className="text-base lg:text-sm  h-full">
                 درباره ما
               </NavigationMenuTrigger>

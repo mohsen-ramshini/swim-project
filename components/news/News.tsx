@@ -33,26 +33,28 @@ const News = () => {
         modifiedAt: news.modifiedAt ? new Date(news.modifiedAt) : undefined,
         publishTime: news.publishDate ? new Date(news.publishDate) : undefined,
         date: news.date ? new Date(news.date) : undefined,
-        publishDate: news.publishDate ? new Date(news.publishDate) : undefined, // تبدیل `publishDate` به `Date`
+        publishDate: news.publishDate ? new Date(news.publishDate) : undefined,
       })) || []
     );
   }, [fetchedNews]);
 
   return (
     <section className="w-full h-full flex flex-col">
-      <div className="w-full flex flex-row-reverse justify-between">
-        <h2 className="text-5xl font-extrabold">اخبار</h2>
-        <Button variant={"ghost"} onClick={() => router.push("/news")}>
-          <ArrowLeftCircle />
-          دیدن همه
-        </Button>
+      <div className="w-full flex flex-col justify-center mt-5">
+        <h2 className="text-5xl font-extrabold text-center my-5">اخبار</h2>
+        <div className="w-full flex justify-center items-cente">
+          <Button variant={"ghost"} onClick={() => router.push("/news")}>
+            <ArrowLeftCircle />
+            دیدن همه
+          </Button>
+        </div>
       </div>
       <div className="w-full h-full flex flex-col justify-center items-center">
         <div className="w-4/5 h-1/2 ">
           <NewsInterface news={normalizedNews} slider={true} />
         </div>
         <div className="w-full h-1/2  my-5">
-          <NewsInterface news={normalizedNews} slider={false} />
+          <NewsInterface news={normalizedNews.slice(0, 3)} slider={false} />
         </div>
       </div>
     </section>

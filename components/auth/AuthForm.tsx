@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -63,8 +63,23 @@ type AuthFormProps = {
   isLogin: boolean;
 };
 
+const useMediaQuery = (query: string) => {
+  const [matches, setMatches] = useState(false);
+
+  React.useEffect(() => {
+    const media = window.matchMedia(query);
+    setMatches(media.matches);
+    const listener = () => setMatches(media.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, [query]);
+
+  return matches;
+};
+
 export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
   const router = useRouter();
+  const isMobile = useMediaQuery("max-width: 768px");
   const formSchema = isLogin ? loginSchema : signUpSchema;
 
   const form = useForm<AuthFormValues>({
@@ -79,15 +94,15 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
   return (
     <div className="w-full lg:w-4/5 h-4/5 mt-10 shadow-lg p-5 bg-white rounded-lg">
       <div className="w-full h-2/5 flex flex-col justify-center items-center">
-        <h1 className=" text-4xl xl:text-5xl font-extrabold py-1 mb-10">
-          انجمن شنای ایران
-        </h1>
         <Image
           src={"/static/images/logo.png"}
           alt="logo"
-          width={300}
-          height={100}
+          width={isMobile ? 150 : 300}
+          height={isMobile ? 50 : 100}
         />
+        <h1 className=" text-xl xl:text-3xl font-extrabold py-1 mb-10 text-center">
+          انجمن علوم نوین شنای ایران
+        </h1>
       </div>
       <Form {...form}>
         <form
