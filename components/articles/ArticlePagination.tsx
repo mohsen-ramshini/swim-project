@@ -57,10 +57,6 @@ const ArticlePagination = () => {
     startIndex + ARTICLES_PER_PAGE
   );
 
-  // const paginatedArticles = test?.data.slice(
-  //   startIndex,
-  //   startIndex + ARTICLES_PER_PAGE
-  // );
   const normalizedArticles = useMemo(() => {
     return (
       paginatedArticles?.map((article) => ({

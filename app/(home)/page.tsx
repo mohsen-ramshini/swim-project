@@ -12,8 +12,8 @@ const page = () => {
     <div className="m-auto w-full h-full flex-col justify-center items-center">
       <Hero
         imageSourse={"main-banner.jpeg"}
-        width={2048}
-        height={500}
+        width={1920}
+        height={680}
         dialog={HeroSectionContent}
       />
       <Articles />

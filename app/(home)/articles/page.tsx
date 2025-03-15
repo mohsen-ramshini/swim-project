@@ -5,7 +5,9 @@ const page = () => {
   return (
     <section className="w-full h-full">
       <HeroSection imageSourse={"banner-one.jpg"} width={1920} height={680} />
-      <ArticlesList />
+      <div className="max-w-3xl m-auto lg:max-w-full">
+        <ArticlesList />
+      </div>
     </section>
   );
 };

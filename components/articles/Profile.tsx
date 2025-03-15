@@ -2,38 +2,26 @@ import React from "react";
 import cn from "clsx"; // Import clsx for conditional classNames
 
 interface ComponentSize {
-  sm: {
-    image: string;
-    text: string;
-    roleText: string;
-  };
-  lg: {
-    image: string;
-    text: string;
-    roleText: string;
-  };
-  xl: {
-    image: string;
-    text: string;
-    roleText: string;
-  };
+  sm: { image: string; text: string; roleText: string };
+  lg: { image: string; text: string; roleText: string };
+  xl: { image: string; text: string; roleText: string };
 }
 
 const componentSize: ComponentSize = {
   sm: {
-    image: "w-8 h-8", // Small image
-    text: "text-sm", // Small text
-    roleText: "text-xs", // Small role text
+    image: "w-8 h-8", // Small image (Increased from w-6 h-6)
+    text: "text-sm",
+    roleText: "text-xs",
   },
   lg: {
-    image: "w-12 h-12", // Large image
-    text: "text-lg", // Large text
-    roleText: "text-sm", // Large role text
+    image: "w-12 h-12",
+    text: "text-lg",
+    roleText: "text-sm",
   },
   xl: {
-    image: "w-16 h-16", // Extra-large image
-    text: "text-xl", // Extra-large text
-    roleText: "text-base", // Extra-large role text
+    image: "w-16 h-16",
+    text: "text-xl",
+    roleText: "text-base",
   },
 };
 
@@ -53,12 +41,13 @@ const Profile: React.FC<Props> = ({
   size,
 }) => {
   const validSize = componentSize[size] ? size : "lg";
+
   return (
     <aside className="flex justify-start items-center flex-row-reverse space-x-reverse space-x-3 mt-1">
       {/* Profile Image */}
       <div
         className={cn(
-          "bg-slate-600 rounded-full flex justify-center items-center p-7",
+          "bg-slate-600 rounded-full flex justify-center items-center overflow-hidden p-7",
           componentSize[validSize].image
         )}
       >
@@ -66,7 +55,7 @@ const Profile: React.FC<Props> = ({
           <img
             src={imagePath}
             alt={fullName}
-            className="rounded-full w-full h-full object-cover"
+            className="w-auto h-auto max-w-full max-h-full object-cover rounded-full"
           />
         ) : (
           <span className="text-white text-xs"></span>

@@ -18,13 +18,18 @@ type Article = z.infer<typeof insertArticleSchema>;
 interface Props {
   data?: Article;
   categoryId?: number;
+  mustRemove?: Article;
 }
 
 const formatJalaliDate = (isoDate: string) => {
   return moment(isoDate).locale("fa").format("YYYY/MM/DD");
 };
 
-const SingleArticleInterface: React.FC<Props> = ({ data, categoryId }) => {
+const SingleArticleInterface: React.FC<Props> = ({
+  data,
+  categoryId,
+  mustRemove,
+}) => {
   const router = useRouter();
   const [relatedArticleCount, setRelatedArticleCount] = useState(3);
   const content = useContentParser(data?.content ?? "", true, 400);
@@ -34,6 +39,9 @@ const SingleArticleInterface: React.FC<Props> = ({ data, categoryId }) => {
     categoryId ?? 0
   );
   const relatedArticles = relatedArticlesResponse?.data ?? [];
+  const filteredArticles = mustRemove
+    ? relatedArticles.filter((art) => art.id !== mustRemove.id)
+    : relatedArticles;
 
   const showMoreBooks = () => {
     setRelatedArticleCount((prev) => prev + 2);
@@ -55,7 +63,12 @@ const SingleArticleInterface: React.FC<Props> = ({ data, categoryId }) => {
       <aside className="flex flex-col w-full h-15 mt-15 mt-16">
         <div className="flex flex-col-reverse items-end lg:flex-row-reverse text-right mb-2">
           <div className="w-full lg:w-3/4">
-            <div className="text-gray-400 font-thin">{"تاریخ"}</div>
+            <div className="text-gray-400 font-thin">
+              {" "}
+              {data?.publishTime
+                ? formatJalaliDate(data.publishTime.toISOString())
+                : "تاریخ نامشخص"}
+            </div>
             <div className="font-extrabold text-3xl">{data.title}</div>
             <div className="flex justify-end">
               <div className="w-32 h-12 flex justify-center items-center rounded-md bg-slate-300 opacity-80 my-5 font-semibold text-lg">
@@ -69,7 +82,7 @@ const SingleArticleInterface: React.FC<Props> = ({ data, categoryId }) => {
               role="نویسنده"
             />
           </div>
-          <div className="w-full h-[180px] mb-5 lg:mb-0 lg:w-1/4 lg:h-[120px] rounded-sm">
+          <div className="max-w-lg  lg:max-w-6xl h-[180px] mb-5 lg:mb-0 lg:w-1/4 lg:h-[120px] rounded-sm">
             <Skeleton className="w-full h-full" />
           </div>
         </div>
@@ -86,32 +99,26 @@ const SingleArticleInterface: React.FC<Props> = ({ data, categoryId }) => {
 
   if (categoryId) {
     return (
-      <aside className="flex flex-col w-full mt-16">
-        {relatedArticles.length > 0 ? (
-          relatedArticles.slice(0, relatedArticleCount).map((art) => (
-            <div key={art.id} className="border-b py-4 ">
-              <div className="text-gray-400 font-thin text-right">
-                {art?.publishTime
-                  ? formatJalaliDate(art.publishTime)
-                  : "تاریخ نامشخص"}
-              </div>
-              <div className="font-extrabold text-2xl text-right">
+      <aside className="flex flex-col w-full mt-16 items-end max-w-4xl m-auto">
+        {filteredArticles.length > 0 ? (
+          filteredArticles.slice(0, relatedArticleCount).map((art) => (
+            <div key={art.id} className="border-b py-4 w-full">
+              <div className="font-extrabold text-xl sm:text-2xl text-right">
                 {art.title}
-              </div>
-              <div className="flex justify-end ">
-                <div className="w-32 h-10 flex justify-center items-center rounded-md bg-slate-300 opacity-80 my-2 font-semibold text-lg">
-                  {categories?.find((cat) => cat.id === art.categoryId)
-                    ?.title || "بدون دسته‌بندی"}
+                <div className="text-gray-400 font-thin text-right">
+                  {art?.publishTime
+                    ? formatJalaliDate(art.publishTime)
+                    : "تاریخ نامشخص"}
                 </div>
               </div>
-              <div className=" w-full flex flex-row justify-between items-center ">
-                <div className="text-right w-44 h-24">
+              <div className="w-full flex flex-col sm:flex-row justify-between items-center">
+                <div className=" text-right w-full sm:w-44 h-24">
                   <Skeleton className="w-full h-full" />
                 </div>
-                <div>
+                <div className="w-full">
                   <Profile
                     fullName="محسن رامشینی"
-                    size="lg"
+                    size="sm"
                     occupation="استاد دانشگاه"
                     role="نویسنده"
                   />
@@ -128,21 +135,21 @@ const SingleArticleInterface: React.FC<Props> = ({ data, categoryId }) => {
         ) : (
           <div>مقاله مرتبطی یافت نشد</div>
         )}
-        <div className="w-full text-center my-5 ">
-          {relatedArticleCount < relatedArticles.length ? (
+        <div className="w-full text-center my-5">
+          {relatedArticleCount < filteredArticles.length ? (
             <Button
               onClick={showMoreBooks}
               variant={"ghost"}
-              className="w-full px-12"
+              className="w-full sm:w-auto px-6"
             >
               مشاهده بیشتر
             </Button>
           ) : (
-            relatedArticles.length !== 6 && (
+            filteredArticles.length > 3 && (
               <Button
                 onClick={showLessBooks}
                 variant={"ghost"}
-                className="w-full px-12"
+                className="w-full sm:w-auto px-6"
               >
                 مشاهده کمتر
               </Button>

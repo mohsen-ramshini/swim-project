@@ -78,6 +78,7 @@ const useMediaQuery = (query: string) => {
 };
 
 export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
+  const [showForgetPassword, setShowForgetPassword] = useState<boolean>(false);
   const router = useRouter();
   const isMobile = useMediaQuery("max-width: 768px");
   const formSchema = isLogin ? loginSchema : signUpSchema;
@@ -97,9 +98,11 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
         <Image
           src={"/static/images/logo.png"}
           alt="logo"
-          width={isMobile ? 150 : 300}
-          height={isMobile ? 50 : 100}
+          className="max-w-[150px] max-h-[50px] sm:max-w-[250px] sm:max-h-[90px] md:max-w-[300px] md:max-h-[100px]"
+          width={300}
+          height={100}
         />
+
         <h1 className=" text-xl xl:text-3xl font-extrabold py-1 mb-10 text-center">
           انجمن علوم نوین شنای ایران
         </h1>
@@ -192,6 +195,16 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
           >
             {isLogin ? "حساب کاربری ندارید؟ ثبت نام کنید" : "به ورود بروید"}
           </Button>
+          {isLogin && (
+            <Button
+              type="button"
+              className="w-full mt-2 text-secondary"
+              variant="ghost"
+              onClick={() => router.push("/forget-password")}
+            >
+              رمز عبور خود را فراموش کردید؟
+            </Button>
+          )}
         </form>
       </Form>
     </div>

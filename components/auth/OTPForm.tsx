@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
 
 export const OTPForm: React.FC<{ onVerify: (otp: string) => void }> = ({
   onVerify,
@@ -49,8 +50,20 @@ export const OTPForm: React.FC<{ onVerify: (otp: string) => void }> = ({
   };
 
   return (
-    <div className="w-full flex justify-center items-center h-full px-4">
+    <div className="w-full flex  justify-center items-center h-full px-4">
       <Card className="w-full max-w-md shadow-lg p-6">
+        <div className="w-full flex flex-col justify-center items-center">
+          <Image
+            src={"/static/images/logo.png"}
+            alt="logo"
+            className="max-w-[150px] max-h-[50px] sm:max-w-[250px] sm:max-h-[90px] md:max-w-[300px] md:max-h-[100px]"
+            width={300}
+            height={100}
+          />
+          <h1 className=" text-xl xl:text-3xl font-extrabold py-10 text-center">
+            انجمن علوم نوین شنای ایران
+          </h1>
+        </div>
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">ورود با کد تایید</CardTitle>
           <p className="text-gray-600">

@@ -21,12 +21,7 @@ const Books = () => {
 
   return (
     <section className="h-full w-full flex flex-col justify-center items-center">
-      <HeroSection
-        imageSourse={"banner-two.jpg"}
-        width={1920}
-        height={680}
-        dialog={"سلام"}
-      />
+      <HeroSection imageSourse={"banner-two.jpg"} width={1920} height={680} />
       <h2 className="text-5xl font-extrabold my-20">همه کتاب ها</h2>
       <div className="">
         {isLoading ? (

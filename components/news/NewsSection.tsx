@@ -90,7 +90,7 @@ const NewsSection: React.FC<Props> = ({ slug }) => {
           </div>
         </div>
         <div className="w-2/3">
-          <h3 className="text-xl font-semibold my-20">مقالات مرتبط</h3>
+          <h3 className="text-xl font-semibold my-20">اخبار </h3>
           <div className="mb-20">
             {normalizedNews.slice(0, VisibleNewsCount).map((related) => (
               <NewsSingleInterface data={related} key={related.id} />

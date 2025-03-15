@@ -91,7 +91,7 @@ const Articles = () => {
           {/* Articles Section */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full bg-white p-4">
             {/* Other Articles */}
-            <div className="w-full p-4 space-y-4 text-right sm:text-center">
+            <div className="w-full p-4 max-w-xl m-auto justify-between lg:max-w-5xl space-y-4 text-right sm:text-center ">
               {otherArticles.map((art) => (
                 <ArticleInterface key={art.id} data={art} />
               ))}

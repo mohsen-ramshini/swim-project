@@ -15,6 +15,8 @@ import { insertNewsSchema } from "@/db/schema/news/news";
 import NewsContent from "./NewsContent";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import useParsedContent from "@/hooks/use-content-parser";
+import Content from "./Content";
 
 type News = z.infer<typeof insertNewsSchema>;
 
@@ -46,7 +48,7 @@ const chunkArray = (arr: News[], size: number) => {
 const NewsInterface: React.FC<Props> = ({ news, slider }) => {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const itemsPerSlide = isMobile ? 1 : 2;
+  const itemsPerSlide = 1;
   const groupedNews = chunkArray(news, itemsPerSlide);
 
   if (!slider) {
@@ -63,13 +65,13 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
 
   return (
     <aside className="w-full h-auto flex flex-col">
-      <Carousel className="w-full h-auto">
-        <CarouselContent className="w-full h-auto lg:h-[550px]">
+      <Carousel className="w-full h-auto max-w-5xl m-auto">
+        <CarouselContent className="w-full h-auto lg:h-[550px] ">
           {groupedNews.map((newsGroup, index) => (
             <CarouselItem
               key={`group-${index}`}
               className={cn(
-                "flex justify-center items-center h-auto gap-4 px-2",
+                "flex justify-center items-center h-auto gap-4 px-2 ",
                 isMobile ? "w-full flex-col" : "w-1/3"
               )}
             >
@@ -77,7 +79,7 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
                 <Link
                   key={newsItem.id}
                   href={`/news/${newsItem.slug}`}
-                  className="w-full md:w-1/2 lg:w-1/3 p-2"
+                  className="w-full  max-w-3xl p-2"
                 >
                   <Card className="w-full h-auto shadow-md rounded-lg overflow-hidden">
                     <CardContent className="flex flex-col items-center p-4">
@@ -86,6 +88,9 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
                       </div>
                       <div className="w-full text-right mt-4 font-semibold text-lg md:text-xl">
                         {newsItem.title}
+                      </div>
+                      <div className="w-full text-right mt-4 font-semibold text-xs md:text-sm">
+                        <Content data={newsItem.content.slice(0, 120)} />
                       </div>
                     </CardContent>
                   </Card>

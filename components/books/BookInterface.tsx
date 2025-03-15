@@ -18,7 +18,7 @@ import Link from "next/link";
 const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const media = window.matchMedia(query);
     setMatches(media.matches);
     const listener = () => setMatches(media.matches);
@@ -34,6 +34,7 @@ type Book = z.infer<typeof insertBookSchema>;
 interface Props {
   data: Book[];
   slider: boolean;
+  interval?: number; // مدت زمان حرکت خودکار (میلی‌ثانیه)
 }
 
 const chunkArray = (arr: Book[], size: number) => {
@@ -42,10 +43,23 @@ const chunkArray = (arr: Book[], size: number) => {
   );
 };
 
-const BookInterface: React.FC<Props> = ({ data, slider }) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+const BookInterface: React.FC<Props> = ({ data, slider, interval = 3000 }) => {
+  const isMobile = useMediaQuery("(max-width: 1024px)");
   const itemsPerSlide = isMobile ? 1 : 3;
   const groupedBooks = chunkArray(data, itemsPerSlide);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (!slider) return;
+
+    const timer = setInterval(() => {
+      setActiveIndex((prevIndex) =>
+        prevIndex - 1 < 0 ? groupedBooks.length - 1 : prevIndex - 1
+      );
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [groupedBooks.length, slider, interval]);
 
   if (!slider) {
     return (
@@ -55,18 +69,13 @@ const BookInterface: React.FC<Props> = ({ data, slider }) => {
             <Link key={book.id} href={`/books/${book.slug}`}>
               <div className="w-full h-full p-2 lg:min-h-96">
                 <div className="flex flex-col items-center p-4 h-full mb-5">
-                  <div className="h-[250px] lg:h-4/5 w-full">
-                    <Skeleton className="w-full h-full" />
+                  <div className=" lg:h-4/5 w-full">
+                    <Skeleton className="h-[365px] w-[300px]" />
                   </div>
                   <div className="w-full h-1/5 text-center">
-                    <h3 className="w-full text-xl h-1/4 font-semibold my-4">
+                    <h3 className="w-full text-xl h-1/4 font-semibold mb-4">
                       {book.title}
                     </h3>
-                    <p className="hidden lg:block text-sm h-1/4 text-gray-600 mb-2">
-                      {book.description?.substring(0, 50) ??
-                        "توضیحات موجود نیست"}
-                      ...
-                    </p>
                     <div className="flex flex-col border-t-2">
                       <div className="flex flex-row items-center justify-around opacity-90 text-gray-500">
                         <p>تعداد صفحات</p>
@@ -92,13 +101,19 @@ const BookInterface: React.FC<Props> = ({ data, slider }) => {
 
   return (
     <aside className="w-full h-full">
-      <Carousel className="w-full h-full">
-        <CarouselContent className="w-full h-full lg:h-[550px]">
+      <Carousel className="w-full h-full ">
+        <CarouselContent
+          className="w-full h-full lg:h-[550px] "
+          style={{
+            transform: `translateX(${activeIndex * 100}%)`,
+            transition: "transform 0.5s ease-in-out",
+          }}
+        >
           {groupedBooks.map((bookGroup, index) => (
             <CarouselItem
               key={bookGroup.length > 0 ? bookGroup[0].id : `group-${index}`}
               className={cn(
-                "flex justify-center items-center h-full gap-2",
+                "flex justify-center items-center h-full gap-2 ",
                 isMobile ? "w-full" : "w-1/3"
               )}
             >
@@ -106,20 +121,17 @@ const BookInterface: React.FC<Props> = ({ data, slider }) => {
                 <Link
                   key={book.id}
                   href={`/books/${book.slug}`}
-                  className="w-full md:w-1/3 h-full p-2"
+                  className="w-full max-w-lg m-auto h-full p-2 "
                 >
-                  <Card className="w-full h-full">
+                  <Card className="w-full h-full ">
                     <CardContent className="flex flex-col items-center p-4 h-full pb-10">
                       <div className="h-[250px] lg:h-4/5 w-full">
                         <Skeleton className="w-full h-full" />
                       </div>
                       <div className="w-full h-1/5 text-center">
-                        <h3 className="w-full text-xl h-1/4 font-semibold my-2">
+                        <h3 className="w-full text-2xl h-1/4 font-semibold my-3">
                           {book.title}
                         </h3>
-                        <p className="hidden lg:block text-sm h-1/4 text-gray-600">
-                          ...{book.description.substring(0, 50)}
-                        </p>
                         <div className="flex flex-col border-t-2">
                           <div className="flex flex-row items-center justify-around opacity-90 text-gray-500">
                             <p>تعداد صفحات</p>
@@ -141,8 +153,21 @@ const BookInterface: React.FC<Props> = ({ data, slider }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious
+          onClick={() =>
+            setActiveIndex((prev) =>
+              prev + 1 >= groupedBooks.length ? 0 : prev + 1
+            )
+          }
+        />
+
+        <CarouselNext
+          onClick={() =>
+            setActiveIndex((prev) =>
+              prev - 1 < 0 ? groupedBooks.length - 1 : prev - 1
+            )
+          }
+        />
       </Carousel>
     </aside>
   );

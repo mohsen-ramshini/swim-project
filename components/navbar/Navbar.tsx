@@ -15,7 +15,6 @@ import { Menu, X, User, Phone } from "lucide-react";
 import { DialogTitle } from "@/components/ui/dialog";
 import Link from "next/link";
 import DropdownProfile from "../user/DropdownProfile";
-import { boolean } from "drizzle-orm/mysql-core";
 
 const SwimAcademyCoursesURL = "https://www.swimacademy.ir/courses";
 
@@ -95,7 +94,7 @@ const NavBar = () => {
               </Button>
               <Button
                 onClick={() => {
-                  handleRouting("articles", false);
+                  handleRouting("about", false);
                   setIsMenuOpen(false);
                 }}
                 variant={"ghost"}
@@ -150,13 +149,15 @@ const NavBar = () => {
               </div>
               <NavigationMenuContent></NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem onClick={() => handleRouting("admin", false)}>
               <div className="group inline-flex h-9 w-max items-center justify-center px-2 py-2 text-sm font-small transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-black cursor-pointer">
                 اعضا
               </div>
               <NavigationMenuContent></NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            <NavigationMenuItem
+              onClick={() => handleRouting("cooperation", false)}
+            >
               <div className="group inline-flex h-9 w-max items-center justify-center px-2 py-2 text-sm font-small transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-black cursor-pointer">
                 فراخوان همکاری
               </div>
@@ -226,9 +227,7 @@ const NavBar = () => {
                 دوره‌های آموزشی
               </div>
             </NavigationMenuItem>
-            <NavigationMenuItem
-              onClick={() => handleRouting("articles", false)}
-            >
+            <NavigationMenuItem onClick={() => handleRouting("FAQ", false)}>
               <div className="group inline-flex h-9 w-max items-center justify-center px-4 py-2 text-base lg:text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-white cursor-pointer">
                 مشاوره و سوالات علمی
               </div>
@@ -237,7 +236,7 @@ const NavBar = () => {
           <div className="ml-0 list-none flex gap-2 h-full ">
             <NavigationMenuItem
               className="h-full relative top-2"
-              onClick={() => handleRouting("articles", false)}
+              onClick={() => handleRouting("about", false)}
             >
               <NavigationMenuTrigger className="text-base lg:text-sm  h-full">
                 درباره ما

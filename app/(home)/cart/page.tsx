@@ -22,6 +22,7 @@ const books = [
     ISBN: "978-600-119-429-6",
     editionNo: 5,
     state: "نو",
+    author: "",
     pageCount: 700,
     publishTime: new Date(),
     isActive: true,
@@ -41,6 +42,7 @@ const books = [
 
     price: 180000,
     ISBN: "978-964-448-049-1",
+    author: "",
     editionNo: 3,
     state: "دست دوم",
     pageCount: 150,
@@ -62,6 +64,7 @@ const books = [
 
     price: 400000,
     ISBN: "978-964-305-379-5",
+    author: "",
     editionNo: 10,
     state: "نو",
     pageCount: 1000,
@@ -85,6 +88,7 @@ const books = [
     ISBN: "978-964-305-379-5",
     editionNo: 10,
     state: "نو",
+    author: "",
     pageCount: 1000,
     publishTime: new Date(),
     isActive: true,
@@ -101,7 +105,7 @@ const books = [
     description:
       "حماسه ملی ایران، نوشته فردوسی که داستان‌های شاهان و پهلوانان ایران را روایت می‌کند.",
     bookComments: "یکی از ارزشمندترین آثار ادبی ایران.",
-
+    author: "",
     price: 400000,
     ISBN: "978-964-305-379-5",
     editionNo: 10,
@@ -124,6 +128,7 @@ const books = [
     bookComments: "یکی از ارزشمندترین آثار ادبی ایران.",
 
     price: 400000,
+    author: "",
     ISBN: "978-964-305-379-5",
     editionNo: 10,
     state: "نو",
@@ -149,6 +154,7 @@ const books = [
     editionNo: 10,
     state: "نو",
     pageCount: 1000,
+    author: "",
     publishTime: new Date(),
     isActive: true,
     createdBy: 12,

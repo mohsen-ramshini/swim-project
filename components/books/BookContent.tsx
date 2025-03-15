@@ -6,6 +6,11 @@ import { ArrowLeftCircle } from "lucide-react";
 import Profile from "../articles/Profile";
 import BookInterface from "./BookInterface";
 import { useGetBookBySlug } from "@/features/book/api/use-get-book-by-slug";
+import CommentForm from "@/components/comment/CommentForm";
+import CommentSection from "../comment/CommentSection";
+import Comment from "../comment/Comment";
+import { useGetBooks } from "@/features/book/api/use-get-books";
+import LoadingComponent from "../appLayout/LoadingComponent";
 
 interface Props {
   slug: string;
@@ -33,11 +38,11 @@ const BookContent: React.FC<Props> = ({ slug }) => {
     isLoading,
     isError,
   } = useGetBookBySlug(slug);
+  const { data: relatedBooks } = useGetBooks();
 
   const normalizedBook = useMemo(() => {
-    if (!book) return null; // جلوگیری از ارور undefined
+    if (!book) return null;
 
-    // اگر book یک آرایه باشد، اولین مقدارش را بگیر
     const singleBook = Array.isArray(book) ? book[0] : book;
 
     return {
@@ -52,59 +57,41 @@ const BookContent: React.FC<Props> = ({ slug }) => {
     };
   }, [book]);
 
+  const normalizedBooks = useMemo(() => {
+    return (
+      relatedBooks?.map((book) => ({
+        ...book,
+        createdAt: new Date(book.createdAt),
+        modifiedAt: book.modifiedAt ? new Date(book.modifiedAt) : undefined,
+        publishTime: book.publishTime ? new Date(book.publishTime) : undefined,
+      })) || []
+    );
+  }, [relatedBooks]);
+
+  if (isLoading) {
+    <LoadingComponent />;
+  }
   return (
-    <aside className="w-full lg:h-[1750px] flex flex-col mt-10 justify-center items-center">
+    <aside className="w-full lg:h-full flex flex-col mt-10 justify-center items-center">
       <h2 className="text-5xl font-extrabold my-10">مشخصات کتاب</h2>
       <div className=" w-11/12 h-full">
-        <div className="h-1/6 mb-20">
+        <div className="h-1/6 mb-20 ">
           <BookDetails data={normalizedBook} />
         </div>
-        <div className=" h-2/6 text-right">{book.description}</div>
-        <div className=" h-1/6 flex flex-col justify-start items-end">
-          <div className="flex flex-row justify-between items-baseline  w-full">
-            <Button variant={"ghost"}>
-              مشاهده همه <ArrowLeftCircle />
-            </Button>
-            <h6>نظرات کاربران</h6>
-          </div>
-          <div className="w-full h-full flex flex-row-reverse justify-start items-center gap-2">
-            <div className="h-full h max-w-60 ">
-              <div>
-                <Profile fullName="محسن رامشینی" size="lg" />
-              </div>
-              <div className="text-xs text-right">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-                ullam expedita laborum ad fuga nulla error unde? Molestiae
-                quibusdam enim ipsa saepe quidem ratione, fugit harum rerum
-                totam vel a!
-              </div>
-            </div>
-            <div className="h-full h max-w-60">
-              <div>
-                <Profile fullName="محسن رامشینی" size="lg" />
-              </div>
-              <div className="text-xs text-right">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-                ullam expedita laborum ad fuga nulla error unde? Molestiae
-                quibusdam enim ipsa saepe quidem ratione, fugit harum rerum
-                totam vel a!
-              </div>
-            </div>
-            <div className="h-full h max-w-60">
-              <div>
-                <Profile fullName="محسن رامشینی" size="lg" />
-              </div>
-              <div className="text-xs text-right">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-                ullam expedita laborum ad fuga nulla error unde? Molestiae
-                quibusdam enim ipsa saepe quidem ratione, fugit harum rerum
-                totam vel a!
-              </div>
-            </div>
-          </div>
+        <h3 className="mr-36 text-4xl font-semibold text-right my-10">
+          توضیحات کتاب
+        </h3>
+        <div className="mr-36 h-2/6 min-h-96 text-right">
+          {book.description}
         </div>
-        <div className=" h-2/6">
-          <h6>{/* <BookInterface data={books} slider={true} /> */}</h6>
+        <div className=" h-1/6">
+          <h5 className="text-4xl font-semibold text-right my-10">
+            کتاب های دیگر انجمن علوم نوین شنا
+          </h5>
+          <BookInterface slider={true} data={normalizedBooks} />
+        </div>
+        <div className="my-10">
+          <Comment />
         </div>
       </div>
     </aside>

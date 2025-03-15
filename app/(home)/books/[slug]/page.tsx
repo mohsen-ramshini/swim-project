@@ -15,7 +15,7 @@ export default async function BookPage({
   const { slug } = await params;
 
   return (
-    <section className="w-full lg:h-[1750px] flex flex-col mt-10">
+    <section className="w-full h-full flex flex-col mt-10">
       <BookContent slug={slug} />
     </section>
   );
