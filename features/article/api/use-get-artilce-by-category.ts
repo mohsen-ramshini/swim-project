@@ -18,7 +18,7 @@ export const useGetArticlesByCategory = (categoryId: number) => {
       }
 
       const data = await response.json();
-      console.log(`fetching : ${data.data}`);
+
       return data;
     },
   });

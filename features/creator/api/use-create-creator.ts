@@ -20,12 +20,9 @@ export const useCreateCreator = () => {
         // modifiedAt: new Date(),
       };
 
-      console.log("Final request body:", JSON.stringify(enrichedJson));
-
       const response = await client.api.creator.$post({ json: enrichedJson });
 
       if (!response.ok) {
-        console.log(response);
         const errorText = await response.text();
         console.error("Error Response:", errorText);
         throw new Error(`Request failed with status ${response.status}`);

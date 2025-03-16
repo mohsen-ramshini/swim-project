@@ -31,19 +31,12 @@ type FormValues = z.input<typeof formSchema>;
 export const NewArticleSheet = () => {
   const { isArticleOpen, onCloseArticle } = useNewArticle();
 
-  useEffect(() => {
-    console.log(`sheet is open :${isArticleOpen}`);
-  }, [isArticleOpen]);
-
   const mutation = useCreateArticle();
 
   const onSubmit = (values: FormValues) => {
-    console.log("Submitting values:", values); // Log form values before mutation
-
     mutation.mutate(values, {
       onSuccess: () => {
         onCloseArticle();
-        console.log("Success artilce sent:", values);
       },
       onError: (error) => {
         console.error("Mutation error:", error);

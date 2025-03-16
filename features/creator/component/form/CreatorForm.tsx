@@ -34,11 +34,11 @@ const formSchema = insertCreatorSchema
     name: true,
   })
   .extend({
-    roles: z.array(z.string()).default([]), // اضافه کردن roles
+    roles: z.array(z.string()).default([]),
   });
 
 type FormValues = z.input<typeof formSchema> & {
-  roles: string[]; // به‌عنوان آرایه‌ای از رشته‌ها
+  roles: string[];
 };
 
 type Props = {
@@ -61,16 +61,11 @@ export const CreatorForm = ({
     defaultValues: defaultValues || {
       id: 0,
       name: "",
-      roles: [], // فیلد roles به‌عنوان آرایه‌ای از رشته‌ها
+      roles: [],
     },
   });
 
-  const { data: categories, isLoading, isError } = useGetCreators();
-
-  const [publishDate, setPublishDate] = useState<Date | null>(null);
-
   const handleFormSubmit = (values: FormValues) => {
-    console.log(`form values${values}`);
     onSubmit(values);
   };
 

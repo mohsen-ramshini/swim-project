@@ -34,19 +34,12 @@ type FormValues = z.input<typeof formSchema>;
 export const NewBookSheet = () => {
   const { IsBookOpen, OnCloseBook } = useNewBook();
 
-  useEffect(() => {
-    console.log(`sheet is open :${IsBookOpen}`);
-  }, [IsBookOpen]);
-
   const mutation = useCreateBook();
 
   const onSubmit = (values: FormValues) => {
-    console.log("Submitting values:", values);
-
     mutation.mutate(values, {
       onSuccess: () => {
         OnCloseBook();
-        console.log("Success artilce sent:", values);
       },
       onError: (error) => {
         console.error("Mutation error:", error);

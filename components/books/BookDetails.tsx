@@ -17,40 +17,25 @@ const formatJalaliDate = (isoDate: string) => {
 };
 
 const BookDetails: React.FC<Props> = ({ data }) => {
-  const commentsRef = useRef<HTMLDivElement>(null);
-
-  const scrollToComments = () => {
-    if (commentsRef.current) {
-      commentsRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
-    <div className="w-full h-full flex flex-row-reverse">
-      <div className="w-3/5 flex flex-row-reverse">
-        <div className="w-1/2">
+    <div className="w-full h-full flex flex-col lg:flex-row-reverse">
+      <div className="w-full lg:w-3/5 flex flex-col lg:flex-row-reverse items-center ">
+        <div className="w-full lg:w-1/2 m-auto flex justify-center lg:block mb-10">
           <Skeleton className="w-[400px] h-[520px] max-w-96" />
         </div>
-        <div className="mr-5 w-1/2 text-right">
+        <div className="lg:mr-5 w-full lg:w-1/2 text-right  h-full">
           <h4 className="text-3xl">{data.title}</h4>
           <div>
             <p className="my-2">نویسنده : {data.author}</p>
             <p className="my-2">مترجم : دکتر مرتضی</p>
             <p className="my-2">انتشارات : راه نوین</p>
             <p className="my-2">دسته‌بندی : بیومکانیک شنا</p>
-            {/* <Button
-              variant={"ghost"}
-              className="text-blue-400"
-              onClick={scrollToComments}
-            >
-              خواندن نظرات
-            </Button> */}
           </div>
         </div>
       </div>
-      <div className="w-2/5 h-[250px] flex flex-col bg-gray-200 p-5 rounded-sm max-w-md">
-        <div className="flex flex-row-reverse justify-around items-center text-right">
-          <div className="flex flex-col text-xl ">
+      <div className="w-full lg:w-2/5 h-auto flex flex-col bg-gray-200 p-5 rounded-sm max-w-md mt-5 lg:mt-0 m-auto">
+        <div className="flex justify-center flex-row-reverse gap-5 lg:flex-row-reverse lg:justify-between  text-right  ">
+          <div className="flex flex-col text-xl mb-3 lg:mb-0 ">
             <p>شماره انتشار</p>
             <p>شماره شابک</p>
             <p>سال انتشار</p>
@@ -61,7 +46,6 @@ const BookDetails: React.FC<Props> = ({ data }) => {
             <p>{data.editionNo}</p>
             <p>{data.ISBN}</p>
             <p>
-              {" "}
               {data?.publishTime
                 ? formatJalaliDate(data.publishTime.toISOString())
                 : "تاریخ نامشخص"}
@@ -70,7 +54,7 @@ const BookDetails: React.FC<Props> = ({ data }) => {
             <p>{data.price}</p>
           </div>
         </div>
-        <div className="flex flex-row justify-center items-center">
+        <div className="flex flex-row justify-center items-center mt-5">
           <Button variant={"ghost"}>
             <Share2 />
           </Button>

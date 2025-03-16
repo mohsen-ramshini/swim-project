@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useStates } from "./hook/use-get-provices";
-import { useCities } from "./hook/use-get-cities";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -277,75 +275,3 @@ const AddressForm = () => {
 };
 
 export default AddressForm;
-
-// import React, { useState, useEffect } from "react";
-
-// const fetchCities = async (stateId: string) => {
-//   const response = await fetch(`/api/cities?state=${stateId}`);
-//   if (!response.ok) {
-//     throw new Error("خطا در دریافت اطلاعات شهرها");
-//   }
-//   const data = await response.json();
-//   return data;
-// };
-
-// const AddressForm = () => {
-//   const [selectedState, setSelectedState] = useState<string>("");
-//   const [cities, setCities] = useState<any[]>([]);
-//   const [isLoading, setIsLoading] = useState<boolean>(false);
-//   const [error, setError] = useState<string | null>(null);
-
-//   const handleStateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-//     setSelectedState(event.target.value);
-//   };
-
-//   useEffect(() => {
-//     const fetchCitiesData = async () => {
-//       if (selectedState) {
-//         setIsLoading(true);
-//         setError(null);
-//         try {
-//           const data = await fetchCities(selectedState);
-//           setCities(data);
-//         } catch (error) {
-//           setError("خطا در دریافت اطلاعات");
-//         } finally {
-//           setIsLoading(false);
-//         }
-//       }
-//     };
-
-//     fetchCitiesData();
-//   }, [selectedState]);
-//   console.log(cities);
-
-//   return (
-//     <form>
-//       <select onChange={handleStateChange}>
-//         <option value="">Select a State</option>
-//         <option value="تهران">تهران</option>
-//         <option value="قم">قم</option>
-//         {/* Add more options based on actual states */}
-//       </select>
-
-//       {isLoading && <p>Loading cities...</p>}
-//       {error && <p>Error: {error}</p>}
-
-//       <select>
-//         <option value="">Select a City</option>
-//         {cities.length > 0 ? (
-//           cities.map((city: any, index: number) => (
-//             // Make sure the key is unique (using either city.id or city.name)
-//             <option key={city.id || index} value={city.id}>
-//               {city.name}
-//             </option>
-//           ))
-//         ) : (
-//           <option value="">No cities available</option>
-//         )}
-//       </select>
-//     </form>
-//   );
-// };
-
-// export default AddressForm;

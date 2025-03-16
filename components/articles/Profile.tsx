@@ -1,5 +1,5 @@
 import React from "react";
-import cn from "clsx"; // Import clsx for conditional classNames
+import cn from "clsx";
 
 interface ComponentSize {
   sm: { image: string; text: string; roleText: string };
@@ -9,7 +9,7 @@ interface ComponentSize {
 
 const componentSize: ComponentSize = {
   sm: {
-    image: "w-8 h-8", // Small image (Increased from w-6 h-6)
+    image: "w-8 h-8",
     text: "text-sm",
     roleText: "text-xs",
   },

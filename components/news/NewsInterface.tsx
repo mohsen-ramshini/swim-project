@@ -23,6 +23,7 @@ type News = z.infer<typeof insertNewsSchema>;
 interface Props {
   news: News[];
   slider: boolean;
+  interval?: number; // مدت زمان حرکت خودکار (میلی‌ثانیه)
 }
 
 const useMediaQuery = (query: string) => {
@@ -45,11 +46,23 @@ const chunkArray = (arr: News[], size: number) => {
   );
 };
 
-const NewsInterface: React.FC<Props> = ({ news, slider }) => {
-  const router = useRouter();
+const NewsInterface: React.FC<Props> = ({ news, slider, interval = 3000 }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const itemsPerSlide = 1;
   const groupedNews = chunkArray(news, itemsPerSlide);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (!slider) return;
+
+    const timer = setInterval(() => {
+      setActiveIndex((prevIndex) =>
+        prevIndex + 1 >= groupedNews.length ? 0 : prevIndex + 1
+      );
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [groupedNews.length, slider, interval]);
 
   if (!slider) {
     return (
@@ -66,12 +79,18 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
   return (
     <aside className="w-full h-auto flex flex-col">
       <Carousel className="w-full h-auto max-w-5xl m-auto">
-        <CarouselContent className="w-full h-auto lg:h-[550px] ">
+        <CarouselContent
+          className="w-full h-auto lg:h-[550px]"
+          style={{
+            transform: `translateX(${activeIndex * 100}%)`,
+            transition: "transform 0.5s ease-in-out",
+          }}
+        >
           {groupedNews.map((newsGroup, index) => (
             <CarouselItem
               key={`group-${index}`}
               className={cn(
-                "flex justify-center items-center h-auto gap-4 px-2 ",
+                "flex justify-center items-center h-auto gap-4 px-2",
                 isMobile ? "w-full flex-col" : "w-1/3"
               )}
             >
@@ -79,7 +98,7 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
                 <Link
                   key={newsItem.id}
                   href={`/news/${newsItem.slug}`}
-                  className="w-full  max-w-3xl p-2"
+                  className="w-full max-w-3xl p-2"
                 >
                   <Card className="w-full h-auto shadow-md rounded-lg overflow-hidden">
                     <CardContent className="flex flex-col items-center p-4">
@@ -99,8 +118,20 @@ const NewsInterface: React.FC<Props> = ({ news, slider }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious
+          onClick={() =>
+            setActiveIndex((prevIndex) =>
+              prevIndex + 1 >= groupedNews.length ? 0 : prevIndex + 1
+            )
+          }
+        />
+        <CarouselNext
+          onClick={() =>
+            setActiveIndex((prevIndex) =>
+              prevIndex - 1 < 0 ? groupedNews.length - 1 : prevIndex - 1
+            )
+          }
+        />
       </Carousel>
     </aside>
   );

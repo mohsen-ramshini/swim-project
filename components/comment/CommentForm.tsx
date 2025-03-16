@@ -11,18 +11,32 @@ import {
 } from "@/components/ui/form";
 import TextEditor from "@/components/modules/TextEditor";
 import { Button } from "../ui/button";
+import { useCreateComment } from "@/features/articleComments/api/use-create-article-comment";
+import { insertArticleCommentsSchema } from "@/db/schema/article/articleComments";
 
-const formSchema = z.object({
-  excerpt: z.string().min(10, "چکیده باید حداقل 10 کاراکتر باشد"),
+const formSchema = insertArticleCommentsSchema.pick({
+  text: true,
+  articleId: true,
+  parentId: true,
+  userId: true,
 });
 
-export default function MyForm() {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: { excerpt: "" },
-  });
+interface Props {
+  ID: number;
+}
 
-  const onSubmit = (data: any) => console.log("Form Data:", data);
+type FormValues = z.input<typeof formSchema>;
+
+export default function MyForm({ ID }: Props) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { text: "", articleId: ID, parentId: 9, userId: 1 },
+  });
+  const mutation = useCreateComment();
+
+  const onSubmit = (data: FormValues) => {
+    mutation.mutate(data);
+  };
 
   return (
     <Form {...form}>
@@ -32,7 +46,7 @@ export default function MyForm() {
       >
         <FormField
           control={form.control}
-          name="excerpt"
+          name="text"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-center text-xl sm:text-2xl">

@@ -6,8 +6,6 @@ import { title } from "process";
 
 const app = new Hono()
   .get("/", async (c) => {
-    console.log("object");
-
     const data = await db
       .select({
         id: authors.id,
@@ -17,10 +15,8 @@ const app = new Hono()
     return c.json({ data });
   })
   .post("/", zValidator("json", insertAuthorSchema), async (c) => {
-    console.log("POST route hit");
     const values = c.req.valid("json");
-    console.log("Raw Body:", await c.req.json());
-    console.log("Validated Data:", values);
+
     const data = await db.insert(authors).values({
       ...values,
     });

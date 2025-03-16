@@ -4,8 +4,6 @@ import { books, insertBookSchema } from "@/db/schema/book/book";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { and, eq, inArray } from "drizzle-orm";
-import ArticleCategory from "@/features/articleCategory/components/ArticleCategory";
-import { articleCategories } from "@/db/schema/article/articleCategory";
 
 const app = new Hono()
   .get("/", async (c) => {
@@ -129,10 +127,8 @@ const app = new Hono()
     }
   )
   .post("/", zValidator("json", insertBookSchema), async (c) => {
-    console.log("POST route hit");
     const values = c.req.valid("json");
-    console.log("Raw Body:", await c.req.json());
-    console.log("Validated Data:", values);
+
     const data = await db.insert(books).values({
       ...values,
     });
@@ -160,7 +156,6 @@ const app = new Hono()
 
         return c.json({ success: true, deleted: data });
       } catch (error) {
-        console.error("Bulk delete error:", error);
         return c.json({ success: false, error: "Failed to delete items" }, 500);
       }
     }

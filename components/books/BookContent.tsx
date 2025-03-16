@@ -1,14 +1,8 @@
 "use client";
 import React, { useMemo } from "react";
 import BookDetails from "./BookDetails";
-import { Button } from "../ui/button";
-import { ArrowLeftCircle } from "lucide-react";
-import Profile from "../articles/Profile";
 import BookInterface from "./BookInterface";
 import { useGetBookBySlug } from "@/features/book/api/use-get-book-by-slug";
-import CommentForm from "@/components/comment/CommentForm";
-import CommentSection from "../comment/CommentSection";
-import Comment from "../comment/Comment";
 import { useGetBooks } from "@/features/book/api/use-get-books";
 import LoadingComponent from "../appLayout/LoadingComponent";
 
@@ -69,30 +63,31 @@ const BookContent: React.FC<Props> = ({ slug }) => {
   }, [relatedBooks]);
 
   if (isLoading) {
-    <LoadingComponent />;
+    return <LoadingComponent />;
   }
+
   return (
-    <aside className="w-full lg:h-full flex flex-col mt-10 justify-center items-center">
-      <h2 className="text-5xl font-extrabold my-10">مشخصات کتاب</h2>
-      <div className=" w-11/12 h-full">
-        <div className="h-1/6 mb-20 ">
+    <aside className="w-full lg:h-full flex flex-col mt-10 justify-center items-center px-4">
+      <h2 className="text-3xl lg:text-5xl font-extrabold my-10 text-center">
+        مشخصات کتاب
+      </h2>
+      <div className="w-full lg:w-11/12 h-full">
+        <div className="h-auto lg:h-1/6 mb-20">
           <BookDetails data={normalizedBook} />
         </div>
-        <h3 className="mr-36 text-4xl font-semibold text-right my-10">
+        <h3 className="text-3xl lg:text-4xl font-semibold text-right my-10">
           توضیحات کتاب
         </h3>
-        <div className="mr-36 h-2/6 min-h-96 text-right">
+        <div className="text-right lg:mr-36 h-auto min-h-96">
           {book.description}
         </div>
-        <div className=" h-1/6">
-          <h5 className="text-4xl font-semibold text-right my-10">
+        <div className="w-5/6 m-auto h-auto lg:h-1/6 my-10">
+          <h5 className="text-3xl lg:text-4xl font-semibold text-right my-10">
             کتاب های دیگر انجمن علوم نوین شنا
           </h5>
           <BookInterface slider={true} data={normalizedBooks} />
         </div>
-        <div className="my-10">
-          <Comment />
-        </div>
+        <div className="my-10">{/* <Comment articleID={}/> */}</div>
       </div>
     </aside>
   );

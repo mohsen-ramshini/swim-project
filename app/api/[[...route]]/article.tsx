@@ -9,8 +9,6 @@ import { articleCategories } from "@/db/schema/article/articleCategory";
 
 const app = new Hono()
   .get("/", async (c) => {
-    console.log("article");
-
     const data = await db
       .select({
         id: articles.id,
@@ -182,10 +180,7 @@ const app = new Hono()
     }
   )
   .post("/", zValidator("json", insertArticleSchema), async (c) => {
-    console.log("POST route hit");
     const values = c.req.valid("json");
-    console.log("Raw Body:", await c.req.json());
-    console.log("Validated Data:", values);
     const data = await db.insert(articles).values({
       ...values,
     });
@@ -213,7 +208,6 @@ const app = new Hono()
 
         return c.json({ success: true, deleted: data });
       } catch (error) {
-        console.error("Bulk delete error:", error);
         return c.json({ success: false, error: "Failed to delete items" }, 500);
       }
     }

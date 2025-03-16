@@ -1,6 +1,5 @@
 "use client";
 import React, { useMemo, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import SingleArticleInterface from "./SingleArticleInterface";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -21,29 +20,25 @@ const ARTICLES_PER_PAGE = 4;
 
 const ArticlePagination = () => {
   const { data: categories = [], isLoading: isCategoryLoading } =
-    useGetCategories(); // دریافت دسته‌بندی‌ها
+    useGetCategories();
 
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );
 
-  // دریافت همه مقالات برای رندر اولیه
   const { data: allArticles = [], isLoading: isAllLoading } = useGetArticles();
 
-  // دریافت مقالات بر اساس دسته‌بندی انتخاب‌شده
   const normalizedCategoryId = selectedCategoryId ?? 0;
 
   const { data: categoryArticles = [], isLoading: isCategoryArticlesLoading } =
     useGetArticlesByCategory(normalizedCategoryId);
 
-  // مشخص کردن مقالاتی که باید نمایش داده شوند
   const displayedArticles = useMemo(() => {
     return selectedCategoryId ? categoryArticles : allArticles;
   }, [selectedCategoryId, categoryArticles, allArticles]);
 
-  const test = displayedArticles || [];
   const [currentPage, setCurrentPage] = useState(1);
-  // const totalPages = Math.ceil(test?.data.length / ARTICLES_PER_PAGE);
+
   const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
 
   const articlesArray = Array.isArray(displayedArticles)
@@ -76,7 +71,7 @@ const ArticlePagination = () => {
     setSelectedCategoryId((prev) =>
       prev === parseInt(categoryId) ? null : parseInt(categoryId)
     );
-    setCurrentPage(1); // بعد از تغییر دسته‌بندی، صفحه اول نمایش داده شود
+    setCurrentPage(1);
   };
 
   if (isAllLoading || isCategoryArticlesLoading || isCategoryLoading) {

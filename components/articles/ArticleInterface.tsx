@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from "react";
 import { insertArticleSchema } from "@/db/schema/article/article";
 import { z } from "zod";
-import parse, { domToReact } from "html-react-parser";
 import Profile from "./Profile";
+
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
+
 import useContentParser from "@/hooks/use-content-parser";
 
 type Article = z.infer<typeof insertArticleSchema>;

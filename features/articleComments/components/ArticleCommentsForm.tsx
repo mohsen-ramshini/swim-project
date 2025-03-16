@@ -4,7 +4,7 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCreateAccount } from "@/features/articleComments/api/use-create-article-comment";
+import { useCreateComment } from "@/features/articleComments/api/use-create-article-comment";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,6 +20,9 @@ import { insertArticleCommentsSchema } from "@/db/schema/article/articleComments
 
 const formSchema = insertArticleCommentsSchema.pick({
   text: true,
+  articleId: true,
+  parentId: true,
+  userId: true,
 });
 
 type FormValues = z.input<typeof formSchema>;
@@ -32,7 +35,7 @@ const ArticleCommentsForm = () => {
     },
   });
 
-  const mutation = useCreateAccount();
+  const mutation = useCreateComment();
 
   function onSubmit(values: FormValues) {
     const formData = {
@@ -41,10 +44,8 @@ const ArticleCommentsForm = () => {
       articleId: 1,
       parentId: 1,
       userId: 1,
-      createDate: new Date(),
+      // createDate: new Date(),
     };
-
-    console.log("Form Data:", formData);
 
     mutation.mutate(formData, {
       onSuccess: () => {

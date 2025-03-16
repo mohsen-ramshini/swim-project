@@ -102,7 +102,7 @@ const SingleArticleInterface: React.FC<Props> = ({
       <aside className="flex flex-col w-full mt-16 items-end max-w-4xl m-auto">
         {filteredArticles.length > 0 ? (
           filteredArticles.slice(0, relatedArticleCount).map((art) => (
-            <div key={art.id} className="border-b py-4 w-full">
+            <div key={art.id} className="border-b py-4 w-full text-center">
               <div className="font-extrabold text-xl sm:text-2xl text-right">
                 {art.title}
                 <div className="text-gray-400 font-thin text-right">

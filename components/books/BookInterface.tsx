@@ -34,7 +34,7 @@ type Book = z.infer<typeof insertBookSchema>;
 interface Props {
   data: Book[];
   slider: boolean;
-  interval?: number; // مدت زمان حرکت خودکار (میلی‌ثانیه)
+  interval?: number;
 }
 
 const chunkArray = (arr: Book[], size: number) => {

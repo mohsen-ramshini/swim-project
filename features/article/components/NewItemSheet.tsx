@@ -41,17 +41,12 @@ export const NewItemSheet: React.FC<{
   title,
   description,
 }) => {
-  useEffect(() => {
-    console.log(`Sheet is open: ${isOpen}`);
-  }, [isOpen]);
-
   const mutation = useMutation();
 
   const onSubmit = (values: any) => {
     mutation.mutate(values, {
       onSuccess: () => {
         onClose();
-        console.log(values);
       },
     });
   };

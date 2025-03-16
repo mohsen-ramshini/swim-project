@@ -40,8 +40,6 @@ export const ForgotPasswordForm: React.FC = () => {
     phoneNumber: string;
     verificationCode?: string;
   }) => {
-    console.log("Submitted values:", values);
-
     try {
       const response = await fetch("/api/forgot-password", {
         method: "POST",
@@ -50,7 +48,7 @@ export const ForgotPasswordForm: React.FC = () => {
       });
 
       const data = await response.json();
-      console.log("Response:", data);
+
       setCodeSent(true);
     } catch (error) {
       console.error("Error sending request:", error);

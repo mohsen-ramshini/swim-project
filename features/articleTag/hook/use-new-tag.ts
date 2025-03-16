@@ -10,7 +10,6 @@ export const useNewTag = create<NewTagState>((set) => ({
   isTagOpen: false,
   onOpenTag: () => {
     set({ isTagOpen: true });
-    console.log(`tag is opening`);
   },
   onCloseTag: () => set({ isTagOpen: false }),
 }));

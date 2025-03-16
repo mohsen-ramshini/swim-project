@@ -6,30 +6,21 @@ import { client } from "@/lib/hono";
 type RequestType = InferRequestType<typeof client.api.comment.$post>["json"];
 type ResponseType = InferResponseType<typeof client.api.comment.$post>;
 
-export const useCreateAccount = () => {
+export const useCreateComment = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
-      const response = await client.api.comment.$post({ json });
-      return await response.json();
-      // try {
-      //   const response = await client.api.comment.$post({ json });
-
-      //   const data = await response.json();
-      //   if (!Array.isArray(data)) {
-      //     throw new Error("Expected response data to be an array");
-      //   }
-
-      //   const result = data.reduce((acc, item) => {
-      //     return acc;
-      //   }, []);
-      //   return result;
-      // } catch (error) {
-      //   console.error("Error in mutation:", error);
-      //   throw error;
-      // }
+      try {
+        const response = await client.api.comment.$post({ json });
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error during comment creation:", error);
+        throw new Error("Failed to create comment");
+      }
     },
+
     onSuccess: () => {
       toast.success("comment created");
       queryClient.invalidateQueries({ queryKey: ["comment"] });

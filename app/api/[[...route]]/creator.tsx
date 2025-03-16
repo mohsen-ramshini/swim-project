@@ -11,9 +11,8 @@ import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { eq, and, inArray } from "drizzle-orm";
 
-// API Setup
 const app = new Hono()
-  // 1. دریافت لیست پدیدآورندگان
+
   .get("/", async (c) => {
     const data = await db
       .select({

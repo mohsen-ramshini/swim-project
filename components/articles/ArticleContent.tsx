@@ -18,6 +18,7 @@ interface Props {
 }
 
 const defaultArticles = {
+  id: 0,
   articleType: 0,
   title: "",
   slug: "",
@@ -34,6 +35,7 @@ const defaultArticles = {
   modifiedAt: new Date(),
 };
 export default function ArticleContent({ slug }: Props) {
+  const [articleId, setArticleId] = useState(0);
   const [category, setCategory] = useState<string>();
   const {
     data: article = defaultArticles,
@@ -56,6 +58,12 @@ export default function ArticleContent({ slug }: Props) {
       categories?.find((cat) => cat.id === article?.categoryId)?.title
     );
   }, [categories, article]);
+
+  useEffect(() => {
+    if (article.id !== 0) {
+      setArticleId(article.id);
+    }
+  }, [article]);
 
   function normalizeArticleData(article: any) {
     return {
@@ -105,7 +113,7 @@ export default function ArticleContent({ slug }: Props) {
             />
           </div>
         </div>
-        <Comment />
+        {articleId !== 0 && <Comment articleID={articleId} />}
       </div>
     </section>
   );

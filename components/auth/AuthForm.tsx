@@ -78,9 +78,7 @@ const useMediaQuery = (query: string) => {
 };
 
 export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
-  const [showForgetPassword, setShowForgetPassword] = useState<boolean>(false);
   const router = useRouter();
-  const isMobile = useMediaQuery("max-width: 768px");
   const formSchema = isLogin ? loginSchema : signUpSchema;
 
   const form = useForm<AuthFormValues>({
@@ -88,7 +86,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
     defaultValues: {
       phoneNumber: "",
       password: "",
-      confirmPassword: "", // فقط در ثبت‌نام نیاز است
+      confirmPassword: "",
     },
   });
 

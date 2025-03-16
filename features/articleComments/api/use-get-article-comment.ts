@@ -1,19 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { client } from "@/lib/hono";
 
-export const useGetArticles = () => {
+export const useGetArticleComment = (articleId?: string) => {
   const query = useQuery({
-    queryKey: ["articles"],
+    enabled: !!articleId,
+    queryKey: ["comment", articleId],
     queryFn: async () => {
-      const response = await client.api.comment.$get();
+      if (!articleId) throw new Error("articleId is required");
+
+      const response = await client.api.comment[":articleId"].$get({
+        param: { articleId },
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch articles");
+        throw new Error("Failed to fetch comment");
       }
 
-      const { data } = await response.json();
-      return data;
+      const jsonData = await response.json();
+
+      return jsonData.data;
     },
   });
+
+  return query;
 };
