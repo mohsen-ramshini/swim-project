@@ -44,12 +44,12 @@ export function AppSidebar() {
       icon: Newspaper,
       subItems: [
         {
-          title: "مقالات",
+          title: "افزودن مقاله",
           setActive: () => setActivePage("article"),
           icon: BookPlus,
         },
         {
-          title: "دسته بندی مقالات",
+          title: "افزودن دسته بندی",
           setActive: () => setActivePage("articleCategory"),
           icon: Inbox,
         },
@@ -79,11 +79,6 @@ export function AppSidebar() {
           title: "افزودن کتاب",
           setActive: () => setActivePage("book"),
           icon: BookPlus,
-        },
-        {
-          title: "دسته بندی کتاب‌ها",
-          setActive: () => setActivePage("bookCategory"),
-          icon: FolderOpen,
         },
       ],
     },

@@ -5,113 +5,29 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1734945784654,
-      "tag": "0000_busy_sentinels",
+      "when": 1742201749268,
+      "tag": "0000_easy_darkstar",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1735373550493,
-      "tag": "0001_opposite_morgan_stark",
+      "when": 1742201867395,
+      "tag": "0001_cute_living_mummy",
       "breakpoints": true
     },
     {
       "idx": 2,
       "version": "7",
-      "when": 1735381860408,
-      "tag": "0002_stale_gargoyle",
+      "when": 1742208674744,
+      "tag": "0002_graceful_jean_grey",
       "breakpoints": true
     },
     {
       "idx": 3,
       "version": "7",
-      "when": 1735382074185,
-      "tag": "0003_exotic_diamondback",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1735382234735,
-      "tag": "0004_clear_gauntlet",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1735382415098,
-      "tag": "0005_nervous_morlocks",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1739094449608,
-      "tag": "0006_minor_grandmaster",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1740561935581,
-      "tag": "0007_pretty_adam_destine",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "7",
-      "when": 1741244774269,
-      "tag": "0008_mean_stellaris",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "7",
-      "when": 1741260053860,
-      "tag": "0009_melted_psylocke",
-      "breakpoints": true
-    },
-    {
-      "idx": 10,
-      "version": "7",
-      "when": 1741343833307,
-      "tag": "0010_icy_forge",
-      "breakpoints": true
-    },
-    {
-      "idx": 11,
-      "version": "7",
-      "when": 1741344216600,
-      "tag": "0011_milky_lake",
-      "breakpoints": true
-    },
-    {
-      "idx": 12,
-      "version": "7",
-      "when": 1741344244005,
-      "tag": "0012_illegal_rogue",
-      "breakpoints": true
-    },
-    {
-      "idx": 13,
-      "version": "7",
-      "when": 1741698606706,
-      "tag": "0013_huge_fat_cobra",
-      "breakpoints": true
-    },
-    {
-      "idx": 14,
-      "version": "7",
-      "when": 1741709821193,
-      "tag": "0014_warm_betty_brant",
-      "breakpoints": true
-    },
-    {
-      "idx": 15,
-      "version": "7",
-      "when": 1742141060551,
-      "tag": "0015_shiny_rhodey",
+      "when": 1742214885027,
+      "tag": "0003_brown_mattie_franklin",
       "breakpoints": true
     }
   ]

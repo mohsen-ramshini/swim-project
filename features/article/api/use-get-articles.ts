@@ -15,7 +15,6 @@ export const useGetArticles = () => {
 
       const { data } = await response.json();
 
-      // **بعد از دریافت مقالات، کش دسته‌بندی‌ها را نامعتبر کنیم**
       queryClient.invalidateQueries({ queryKey: ["categories"] });
 
       return data;

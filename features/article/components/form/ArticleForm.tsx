@@ -29,6 +29,7 @@ import {
 import { insertArticleSchema } from "@/db/schema/article/article";
 import { Trash } from "lucide-react";
 import { useGetCategories } from "@/features/articleCategory/api/use-get-categories";
+import { useGetCreators } from "@/features/creator/api/use-get-creators";
 
 const formSchema = insertArticleSchema.pick({
   articleType: true,
@@ -41,6 +42,9 @@ const formSchema = insertArticleSchema.pick({
   reference: true,
   // publishTime: true,
   isActive: true,
+  authorId: true,
+  translatorId: true,
+  editorId: true,
 });
 
 type FormValues = z.input<typeof formSchema>;
@@ -69,7 +73,7 @@ export const ArticleForm = ({
       thumbnail: "",
       excerpt: "",
       content: "",
-      categoryId: 1,
+
       reference: "",
       // publishTime: new Date(),
       isActive: true,
@@ -77,6 +81,7 @@ export const ArticleForm = ({
   });
 
   const { data: categories, isLoading, isError } = useGetCategories();
+  const { data: creators } = useGetCreators();
 
   const handleFormSubmit = (values: FormValues) => {
     onSubmit(values);
@@ -272,6 +277,111 @@ export const ArticleForm = ({
                 )}
               />
             </div>
+          </div>
+          <div className="sm:w-1/3">
+            <FormField
+              control={form.control}
+              name="authorId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>نویسنده</FormLabel>
+                  <FormControl>
+                    <Select
+                      value={String(field.value || "")} // ارسال آیدی نویسنده
+                      onValueChange={(value) => field.onChange(Number(value))} // تبدیل به عدد
+                      disabled={disabled}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="انتخاب نویسنده" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {creators
+                          ?.filter((creator) => creator.author === true)
+                          .map((creator) => (
+                            <SelectItem
+                              key={creator.id}
+                              value={String(creator.id)} // ارسال آیدی به جای نام
+                            >
+                              {creator.name}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="sm:w-1/3">
+            <FormField
+              control={form.control}
+              name="editorId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>ویراستار</FormLabel>
+                  <FormControl>
+                    <Select
+                      value={String(field.value || "")} // ارسال آیدی ویراستار
+                      onValueChange={(value) => field.onChange(Number(value))} // تبدیل به عدد
+                      disabled={disabled}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="انتخاب ویراستار" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {creators
+                          ?.filter((creator) => creator.editor === true)
+                          .map((creator) => (
+                            <SelectItem
+                              key={creator.id}
+                              value={String(creator.id)} // ارسال آیدی به جای نام
+                            >
+                              {creator.name}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="sm:w-1/3">
+            <FormField
+              control={form.control}
+              name="translatorId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>مترجم</FormLabel>
+                  <FormControl>
+                    <Select
+                      value={String(field.value || "")} // ارسال آیدی مترجم
+                      onValueChange={(value) => field.onChange(Number(value))} // تبدیل به عدد
+                      disabled={disabled}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="انتخاب مترجم" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {creators
+                          ?.filter((creator) => creator.translator === true)
+                          .map((creator) => (
+                            <SelectItem
+                              key={creator.id}
+                              value={String(creator.id)} // ارسال آیدی به جای نام
+                            >
+                              {creator.name}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
           <div className="flex flex-wrap gap-6">

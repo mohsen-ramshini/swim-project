@@ -12,6 +12,7 @@ import Comment from "@/components/comment/Comment";
 
 import { useGetArticleBySlug } from "@/features/article/api/use-get-article-by-slug";
 import { useGetCategories } from "@/features/articleCategory/api/use-get-categories";
+import { useGetCreator } from "@/features/creator/api/use-get-creator";
 
 interface Props {
   slug: string;
@@ -34,6 +35,7 @@ const defaultArticles = {
   modifiedBy: 0,
   modifiedAt: new Date(),
 };
+
 export default function ArticleContent({ slug }: Props) {
   const [articleId, setArticleId] = useState(0);
   const [category, setCategory] = useState<string>();
@@ -52,6 +54,17 @@ export default function ArticleContent({ slug }: Props) {
   const { data: categories } = useGetCategories();
   const excerpt = useContentParser(article?.excerpt ?? "", false);
   const content = useContentParser(article?.content ?? "", false);
+
+  // Fetch author, translator, and editor data dynamically
+  const { data: authorData, isLoading: authorLoading } = useGetCreator(
+    article?.createdBy?.toString()
+  );
+  const { data: translatorData, isLoading: translatorLoading } = useGetCreator(
+    article?.createdBy?.toString() // Adjust if you have specific fields for translator
+  );
+  const { data: editorData, isLoading: editorLoading } = useGetCreator(
+    article?.createdBy?.toString() // Adjust if you have specific fields for editor
+  );
 
   useEffect(() => {
     setCategory(
@@ -75,7 +88,7 @@ export default function ArticleContent({ slug }: Props) {
   }
 
   if (isLoading) {
-    <LoadingComponent />;
+    return <LoadingComponent />;
   }
   if (error || !article) return notFound();
 
@@ -96,7 +109,17 @@ export default function ArticleContent({ slug }: Props) {
           </div>
         </div>
         <div className="w-2/3">
-          <Profile fullName="محسن رامشینی" size="lg" />
+          {/* Display author, translator, and editor profiles dynamically */}
+          <Profile
+            fullName={
+              authorLoading
+                ? "در حال بارگذاری..."
+                : authorData?.name ?? "ناشناس"
+            }
+            role="نویسنده"
+            occupation="استاد دانشگاه"
+            size="lg"
+          />
           <div className="text-right font-bold text-2xl lg:text-3xl my-5 leading-[1.5]">
             {excerpt}
           </div>

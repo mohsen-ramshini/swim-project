@@ -11,6 +11,7 @@ import Profile from "./Profile";
 import useContentParser from "@/hooks/use-content-parser";
 import { useGetCategories } from "@/features/articleCategory/api/use-get-categories";
 import { useGetArticlesByCategory } from "@/features/article/api/use-get-artilce-by-category";
+import { useGetCreator } from "@/features/creator/api/use-get-creator"; // Assuming the hook is available
 import moment from "jalali-moment";
 
 type Article = z.infer<typeof insertArticleSchema>;
@@ -37,6 +38,9 @@ const SingleArticleInterface: React.FC<Props> = ({
   const { data: categories } = useGetCategories();
   const { data: relatedArticlesResponse } = useGetArticlesByCategory(
     categoryId ?? 0
+  );
+  const { data: authorData, isLoading: authorLoading } = useGetCreator(
+    data?.authorId?.toString()
   );
   const relatedArticles = relatedArticlesResponse?.data ?? [];
   const filteredArticles = mustRemove
@@ -76,13 +80,17 @@ const SingleArticleInterface: React.FC<Props> = ({
               </div>
             </div>
             <Profile
-              fullName="محسن رامشینی"
+              fullName={
+                authorLoading
+                  ? "در حال بارگذاری..."
+                  : authorData?.name ?? "ناشناس"
+              }
               size="lg"
               occupation="استاد دانشگاه"
               role="نویسنده"
             />
           </div>
-          <div className="max-w-lg  lg:max-w-6xl h-[180px] mb-5 lg:mb-0 lg:w-1/4 lg:h-[120px] rounded-sm">
+          <div className="max-w-lg lg:max-w-6xl h-[180px] mb-5 lg:mb-0 lg:w-1/4 lg:h-[120px] rounded-sm">
             <Skeleton className="w-full h-full" />
           </div>
         </div>

@@ -5,8 +5,10 @@ import {
   integer,
   timestamp,
   serial,
+  AnyPgColumn,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
+import { articleCategories } from "../article/articleCategory";
 
 export const books = pgTable("books", {
   id: serial("id").primaryKey(),
@@ -27,6 +29,9 @@ export const books = pgTable("books", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   modifiedBy: integer("modified_by"),
   modifiedAt: timestamp("modified_at").defaultNow(),
+  categoryId: integer("category_id").references(
+    (): AnyPgColumn => articleCategories.id
+  ),
 });
 
 export const insertBookSchema = createInsertSchema(books);

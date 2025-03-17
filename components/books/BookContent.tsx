@@ -1,10 +1,12 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import BookDetails from "./BookDetails";
 import BookInterface from "./BookInterface";
 import { useGetBookBySlug } from "@/features/book/api/use-get-book-by-slug";
 import { useGetBooks } from "@/features/book/api/use-get-books";
 import LoadingComponent from "../appLayout/LoadingComponent";
+import { useGetBookByCategory } from "@/features/book/api/use-get-book-by-category";
+import BookComment from "./BookComment";
 
 interface Props {
   slug: string;
@@ -24,21 +26,36 @@ const defaultBook = {
   createdAt: new Date(),
   modifiedAt: new Date(),
   isActive: true,
+  categoryId: null,
 };
 
 const BookContent: React.FC<Props> = ({ slug }) => {
+  const [bookId, setBookId] = useState(0);
   const {
     data: book = defaultBook,
     isLoading,
     isError,
   } = useGetBookBySlug(slug);
-  const { data: relatedBooks } = useGetBooks();
+
+  const [categoryId, setCategoryId] = useState<number | null>(null);
+
+  useEffect(() => {
+    if ("categoryId" in book && book.categoryId !== undefined) {
+      setCategoryId(book.categoryId ?? null);
+    }
+  }, [book]);
+
+  const { data: relatedBooks } = useGetBookByCategory(categoryId ?? 0);
+
+  useEffect(() => {
+    if (book.id !== 0) {
+      setBookId(book.id);
+    }
+  }, [book]);
 
   const normalizedBook = useMemo(() => {
     if (!book) return null;
-
     const singleBook = Array.isArray(book) ? book[0] : book;
-
     return {
       ...singleBook,
       createdAt: new Date(singleBook.createdAt),
@@ -53,7 +70,7 @@ const BookContent: React.FC<Props> = ({ slug }) => {
 
   const normalizedBooks = useMemo(() => {
     return (
-      relatedBooks?.map((book) => ({
+      relatedBooks?.data?.map((book) => ({
         ...book,
         createdAt: new Date(book.createdAt),
         modifiedAt: book.modifiedAt ? new Date(book.modifiedAt) : undefined,
@@ -87,7 +104,9 @@ const BookContent: React.FC<Props> = ({ slug }) => {
           </h5>
           <BookInterface slider={true} data={normalizedBooks} />
         </div>
-        <div className="my-10">{/* <Comment articleID={}/> */}</div>
+        <div className="my-10">
+          {bookId !== 0 && <BookComment bookId={bookId} />}
+        </div>
       </div>
     </aside>
   );

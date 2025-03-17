@@ -7,6 +7,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 
 import useContentParser from "@/hooks/use-content-parser";
+import { useGetCreators } from "@/features/creator/api/use-get-creators";
+import { useGetCreator } from "@/features/creator/api/use-get-creator";
 
 type Article = z.infer<typeof insertArticleSchema>;
 
@@ -15,8 +17,23 @@ interface Props {
 }
 
 const ArticleInterface: React.FC<Props> = ({ data }) => {
+  const authorId = data?.authorId ?? undefined;
+  const translatorId = data?.translatorId ?? undefined;
+  const editorId = data?.editorId ?? undefined;
+
+  const { data: authorData, isLoading: authorLoading } = useGetCreator(
+    authorId?.toString()
+  );
+  const { data: translatorData, isLoading: translatorLoading } = useGetCreator(
+    translatorId?.toString()
+  );
+  const { data: editorData, isLoading: editorLoading } = useGetCreator(
+    editorId?.toString()
+  );
+
   const router = useRouter();
   const content = useContentParser(data.excerpt, true);
+  console.log(data);
 
   return (
     <aside className="flex flex-col lg:flex-row-reverse border-b-2 mb-3">
@@ -26,7 +43,11 @@ const ArticleInterface: React.FC<Props> = ({ data }) => {
         </div>
         <div>
           <Profile
-            fullName={"محسن رامشینی"}
+            fullName={
+              authorLoading
+                ? "در حال بارگذاری..."
+                : authorData?.name ?? "ناشناس"
+            }
             role={"نویسنده"}
             occupation={"استاد دانشگاه"}
             size="lg"

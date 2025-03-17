@@ -13,14 +13,10 @@ import {
 } from "@/components/ui/sheet";
 import { useEffect } from "react";
 
-const formSchema = insertCreatorSchema
-  .pick({
-    id: true,
-    name: true,
-  })
-  .extend({
-    roles: z.array(z.string()).default([]), // اضافه کردن roles
-  });
+const formSchema = insertCreatorSchema.pick({
+  id: true,
+  name: true,
+});
 
 type FormValues = z.input<typeof formSchema>;
 
@@ -40,28 +36,12 @@ export const NewCreatorSheet = () => {
   };
 
   const onSubmit = (values: FormValues) => {
-    // اطمینان از اینکه roles همیشه یک آرایه باشد
-    const roles = values.roles ?? []; // اگر roles undefined بود، بهش یک آرایه خالی بده
-    const roleMapping: Record<string, number> = {
-      author: 1,
-      editor: 2,
-      translator: 3,
-    };
+    console.log("Submitting values:", values);
 
-    const formattedValues = {
-      ...values,
-      roles: roles.map((role) => ({
-        type: role as "author" | "editor" | "translator",
-        role_id: roleMapping[role],
-      })),
-    };
-
-    console.log("Submitting values:", formattedValues);
-
-    mutation.mutate(formattedValues, {
+    mutation.mutate(values, {
       onSuccess: () => {
         onCloseCreator();
-        console.log("Success article sent:", formattedValues);
+        console.log("Success article sent:", values);
       },
       onError: (error) => {
         console.error("Mutation error:", error);

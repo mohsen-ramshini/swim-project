@@ -61,7 +61,7 @@ export default function RootLayout({
           <QueryProvider>
             <Toaster />
             {children}
-            <ReactQueryDevtools initialIsOpen={true} />
+            {/* <ReactQueryDevtools initialIsOpen={true} /> */}
           </QueryProvider>
         </AppProvider>
       </body>

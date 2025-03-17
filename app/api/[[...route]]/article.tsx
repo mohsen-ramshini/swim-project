@@ -26,6 +26,9 @@ const app = new Hono()
         createdBy: articles.createdBy,
         createdAt: articles.createdAt,
         isActive: articles.isActive,
+        authorId: articles.authorId,
+        translatorId: articles.translatorId,
+        editorId: articles.editorId,
       })
       .from(articles);
     return c.json({ data });
@@ -79,6 +82,9 @@ const app = new Hono()
           createdBy: articles.createdBy,
           createdAt: articles.createdAt,
           isActive: articles.isActive,
+          authorId: articles.authorId,
+          translatorId: articles.translatorId,
+          editorId: articles.editorId,
         })
         .from(articles)
         .where(eq(articles.categoryId, numericCategoryId));
@@ -118,6 +124,9 @@ const app = new Hono()
           createdBy: articles.createdBy,
           createdAt: articles.createdAt,
           isActive: articles.isActive,
+          authorId: articles.authorId,
+          translatorId: articles.translatorId,
+          editorId: articles.editorId,
         })
         .from(articles)
         .where(eq(articles.slug, slug));
@@ -168,6 +177,9 @@ const app = new Hono()
           createdBy: articles.createdBy,
           createdAt: articles.createdAt,
           isActive: articles.isActive,
+          authorId: articles.authorId,
+          translatorId: articles.translatorId,
+          editorId: articles.editorId,
         })
         .from(articles)
         .where(and(eq(articles.id, numericId)));

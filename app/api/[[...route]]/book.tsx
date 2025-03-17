@@ -27,6 +27,7 @@ const app = new Hono()
         createdBy: books.createdBy,
         createdAt: books.createdAt,
         isActive: books.isActive,
+        categoryId: books.categoryId,
       })
       .from(books);
     return c.json({ data });
@@ -62,6 +63,7 @@ const app = new Hono()
           createdBy: books.createdBy,
           createdAt: books.createdAt,
           isActive: books.isActive,
+          categoryId: books.categoryId,
         })
         .from(books)
         .where(eq(books.slug, slug));
@@ -73,6 +75,60 @@ const app = new Hono()
       return c.json({ data });
     }
   )
+  .get(
+    "/category/:categoryId",
+    zValidator(
+      "param",
+      z.object({
+        categoryId: z.string(),
+      })
+    ),
+    async (c) => {
+      const { categoryId } = c.req.valid("param");
+
+      // تبدیل categoryId به عدد برای جلوگیری از اشتباهات
+      const numericCategoryId = parseInt(categoryId, 10);
+
+      if (isNaN(numericCategoryId)) {
+        return c.json({ error: "Invalid categoryId" }, 400);
+      }
+
+      const data = await db
+        .select({
+          id: books.id,
+          title: books.title,
+          slug: books.slug,
+          thumbnail: books.thumbnail,
+          author: books.author,
+          description: books.description,
+          publishTime: books.publishTime,
+          bookComments: books.bookComments,
+          price: books.price,
+          ISBN: books.ISBN,
+          editionNo: books.editionNo,
+          state: books.state,
+          pageCount: books.pageCount,
+          modifiedBy: books.modifiedBy,
+          modifiedAt: books.modifiedAt,
+          createdBy: books.createdBy,
+          createdAt: books.createdAt,
+          isActive: books.isActive,
+          categoryId: books.categoryId,
+        })
+        .from(books)
+        .where(eq(books.categoryId, numericCategoryId));
+
+      if (data.length === 0) {
+        return c.json(
+          { error: "No books found for the specified category" },
+          404
+        );
+      }
+
+      return c.json({ data });
+    }
+  )
+
   .get(
     "/:id",
     zValidator(
@@ -115,6 +171,7 @@ const app = new Hono()
           createdBy: books.createdBy,
           createdAt: books.createdAt,
           isActive: books.isActive,
+          categoryId: books.categoryId,
         })
         .from(books)
         .where(and(eq(books.id, numericId)));
@@ -174,6 +231,7 @@ const app = new Hono()
         title: true,
         slug: true,
         isActive: true,
+        categoryId: true,
       })
     ),
     async (c) => {

@@ -44,6 +44,8 @@ export const NewItemSheet: React.FC<{
   const mutation = useMutation();
 
   const onSubmit = (values: any) => {
+    console.log(`sub values ${values}`);
+
     mutation.mutate(values, {
       onSuccess: () => {
         onClose();

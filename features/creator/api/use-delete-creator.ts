@@ -12,18 +12,21 @@ export const useDeleteCreator = (id?: string) => {
 
   const mutation = useMutation<ResponseType, Error>({
     mutationFn: async () => {
+      if (!id) {
+        throw new Error("ID is required to delete creator");
+      }
       const response = await client.api.creator[":id"]["$delete"]({
         param: { id },
       });
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("creator deleted");
+      toast.success("Creator deleted");
       queryClient.invalidateQueries({ queryKey: ["creator", { id }] });
       queryClient.invalidateQueries({ queryKey: ["creators"] });
     },
     onError: () => {
-      toast.error("Failed to delete article");
+      toast.error("Failed to delete creator");
     },
   });
 

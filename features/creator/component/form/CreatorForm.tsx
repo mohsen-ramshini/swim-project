@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
-
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Form,
   FormControl,
@@ -23,23 +14,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import { insertCreatorSchema } from "@/db/schema/article/creator";
 import { Trash } from "lucide-react";
 import { useGetCreators } from "@/features/creator/api/use-get-creators";
 
-const formSchema = insertCreatorSchema
-  .pick({
-    id: true,
-    name: true,
-  })
-  .extend({
-    roles: z.array(z.string()).default([]),
-  });
+// API expects a schema like this:
+const formSchema = z.object({
+  name: z.string().min(1, "Name is required"), // name field
+  author: z.boolean().optional(), // optional checkbox for author
+  editor: z.boolean().optional(), // optional checkbox for editor
+  translator: z.boolean().optional(), // optional checkbox for translator
+});
 
-type FormValues = z.input<typeof formSchema> & {
-  roles: string[];
-};
+type FormValues = z.input<typeof formSchema>;
 
 type Props = {
   id?: string;
@@ -59,13 +45,15 @@ export const CreatorForm = ({
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues || {
-      id: 0,
       name: "",
-      roles: [],
+      author: false,
+      editor: false,
+      translator: false,
     },
   });
 
   const handleFormSubmit = (values: FormValues) => {
+    // Add roles directly from checkboxes
     onSubmit(values);
   };
 
@@ -102,51 +90,73 @@ export const CreatorForm = ({
             />
           </div>
 
-          {/* roles */}
+          {/* roles (checkboxes for author, editor, translator) */}
           <div className="sm:w-1/3">
             <FormField
               control={form.control}
-              name="roles"
+              name="author"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>نقش‌ها</FormLabel>
-                  <div className="flex flex-col space-y-2">
-                    {["author", "editor", "translator"].map((role) => (
-                      <FormControl key={role}>
-                        <Label className="flex items-center space-x-2">
-                          <Checkbox
-                            checked={field.value.includes(role)}
-                            onCheckedChange={(checked) => {
-                              // اینجا در صورتی که checked true بود نقش به آرایه اضافه می‌شود و در غیر این صورت حذف می‌شود
-                              field.onChange(
-                                checked
-                                  ? [...field.value, role]
-                                  : field.value.filter((r) => r !== role)
-                              );
-                            }}
-                            disabled={disabled}
-                          />
-                          <span>
-                            {role === "author"
-                              ? "نویسنده"
-                              : role === "editor"
-                              ? "ویراستار"
-                              : "مترجم"}
-                          </span>
-                        </Label>
-                      </FormControl>
-                    ))}
-                  </div>
+                  <FormLabel>نویسنده</FormLabel>
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) => field.onChange(checked)}
+                      disabled={disabled}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
 
+          <div className="sm:w-1/3">
+            <FormField
+              control={form.control}
+              name="editor"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>ویراستار</FormLabel>
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) => field.onChange(checked)}
+                      disabled={disabled}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="sm:w-1/3">
+            <FormField
+              control={form.control}
+              name="translator"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>مترجم</FormLabel>
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) => field.onChange(checked)}
+                      disabled={disabled}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Submit Button */}
           <Button className="w-full" disabled={disabled}>
             {id ? "ذخیره تغییرات" : "ایجاد کتاب"}
           </Button>
 
+          {/* Delete Button (only visible if id exists) */}
           {!!id && (
             <Button
               type="button"

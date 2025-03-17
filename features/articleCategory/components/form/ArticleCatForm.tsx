@@ -46,7 +46,6 @@ export const ArticleCategoryForm = ({
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues || {
-      id: 0,
       title: "",
       slug: "",
       isActive: false,
@@ -54,6 +53,8 @@ export const ArticleCategoryForm = ({
   });
 
   const handleSubmit = (values: FormValues) => {
+    console.log(`submitted valures ${values}`);
+
     onSubmit(values);
   };
   const handleDelete = () => {

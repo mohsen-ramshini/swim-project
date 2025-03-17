@@ -27,6 +27,9 @@ export const articles = pgTable("articles", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   modifiedBy: integer("modified_by"),
   modifiedAt: timestamp("modified_at").defaultNow(),
+  authorId: integer("author_id"),
+  editorId: integer("editor_id"),
+  translatorId: integer("translator_id"),
 });
 
 export const insertArticleSchema = createInsertSchema(articles);

@@ -65,7 +65,7 @@ const CreatorTable = () => {
               deleteCreator.mutate({ ids });
             }}
             disabled={isDisabled}
-            filterKey="title"
+            filterKey="name"
           />
         </CardContent>
       </Card>

@@ -2,14 +2,12 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import Article from "./article";
 import Category from "./articleCategory";
-import Comment from "./articleComments";
+import ArticleComment from "./articleComments";
 import Tag from "./articleTag";
-import Author from "./author";
-import Editor from "./editor";
-import Translator from "./translator";
 import Book from "./book";
 import News from "./news";
 import Creator from "./creator";
+import BookComment from "./bookComents";
 import { HTTPException } from "hono/http-exception";
 
 // export const runtime = "edge";
@@ -26,15 +24,13 @@ app.onError((err, c) => {
 
 const routes = app
   .route("/category", Category)
-  .route("/comment", Comment)
+  .route("/comment", ArticleComment)
   .route("/tag", Tag)
-  .route("/author", Author)
-  .route("/editor", Editor)
-  .route("/translator", Translator)
   .route("/article", Article)
   .route("/book", Book)
   .route("/news", News)
-  .route("/creator", Creator);
+  .route("/creator", Creator)
+  .route("/bookcomment", BookComment);
 
 export const GET = handle(app);
 export const POST = handle(app);

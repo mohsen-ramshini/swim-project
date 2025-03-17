@@ -17,12 +17,17 @@ export const useGetCreator = (id?: string) => {
         throw new Error("Failed to fetch creator");
       }
 
-      // تایپ داده‌های بازگشتی به گونه‌ای که id به عنوان string باشد
-      const creator = await response.json();
+      const creatorData = await response.json();
+      const creator = creatorData.creator;
+
       return {
         id: creator.id.toString(),
         name: creator.name,
-        roles: creator.roles,
+        roles: {
+          translator: creator.translator,
+          editor: creator.editor,
+          author: creator.author,
+        },
       };
     },
   });

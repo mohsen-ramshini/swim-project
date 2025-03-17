@@ -27,6 +27,7 @@ import {
 import { insertBookSchema } from "@/db/schema/book/book";
 import { Trash } from "lucide-react";
 import { useGetBooks } from "@/features/book/api/use-get-books";
+import { useGetCategories } from "@/features/articleCategory/api/use-get-categories";
 
 const formSchema = insertBookSchema.pick({
   title: true,
@@ -43,6 +44,7 @@ const formSchema = insertBookSchema.pick({
   publishTime: true,
   // publishTime: true,
   isActive: true,
+  categoryId: true,
 });
 
 type FormValues = z.input<typeof formSchema>;
@@ -78,10 +80,11 @@ export const BookForm = ({
       pageCount: 0,
       // publishTime: true,
       isActive: true,
+      categoryId: 0,
     },
   });
 
-  const { data: categories, isLoading, isError } = useGetBooks();
+  const { data: categories, isLoading, isError } = useGetCategories();
 
   const [publishDate, setPublishDate] = useState<Date | null>(null);
 
@@ -169,6 +172,25 @@ export const BookForm = ({
                             field.onChange(null); // Handle case where no file is selected
                           }
                         }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="sm:w-1/3">
+              <FormField
+                control={form.control}
+                name="author"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>نویسنده</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="نام نویسنده را وارد کنید"
+                        {...field}
+                        disabled={disabled}
                       />
                     </FormControl>
                     <FormMessage />
@@ -291,6 +313,45 @@ export const BookForm = ({
                 )}
               />
             </div>
+            <div className="sm:w-1/3">
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>دسته‌بندی</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={String(field.value || 1)} // 1 به عنوان مقدار پیش‌فرض
+                        onValueChange={(value) => field.onChange(Number(value))}
+                        disabled={disabled}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="انتخاب دسته‌بندی" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {isLoading ? (
+                            <SelectItem value="">در حال بارگذاری...</SelectItem>
+                          ) : isError ? (
+                            <SelectItem value="">خطا در بارگذاری</SelectItem>
+                          ) : (
+                            categories?.map((category) => (
+                              <SelectItem
+                                key={category.id}
+                                value={String(category.id)}
+                              >
+                                {category.title}
+                              </SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-6 rtl">
@@ -327,9 +388,11 @@ export const BookForm = ({
                       <Input
                         placeholder="تعداد صفحات را وارد کنید"
                         type="number"
+                        min="0" // اطمینان از اینکه عدد منفی وارد نشود
                         {...field}
-                        onChange={(e) =>
-                          field.onChange(Number(e.target.value) || 0)
+                        onChange={
+                          (e) =>
+                            field.onChange(Math.max(0, Number(e.target.value))) // اطمینان از اینکه عدد منفی نخواهد بود
                         }
                         disabled={disabled}
                       />
@@ -396,7 +459,7 @@ export const BookForm = ({
               disabled={disabled}
             >
               <Trash className="size-4 mr-2" />
-              حذف مقاله
+              حذف کتاب
             </Button>
           )}
         </form>
