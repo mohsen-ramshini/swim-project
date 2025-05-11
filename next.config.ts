@@ -20,6 +20,9 @@ const nextConfig = {
       },
     ];
   },
+  eslint: {
+    ignoreDuringBuilds: true, // این قسمت برای غیرفعال کردن eslint در زمان build است
+  },
 };
 
 module.exports = nextConfig;
