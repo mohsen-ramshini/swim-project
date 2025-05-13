@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏊 swim-project
 
-## Getting Started
+A **feature-rich, full-stack web app** built with **Next.js 15**, **TailwindCSS**, and **Radix UI**, utilizing **React Query**, **Zustand**, and **Drizzle ORM**. This project is built with a modular and scalable architecture to handle complex forms, data tables, rich text editors, and PostgreSQL-based persistence.
 
-First, run the development server:
+🔗 **Live Demo** – *Coming Soon*
+
+---
+
+## ✨ Features
+
+- ⚡ **Next.js 15** – App Router & Server Actions
+- 🎨 **TailwindCSS** – Utility-first, custom animated UI with `tailwindcss-animate`
+- 🧩 **Radix UI** – Accessible UI primitives (dialog, popover, tooltip, progress, etc.)
+- 🧠 **React Query + Zustand** – Powerful state and data management
+- 📋 **Forms & Validation** – `react-hook-form`, `zod`, `@hookform/resolvers`
+- 🧾 **Rich Text Editor** – With `CKEditor` and `SunEditor`
+- 📆 **Date Pickers** – Jalali + Multi-date support
+- 📦 **PostgreSQL Integration** – Via `drizzle-orm` and `pg`
+- 🔄 **Drizzle Kit** – Full database schema management
+- 📊 **Data Tables** – Built with `@tanstack/react-table`
+- 🚀 **Command Menu** – Powered by `cmdk`
+- 🔔 **Toasts & Notifications** – Using `sonner` and `toaster`
+- 🎠 **Carousel** – `embla-carousel-react`
+- 🌙 **Dark Mode** – Configurable via `next-themes`
+
+---
+
+## 📁 Folder Structure (Simplified)
+
+/app # Application routes (Next.js App Router)
+/(main) # UI pages and layouts
+/components # UI components (Radix, form elements, etc.)
+/hooks # Custom React hooks
+/lib # Utilities, helpers, constants
+/db # Drizzle schema and DB queries
+/styles # Tailwind + global CSS
+/types # Global TypeScript types
+/public # Static assets (images, etc.)
+
+
+---
+
+## 🧰 Tech Stack
+
+| Category         | Packages / Tools |
+|------------------|------------------|
+| **Frontend**     | `next`, `react`, `tailwindcss`, `clsx`, `tailwind-merge`, `lucide-react`, `cmdk` |
+| **Forms**        | `react-hook-form`, `zod`, `@hookform/resolvers` |
+| **Database**     | `pg`, `drizzle-orm`, `drizzle-kit` |
+| **Validation**   | `zod`, `drizzle-zod`, `@hono/zod-validator` |
+| **State Mgmt**   | `zustand`, `react-use`, `@tanstack/react-query`, `@tanstack/react-query-devtools` |
+| **UI Components**| `@radix-ui/react-*`, `react-multi-date-picker`, `embla-carousel-react`, `textarea` |
+| **Editors**      | `@ckeditor/ckeditor5-react`, `@ckeditor/ckeditor5-build-classic`, `suneditor`, `suneditor-react` |
+| **Utilities**    | `uuid`, `cuid2`, `dotenv`, `html-react-parser`, `jalali-moment` |
+| **Dev Tools**    | `eslint`, `typescript`, `postcss`, `tailwindcss`, `tsx` |
+
+---
+
+## 🚀 Getting Started
 
 ```bash
+# 1. Clone the repo
+git clone https://github.com/your-username/swim-project.git
+cd swim-project
+
+# 2. Install dependencies
+npm install
+
+# 3. Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Project will be running locally at http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🛠️ Deployment
+This project is designed to be easily deployed with Vercel.
 
-## Learn More
+Vercel Settings:
 
-To learn more about Next.js, take a look at the following resources:
+Build Command: npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Output Directory: .next
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Or deploy manually to your own Node.js server.
 
-## Deploy on Vercel
+🧾 License
+This project is licensed under the MIT License.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🙌 Author
+Made with ❤️ by Mohsen Ramshini
