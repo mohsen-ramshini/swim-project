@@ -13,16 +13,16 @@ import {
   FileText,
 } from "lucide-react";
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
+// import {
+//   Sidebar,
+//   SidebarContent,
+//   SidebarGroup,
+//   SidebarGroupContent,
+//   SidebarGroupLabel,
+//   SidebarMenu,
+//   SidebarMenuButton,
+//   SidebarMenuItem,
+// } from "@/components/ui/sidebar";
 
 import {
   DropdownMenu,
@@ -97,40 +97,41 @@ export function AppSidebar() {
   ];
 
   return (
-    <Sidebar side="right" dir="rtl" variant="sidebar">
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>فهرست</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {headItems.map((headItem) => (
-                <SidebarMenuItem key={headItem.title}>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <SidebarMenuButton asChild>
-                        <a href={headItem.url}>
-                          <headItem.icon />
-                          <span>{headItem.title}</span>
-                        </a>
-                      </SidebarMenuButton>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      {headItem.subItems.map((item) => (
-                        <DropdownMenuItem key={item.title} dir="rtl" asChild>
-                          <a onClick={item.setActive}>
-                            <item.icon />
-                            <span>{item.title}</span>
-                          </a>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+    <></>
+    // <Sidebar side="right" dir="rtl" variant="sidebar">
+    //   <SidebarContent>
+    //     <SidebarGroup>
+    //       <SidebarGroupLabel>فهرست</SidebarGroupLabel>
+    //       <SidebarGroupContent>
+    //         <SidebarMenu>
+    //           {headItems.map((headItem) => (
+    //             <SidebarMenuItem key={headItem.title}>
+    //               <DropdownMenu>
+    //                 <DropdownMenuTrigger asChild>
+    //                   <SidebarMenuButton asChild>
+    //                     <a href={headItem.url}>
+    //                       <headItem.icon />
+    //                       <span>{headItem.title}</span>
+    //                     </a>
+    //                   </SidebarMenuButton>
+    //                 </DropdownMenuTrigger>
+    //                 <DropdownMenuContent>
+    //                   {headItem.subItems.map((item) => (
+    //                     <DropdownMenuItem key={item.title} dir="rtl" asChild>
+    //                       <a onClick={item.setActive}>
+    //                         <item.icon />
+    //                         <span>{item.title}</span>
+    //                       </a>
+    //                     </DropdownMenuItem>
+    //                   ))}
+    //                 </DropdownMenuContent>
+    //               </DropdownMenu>
+    //             </SidebarMenuItem>
+    //           ))}
+    //         </SidebarMenu>
+    //       </SidebarGroupContent>
+    //     </SidebarGroup>
+    //   </SidebarContent>
+    // </Sidebar>
   );
 }
