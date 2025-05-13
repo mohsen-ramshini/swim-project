@@ -1,11 +1,12 @@
+import { use } from "react";
 import BookContent from "@/components/books/BookContent";
 
-export default async function BookPage({
+export default function BookPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
+  const { slug } = use(params);
 
   return (
     <section className="w-full h-full flex flex-col mt-10">

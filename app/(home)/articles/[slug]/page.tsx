@@ -1,12 +1,7 @@
+import { use } from "react";
 import ArticleContent from "@/components/articles/ArticleContent";
 
-export default async function ArticlePage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = await params;
-  console.log(slug);
-
+export default function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params);
   return <ArticleContent slug={slug} />;
 }

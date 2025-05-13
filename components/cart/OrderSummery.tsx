@@ -153,7 +153,7 @@ const books = [
 const OrderSummery = () => {
   return (
     <aside className="w-full h-full">
-      <ProductInterface book={books.slice(0, 4)} controller={false} />
+      {/* <ProductInterface book={books.slice(0, 4)} controller={false} /> */}
     </aside>
   );
 };
