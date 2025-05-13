@@ -21,6 +21,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex-1 p-6 bg-gray-100">{children}</div>
         </main>
       </section>
-    </SidebarProvider>
+   </SidebarProvider>
   );
 }
