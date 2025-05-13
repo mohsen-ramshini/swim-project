@@ -2,7 +2,7 @@
 
 A **feature-rich, full-stack web app** built with **Next.js 15**, **TailwindCSS**, and **Radix UI**, utilizing **React Query**, **Zustand**, and **Drizzle ORM**. This project is built with a modular and scalable architecture to handle complex forms, data tables, rich text editors, and PostgreSQL-based persistence.
 
-🔗 **Live Demo** – *Coming Soon*
+🔗 **Live Demo** – (https://swim-project.vercel.app/)
 
 ---
 
