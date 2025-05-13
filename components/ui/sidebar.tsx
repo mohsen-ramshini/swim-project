@@ -429,14 +429,14 @@ const SidebarGroup = React.forwardRef<
 SidebarGroup.displayName = "SidebarGroup"
 
 const SidebarGroupLabel = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"div"> & { asChild?: boolean }
+  HTMLDivElement, // تایپ ref برای div
+  React.ComponentProps<"div"> & { asChild?: boolean } // props برای div
 >(({ className, asChild = false, ...props }, ref) => {
-  const Comp = asChild ? Slot : "div"
+  const Comp = asChild ? "div" : "div"; // شما می‌توانید Slot را هم در اینجا جایگزین کنید
 
   return (
     <Comp
-      ref={ref}
+      ref={ref} // ref به طور صحیح به Comp منتقل می‌شود
       data-sidebar="group-label"
       className={cn(
         "flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
@@ -447,8 +447,8 @@ const SidebarGroupLabel = React.forwardRef<
     />
   )
 })
-SidebarGroupLabel.displayName = "SidebarGroupLabel"
 
+SidebarGroupLabel.displayName = "SidebarGroupLabel"
 const SidebarGroupAction = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<"button"> & { asChild?: boolean }
