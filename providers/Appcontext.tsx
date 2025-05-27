@@ -19,7 +19,7 @@ export const useAppContext = () => {
 export const AppProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [activePage, setActivePage] = useState("article");
+  const [activePage, setActivePage] = useState("articleCategory");
 
   return (
     <AppContext.Provider value={{ activePage, setActivePage }}>
