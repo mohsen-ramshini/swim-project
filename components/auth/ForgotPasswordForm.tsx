@@ -14,139 +14,116 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
-import { Lock, Phone } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabaseClient";
+import { toast } from "sonner";
 
 const forgotPasswordSchema = z.object({
-  phoneNumber: z
-    .string()
-    .min(10, { message: "شماره تلفن باید حداقل ۱۰ رقم باشد" })
-    .max(15, { message: "شماره تلفن نمی‌تواند بیش از ۱۵ رقم باشد" })
-    .regex(/^\+98|0?9\d{9}$/, { message: "شماره تلفن نامعتبر است" }),
-  verificationCode: z.string().optional(),
+  email: z.string().email({ message: "ایمیل معتبر نیست" }),
 });
 
-export const ForgotPasswordForm: React.FC = () => {
-  const router = useRouter();
-  const [codeSent, setCodeSent] = useState(true); // اصلاح مقدار اولیه
+interface Props {
+  onSubmit?: (values: { email: string }) => void;
+}
 
-  const form = useForm({
+export const ForgotPasswordForm: React.FC<Props> = ({ onSubmit }) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [codeSent, setCodeSent] = useState(false);
+
+  const form = useForm<{ email: string }>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
-      phoneNumber: "",
-      verificationCode: "",
+      email: "",
     },
   });
 
-  const onSubmit = async (values: {
-    phoneNumber: string;
-    verificationCode?: string;
-  }) => {
-    try {
-      const response = await fetch("/api/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
+  const sendRecoveryEmail = async (email: string) => {
+    setLoading(true);
+    setMessage("");
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/update-password`,
+    });
 
-      const data = await response.json();
+    if (error) {
+      toast.error("خطا در ارسال لینک بازیابی")
+    } else {
+      toast.success("لینک بازیابی رمز عبور به ایمیل شما ارسال شد. لطفاً ایمیل خود را بررسی کنید.")
 
-      // فرض بر این است که بعد از ارسال موفق، کد فعال می‌شود
-      if (!codeSent) setCodeSent(true);
-    } catch (error) {
-      console.error("Error sending request:", error);
+      setCodeSent(true);
     }
+    setLoading(false);
+  };
+
+  const onSubmitHandler = async (values: { email: string }) => {
+    await sendRecoveryEmail(values.email);
+    onSubmit && onSubmit(values);
   };
 
   return (
-<div
-  className="w-full max-w-md mx-auto bg-white dark:bg-zinc-900 rounded-2xl shadow-lg p-6 space-y-6"
-  dir="rtl"
->
-  <div className="text-center space-y-3">
-    <h1 className="text-2xl font-bold text-[#172b79]">بازیابی رمز عبور</h1>
-    <Lock size={32} className="mx-auto text-[#172b79]" />
-  </div>
-
-  <Form {...form}>
-    <form
-      onSubmit={form.handleSubmit(onSubmit)}
-      className="space-y-5 text-right"
+    <div
+      className="w-full max-w-md mx-auto bg-white dark:bg-zinc-900 rounded-2xl shadow-lg p-6 space-y-6"
       dir="rtl"
     >
-      {!codeSent && (
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex items-center gap-1">
-                شماره همراه <Phone size={18} />
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="مثال: 09123456789"
-                  {...field}
-                  className="text-right"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+      <div className="text-center space-y-3">
+        <h1 className="text-2xl font-bold text-[#172b79]">بازیابی رمز عبور</h1>
+        <Lock size={32} className="mx-auto text-[#172b79]" />
+      </div>
+
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmitHandler)}
+          className="space-y-5 text-right"
+          dir="rtl"
+        >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex items-center gap-1">
+                  ایمیل <Mail size={18} />
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="example@example.com"
+                    {...field}
+                    className="text-left"
+                    type="email"
+                    autoComplete="email"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            className="w-full bg-[#172b79] text-white"
+            disabled={loading}
+          >
+            {loading ? "در حال ارسال..." : codeSent ? "ارسال مجدد لینک" : "ارسال لینک بازیابی"}
+          </Button>
+
+          {message && (
+            <p className="text-center text-sm text-red-600 dark:text-red-400">
+              {message}
+            </p>
           )}
-        />
-      )}
 
-      {codeSent && (
-        <FormField
-          control={form.control}
-          name="verificationCode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>کد تایید ارسال‌شده</FormLabel>
-              <FormControl>
-                <div className="flex justify-center">
-                  <InputOTP maxLength={6} onChange={field.onChange}>
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                    </InputOTPGroup>
-                    <InputOTPSeparator />
-                    <InputOTPGroup>
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
-                    </InputOTPGroup>
-                  </InputOTP>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      )}
-
-      <Button type="submit" className="w-full bg-[#172b79] text-white">
-        {codeSent ? "تایید کد" : "ارسال کد بازیابی"}
-      </Button>
-
-      <Button
-        type="button"
-        variant="ghost"
-        className="w-full text-[#172b79] hover:underline"
-        onClick={() => router.push("/sign-in")}
-      >
-        بازگشت به صفحه ورود
-      </Button>
-    </form>
-  </Form>
-</div>
-
+          <Button
+            type="button"
+            variant="ghost"
+            className="w-full text-[#172b79] hover:underline"
+            onClick={() => router.push("/sign-in")}
+          >
+            بازگشت به صفحه ورود
+          </Button>
+        </form>
+      </Form>
+    </div>
   );
 };

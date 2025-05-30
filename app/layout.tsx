@@ -59,7 +59,7 @@ export default function RootLayout({
       <body className={font.className}>
         <AppProvider>
           <QueryProvider>
-            <Toaster />
+            <Toaster dir="rtl" position="top-center"/>
             {children}
             {/* <ReactQueryDevtools initialIsOpen={true} /> */}
           </QueryProvider>

@@ -19,21 +19,13 @@ import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
-  phoneNumber: z
-    .string()
-    .min(10, { message: "شماره تلفن باید حداقل ۱۰ رقم باشد" })
-    .max(15, { message: "شماره تلفن نمی‌تواند بیش از ۱۵ رقم باشد" })
-    .regex(/^(\+98|0)?9\d{9}$/, { message: "شماره تلفن نامعتبر است" }),
+  email: z.string().email({ message: "ایمیل نامعتبر است" }),
   password: z.string().min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
 });
 
 const signUpSchema = z
   .object({
-    phoneNumber: z
-      .string()
-      .min(10, { message: "شماره تلفن باید حداقل ۱۰ رقم باشد" })
-      .max(15, { message: "شماره تلفن نمی‌تواند بیش از ۱۵ رقم باشد" })
-      .regex(/^(\+98|0)?9\d{9}$/, { message: "شماره تلفن نامعتبر است" }),
+    email: z.string().email({ message: "ایمیل نامعتبر است" }),
     password: z.string().min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
     confirmPassword: z
       .string()
@@ -50,7 +42,7 @@ const signUpSchema = z
   });
 
 type AuthFormValues = {
-  phoneNumber: string;
+  email: string;
   password: string;
   confirmPassword?: string;
 };
@@ -67,13 +59,12 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
   const form = useForm<AuthFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      phoneNumber: "",
+      email: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  // state برای نمایش/مخفی کردن رمز عبور
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -84,7 +75,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
           {isLogin ? "ورود به حساب کاربری" : "ایجاد حساب کاربری"}
         </h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-          {`برای ${isLogin ? "ورود" : "ثبت‌نام"} شماره موبایل و رمز عبور خود را وارد کنید.`}
+          {`برای ${isLogin ? "ورود" : "ثبت‌نام"} ایمیل و رمز عبور خود را وارد کنید.`}
         </p>
       </div>
 
@@ -92,18 +83,18 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
-            name="phoneNumber"
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  شماره موبایل
+                  ایمیل
                 </FormLabel>
                 <FormControl>
                   <Input
                     dir="rtl"
-                    className="text-right"
-                    type="text"
-                    placeholder="مثال: 09123456789"
+                    className="text-right placeholder:text-right"
+                    type="email"
+                    placeholder="you@example.com"
                     {...field}
                   />
                 </FormControl>
@@ -124,7 +115,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
                   <div className="relative">
                     <Input
                       dir="rtl"
-                      className="text-right pr-10"
+                      className="text-right  placeholder:text-right"
                       type={showPassword ? "text" : "password"}
                       placeholder="رمز عبور خود را وارد کنید"
                       {...field}
@@ -157,7 +148,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
                     <div className="relative">
                       <Input
                         dir="rtl"
-                        className="text-right pr-10"
+                        className="text-right placeholder:text-right"
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="رمز عبور را دوباره وارد کنید"
                         {...field}
@@ -187,7 +178,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
             </Link>
           )}
 
-          <Button type="submit" className="w-full mt-2 bg-primary hover:bg-primary/90">
+          <Button type="submit" className="w-full mt-2 bg-blue-500 hover:bg-blue-600">
             {isLogin ? "ورود" : "ثبت‌نام"}
           </Button>
 
@@ -197,7 +188,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
             className="w-full text-sm text-gray-600 dark:text-gray-400 hover:underline"
             onClick={() => router.push(isLogin ? "/sign-up" : "/sign-in")}
           >
-            {isLogin ? "حساب ندارید؟ ثبت‌نام کنید" : "قبلاً حساب دارید؟ ورود"}
+            {isLogin ? "حساب ندارید؟ ثبت‌نام کنید" : "از قبل حساب دارید؟ ورود"}
           </Button>
         </form>
       </Form>

@@ -1,5 +1,8 @@
+// next.config.js
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // پیکربندی مجاز برای بارگذاری تصاویر از دامنه خارجی
   images: {
     remotePatterns: [
       {
@@ -8,21 +11,34 @@ const nextConfig = {
       },
     ],
   },
+
+  // بازنویسی مسیرهای API برای پروکسی کردن به سرویس‌های خارجی
   async rewrites() {
     return [
       {
-        source: "/api/states", // درخواست‌های فرانت‌اند به این مسیر هدایت می‌شود
-        destination: "https://iran-locations-api.ir/api/v1/fa/states", // مقصد API اصلی
+        source: "/api/states",
+        destination: "https://iran-locations-api.ir/api/v1/fa/states",
       },
       {
         source: "/api/cities",
-        destination: "https://iran-locations-api.ir/api/v1/fa/cities", // Proxy for cities API
+        destination: "https://iran-locations-api.ir/api/v1/fa/cities",
       },
     ];
   },
+
+  // غیرفعال‌سازی بررسی‌های eslint هنگام build (مثلاً برای build در Vercel یا production)
   eslint: {
-    ignoreDuringBuilds: true, // این قسمت برای غیرفعال کردن eslint در زمان build است
+    ignoreDuringBuilds: true,
+  },
+
+  // مسیرهایی که توسط middleware بررسی می‌شوند
+  // (می‌تونی بسته به نیاز بیشتر اضافه یا کم کنی)
+  experimental: {
+    serverActions: true,
   },
 };
 
 module.exports = nextConfig;
+
+// اگر middleware داری، تنظیم زیر رو در فایل middleware.ts باشه نه اینجا:
+// export const config = { matcher: [...] }

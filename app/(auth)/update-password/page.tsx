@@ -1,6 +1,8 @@
 "use client";
 
-import { ForgotPasswordForm } from "@/components/auth/ForgotPasswordForm";
+import UpdatePasswordPage from "@/components/auth/UpdatePasswordForm";
+
+
 
 const Page = () => {
   const handleSubmit = (values: { email: string }) => {
@@ -15,7 +17,7 @@ const Page = () => {
       </h1>
 
       <div className="w-full max-w-md bg-white dark:bg-zinc-900 rounded-2xl shadow-xl p-6 sm:p-8">
-        <ForgotPasswordForm onSubmit={handleSubmit} />
+        <UpdatePasswordPage />
       </div>
     </section>
   );

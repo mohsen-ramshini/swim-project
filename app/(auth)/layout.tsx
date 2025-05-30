@@ -10,10 +10,10 @@ export default function RootLayout({
       {/* این بخش فقط در مدیوم و بالاتر دیده می‌شود */}
       <div className="hidden md:flex w-1/2 h-screen justify-center items-center">
         <div
-          className="w-[99%] h-[99%] bg-cover bg-center rounded-lg shadow-lg"
+          className="w-[95%] h-[95%] bg-cover bg-center rounded-lg shadow-2xl"
           style={{ backgroundImage: 'url("/static/images/auth-banner.jpg")' }}
         >
-          <div className="w-36 h-20 bg-white/30 backdrop-blur-md flex justify-center items-center rounded-md m-5">
+          <div className="w-36 h-20 bg-white flex justify-center items-center rounded-md m-5">
             <Image
               src={"/static/images/logo.png"}
               alt="logo"
