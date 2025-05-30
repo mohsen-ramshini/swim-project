@@ -36,7 +36,7 @@ const ArticleInterface: React.FC<Props> = ({ data }) => {
   console.log(data);
 
   return (
-    <aside className="flex flex-col lg:flex-row-reverse border-b-2 mb-3">
+    <aside className="flex flex-col lg:flex-row-reverse border-b-2 ">
       <div className="w-full lg:w-1/3 mb-5 ml-5">
         <div className="w-full h-[200px] lg:m-auto lg:w-full lg:h-[110px] mb-5 rounded-sm">
           <Skeleton className="w-full h-full" />

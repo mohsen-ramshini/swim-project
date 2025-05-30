@@ -31,7 +31,16 @@ const NavBar = () => {
   };
 
   return (
-    <div className="relative h-20 lg:h-40 w-full flex items-center justify-between px-4 bg-slate-50 ">
+<div
+  className="relative h-20 lg:h-[450px] w-full flex items-center justify-between px-4 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0)), url("/static/images/main-banner.jpeg")`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  }}
+>
+
+
       {/* Mobile Hamburger Menu */}
       <div className="absolute right-4 lg:hidden">
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -124,77 +133,7 @@ const NavBar = () => {
           </SheetContent>
         </Sheet>
       </div>
-      <div className="absolute left-1/2 transform -translate-x-1/2 md:left-auto md:right-0">
-        <Link href={"/"}>
-          <Image
-            src="/static/images/logo.png"
-            alt="Logo"
-            width={220}
-            height={30}
-            className="w-[130px] h-[50px] md:w-[200px] md:h-[70px] lg:w-[230px] lg:h-[80px]"
-          />
-        </Link>
-      </div>
-
-      {/* Desktop Navigation */}
-      <div className="hidden lg:flex items-center justify-between max-w-xl absolute top-0 left-48 ">
-        <NavigationMenu dir="rtl">
-          <NavigationMenuList>
-            <NavigationMenuItem
-              className="pl-5"
-              onClick={() => handleRouting("admin", false)}
-            >
-              <div className="group inline-flex h-9 w-max items-center justify-center px-2 py-2 text-sm font-small transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-black cursor-pointer">
-                همکاران ما
-              </div>
-              <NavigationMenuContent></NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem onClick={() => handleRouting("admin", false)}>
-              <div className="group inline-flex h-9 w-max items-center justify-center px-2 py-2 text-sm font-small transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-black cursor-pointer">
-                اعضا
-              </div>
-              <NavigationMenuContent></NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem
-              onClick={() => handleRouting("cooperation", false)}
-            >
-              <div className="group inline-flex h-9 w-max items-center justify-center px-2 py-2 text-sm font-small transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-black cursor-pointer">
-                فراخوان همکاری
-              </div>
-            </NavigationMenuItem>
-            <NavigationMenuItem
-              onClick={() => handleRouting("articles", false)}
-            >
-              <div className="group inline-flex h-9 w-max items-center justify-center px-2 py-2 text-sm font-small transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-black cursor-pointer">
-                بلاگ
-              </div>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <div className="group inline-flex h-9 w-max items-center justify-center px-2 py-2 text-sm font-small transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50 text-black cursor-pointer">
-                تماس با ما
-              </div>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
-
-      <div
-        className="absolute left-0 pl-4 md:pl-10 lg:pl-40 text-xl font-bold"
-        dir="rtl"
-      >
-        <a href="tel:09032342677">
-          <Button variant={"ghost"} size={"lg"}>
-            <Phone
-              style={{ width: 25, height: 25 }}
-              className="inline md:hidden"
-            />
-            <span className="hidden md:inline md:text-xl">تماس بگیرید :</span>
-            <span className="hidden md:inline md:text-xl">0903-234-2677</span>
-          </Button>
-        </a>
-      </div>
-
-      <div className="hidden lg:inline-flex  items-center justify-center  bg-slate-800 rounded-sm  top-32 absolute left-10 right-10">
+      <div className="hidden lg:inline-flex  items-center justify-center top-1 absolute left-10 right-10">
         <NavigationMenu
           dir="rtl"
           className="flex justify-between p-5 min-w-full"
@@ -244,9 +183,8 @@ const NavBar = () => {
               <NavigationMenuContent></NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <div className="text-base lg:text-sm flex justify-center items-center bg-secondary p-2 rounded-lg">
+              <div className="text-base lg:text-sm flex justify-center items-center bg-secondary p-4 rounded-lg ">
                 <DropdownProfile />
-                <User color="white" size={20} />
               </div>
               <NavigationMenuContent></NavigationMenuContent>
             </NavigationMenuItem>

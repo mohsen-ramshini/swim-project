@@ -8,10 +8,11 @@ const page = () => {
   };
   return (
     <section className="w-full h-screen flex flex-col justify-center items-center bg-secondary">
-      <div className="w-4/5 lg:w-2/5 h-full  flex justify-center items-center">
+      <h1 className="relative top-10 text-4xl font-bold text-[#172c78]">انجمن علوم نوین شنای ایران</h1>
+      <div className="w-5/6 lg:w-3/5 h-full  flex justify-center items-center">
         <AuthForm isLogin={false} onSubmit={handleSubmit} />
       </div>
-    </section>
+    </section>    
   );
 };
 

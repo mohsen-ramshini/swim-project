@@ -89,22 +89,20 @@ const Articles = () => {
           </div>
 
           {/* Articles Section */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full bg-white p-4">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full p-4 items-stretch">
             {/* Other Articles */}
-            <div className="w-full p-4 max-w-xl m-auto justify-between lg:max-w-5xl space-y-4 text-right sm:text-center ">
+            <div className="w-full p-4 space-y-7 text-right sm:text-cente">
               {otherArticles.map((art) => (
                 <ArticleInterface key={art.id} data={art} />
               ))}
             </div>
 
             {/* Main Article Section */}
-            <div className="hidden w-full p-4 space-y-4 text-right sm:text-center xl:block">
-              {/* Head Articles */}
+            <div className="hidden xl:block w-full p-4 space-y-4 text-right sm:text-cente">
               {headArticles.map((art) => (
                 <HeadArticle key={art.id} data={art} />
               ))}
 
-              {/* Middle Articles */}
               {middleArticle.map((art) => (
                 <ArticleInterface key={art.id} data={art} />
               ))}

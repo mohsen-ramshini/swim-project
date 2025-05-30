@@ -22,9 +22,10 @@ const DropdownProfile = () => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant={"ghost"} className="text-white">
-            ناحیه کاربری
-          </Button>
+          <div className="flex items-center gap-2 cursor-pointer text-white hover:text-gray-200">
+            <CircleUserRound className="w-5 h-5" />
+            <span className="text-sm font-medium">ناحیه کاربری</span>
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 rtl">
           <DropdownMenuLabel className="flex justify-between">

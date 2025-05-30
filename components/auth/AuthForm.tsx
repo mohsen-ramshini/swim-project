@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 import {
   Form,
   FormControl,
@@ -13,9 +15,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Lock, Phone } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
   phoneNumber: z
@@ -23,9 +24,7 @@ const loginSchema = z.object({
     .min(10, { message: "شماره تلفن باید حداقل ۱۰ رقم باشد" })
     .max(15, { message: "شماره تلفن نمی‌تواند بیش از ۱۵ رقم باشد" })
     .regex(/^(\+98|0)?9\d{9}$/, { message: "شماره تلفن نامعتبر است" }),
-  password: z
-    .string()
-    .min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
+  password: z.string().min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
 });
 
 const signUpSchema = z
@@ -35,9 +34,7 @@ const signUpSchema = z
       .min(10, { message: "شماره تلفن باید حداقل ۱۰ رقم باشد" })
       .max(15, { message: "شماره تلفن نمی‌تواند بیش از ۱۵ رقم باشد" })
       .regex(/^(\+98|0)?9\d{9}$/, { message: "شماره تلفن نامعتبر است" }),
-    password: z
-      .string()
-      .min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
+    password: z.string().min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
     confirmPassword: z
       .string()
       .min(6, { message: "تأیید رمز عبور باید حداقل ۶ کاراکتر باشد" }),
@@ -63,20 +60,6 @@ type AuthFormProps = {
   isLogin: boolean;
 };
 
-const useMediaQuery = (query: string) => {
-  const [matches, setMatches] = useState(false);
-
-  React.useEffect(() => {
-    const media = window.matchMedia(query);
-    setMatches(media.matches);
-    const listener = () => setMatches(media.matches);
-    media.addEventListener("change", listener);
-    return () => media.removeEventListener("change", listener);
-  }, [query]);
-
-  return matches;
-};
-
 export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
   const router = useRouter();
   const formSchema = isLogin ? loginSchema : signUpSchema;
@@ -90,119 +73,132 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
     },
   });
 
+  // state برای نمایش/مخفی کردن رمز عبور
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   return (
-    <div className="w-full lg:w-4/5 h-4/5 mt-10 shadow-lg p-5 bg-white rounded-lg">
-      <div className="w-full h-2/5 flex flex-col justify-center items-center">
-        <Image
-          src={"/static/images/logo.png"}
-          alt="logo"
-          className="max-w-[150px] max-h-[50px] sm:max-w-[250px] sm:max-h-[90px] md:max-w-[300px] md:max-h-[100px]"
-          width={300}
-          height={100}
-        />
-
-        <h1 className=" text-xl xl:text-3xl font-extrabold py-1 mb-10 text-center">
-          انجمن علوم نوین شنای ایران
+    <div className="w-full max-w-md mx-auto bg-white dark:bg-zinc-900 rounded-2xl shadow-lg p-6 md:p-8 mt-12 text-right direction-rtl">
+      <div className="mb-6 text-center">
+        <h1 className="text-2xl font-bold text-primary dark:text-white">
+          {isLogin ? "ورود به حساب کاربری" : "ایجاد حساب کاربری"}
         </h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+          {`برای ${isLogin ? "ورود" : "ثبت‌نام"} شماره موبایل و رمز عبور خود را وارد کنید.`}
+        </p>
       </div>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col justify-around items-center w-full h-3/5"
-        >
-          <div className="w-full flex flex-col justify-center text-right">
-            {/* phoneNumber */}
-            <FormField
-              control={form.control}
-              name="phoneNumber"
-              render={({ field }) => (
-                <FormItem className="text-right rtl py-5">
-                  <FormLabel className="text-lg lg:text-2xl">
-                    شماره همراه
-                    <Phone size={35} className="inline pl-2" />
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="شماره همراه خود را وارد کنید"
-                      {...field}
-                      style={{ direction: "rtl" }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
-            {/* Password */}
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg lg:text-2xl">
-                    رمز عبور
-                    <Lock size={35} className="inline pl-2" />
-                  </FormLabel>
-                  <FormControl>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <FormField
+            control={form.control}
+            name="phoneNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  شماره موبایل
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    dir="rtl"
+                    className="text-right"
+                    type="text"
+                    placeholder="مثال: 09123456789"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-500 text-sm mt-1" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  رمز عبور
+                </FormLabel>
+                <FormControl>
+                  <div className="relative">
                     <Input
-                      type="password"
+                      dir="rtl"
+                      className="text-right pr-10"
+                      type={showPassword ? "text" : "password"}
                       placeholder="رمز عبور خود را وارد کنید"
                       {...field}
-                      style={{ direction: "rtl" }}
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 left-2 flex items-center px-2 text-gray-600 dark:text-gray-400"
+                      tabIndex={-1}
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                </FormControl>
+                <FormMessage className="text-red-500 text-sm mt-1" />
+              </FormItem>
+            )}
+          />
+
+          {!isLogin && (
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    تأیید رمز عبور
+                  </FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        dir="rtl"
+                        className="text-right pr-10"
+                        type={showConfirmPassword ? "text" : "password"}
+                        placeholder="رمز عبور را دوباره وارد کنید"
+                        {...field}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute inset-y-0 left-2 flex items-center px-2 text-gray-600 dark:text-gray-400"
+                        tabIndex={-1}
+                      >
+                        {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 text-sm mt-1" />
                 </FormItem>
               )}
             />
+          )}
 
-            {/* Confirm Password (only for sign-up) */}
-            {!isLogin && (
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem className="py-5">
-                    <FormLabel className="text-2xl">تأیید رمز عبور</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="رمز عبور خود را تأیید کنید"
-                        {...field}
-                        style={{ direction: "rtl" }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-          </div>
+          {isLogin && (
+            <Link
+              href="/forget-password"
+              className="block text-sm text-blue-600 dark:text-blue-400 text-right hover:underline"
+            >
+              رمز عبور را فراموش کرده‌اید؟
+            </Link>
+          )}
 
-          {/* Submit Button */}
-          <Button type="submit" className="w-full bg-[#172b79]">
-            {isLogin ? "ورود" : "ثبت نام"}
+          <Button type="submit" className="w-full mt-2 bg-primary hover:bg-primary/90">
+            {isLogin ? "ورود" : "ثبت‌نام"}
           </Button>
 
-          {/* Toggle between login and signup */}
           <Button
             type="button"
-            className="w-full mt-2"
             variant="ghost"
+            className="w-full text-sm text-gray-600 dark:text-gray-400 hover:underline"
             onClick={() => router.push(isLogin ? "/sign-up" : "/sign-in")}
           >
-            {isLogin ? "حساب کاربری ندارید؟ ثبت نام کنید" : "به ورود بروید"}
+            {isLogin ? "حساب ندارید؟ ثبت‌نام کنید" : "قبلاً حساب دارید؟ ورود"}
           </Button>
-          {isLogin && (
-            <Button
-              type="button"
-              className="w-full mt-2 text-secondary"
-              variant="ghost"
-              onClick={() => router.push("/forget-password")}
-            >
-              رمز عبور خود را فراموش کردید؟
-            </Button>
-          )}
         </form>
       </Form>
     </div>

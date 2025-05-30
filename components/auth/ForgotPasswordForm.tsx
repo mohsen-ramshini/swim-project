@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,8 +14,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Phone } from "lucide-react";
-import Image from "next/image";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { Lock, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const forgotPasswordSchema = z.object({
@@ -28,12 +34,14 @@ const forgotPasswordSchema = z.object({
 
 export const ForgotPasswordForm: React.FC = () => {
   const router = useRouter();
-
-  const [codeSent, setCodeSent] = useState(false);
+  const [codeSent, setCodeSent] = useState(true); // اصلاح مقدار اولیه
 
   const form = useForm({
     resolver: zodResolver(forgotPasswordSchema),
-    defaultValues: { phoneNumber: "", verificationCode: "" },
+    defaultValues: {
+      phoneNumber: "",
+      verificationCode: "",
+    },
   });
 
   const onSubmit = async (values: {
@@ -49,90 +57,96 @@ export const ForgotPasswordForm: React.FC = () => {
 
       const data = await response.json();
 
-      setCodeSent(true);
+      // فرض بر این است که بعد از ارسال موفق، کد فعال می‌شود
+      if (!codeSent) setCodeSent(true);
     } catch (error) {
       console.error("Error sending request:", error);
     }
   };
 
   return (
-    <div className="w-full lg:w-4/5 h-4/5 mt-10 shadow-lg p-5 bg-white rounded-lg">
-      <div className="w-full h-2/5 flex flex-col justify-center items-center">
-        <Image
-          src={"/static/images/logo.png"}
-          alt="logo"
-          className="max-w-[150px] max-h-[50px] sm:max-w-[250px] sm:max-h-[90px] md:max-w-[300px] md:max-h-[100px]"
-          width={300}
-          height={100}
+<div
+  className="w-full max-w-md mx-auto bg-white dark:bg-zinc-900 rounded-2xl shadow-lg p-6 space-y-6"
+  dir="rtl"
+>
+  <div className="text-center space-y-3">
+    <h1 className="text-2xl font-bold text-[#172b79]">بازیابی رمز عبور</h1>
+    <Lock size={32} className="mx-auto text-[#172b79]" />
+  </div>
+
+  <Form {...form}>
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="space-y-5 text-right"
+      dir="rtl"
+    >
+      {!codeSent && (
+        <FormField
+          control={form.control}
+          name="phoneNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-1">
+                شماره همراه <Phone size={18} />
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="مثال: 09123456789"
+                  {...field}
+                  className="text-right"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <h1 className="text-xl xl:text-3xl font-extrabold py-1 mb-10 text-center">
-          بازیابی رمز عبور
-        </h1>
-      </div>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col justify-around items-center w-full h-3/5"
-        >
-          <div className="w-full flex flex-col justify-center text-right">
-            <FormField
-              control={form.control}
-              name="phoneNumber"
-              render={({ field }) => (
-                <FormItem className="text-right rtl py-5">
-                  <FormLabel className="text-lg lg:text-2xl">
-                    شماره همراه
-                    <Phone size={35} className="inline pl-2" />
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="شماره همراه خود را وارد کنید"
-                      {...field}
-                      style={{ direction: "rtl" }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+      )}
 
-            {codeSent && (
-              <FormField
-                control={form.control}
-                name="verificationCode"
-                render={({ field }) => (
-                  <FormItem className="text-right rtl py-5">
-                    <FormLabel className="text-lg lg:text-2xl">
-                      کد تایید
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="کد تایید را وارد کنید"
-                        {...field}
-                        style={{ direction: "rtl" }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-          </div>
+      {codeSent && (
+        <FormField
+          control={form.control}
+          name="verificationCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>کد تایید ارسال‌شده</FormLabel>
+              <FormControl>
+                <div className="flex justify-center">
+                  <InputOTP maxLength={6} onChange={field.onChange}>
+                    <InputOTPGroup>
+                      <InputOTPSlot index={0} />
+                      <InputOTPSlot index={1} />
+                      <InputOTPSlot index={2} />
+                    </InputOTPGroup>
+                    <InputOTPSeparator />
+                    <InputOTPGroup>
+                      <InputOTPSlot index={3} />
+                      <InputOTPSlot index={4} />
+                      <InputOTPSlot index={5} />
+                    </InputOTPGroup>
+                  </InputOTP>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      )}
 
-          <Button type="submit" className="w-full bg-[#172b79]">
-            {codeSent ? "تایید کد" : "ارسال کد بازیابی"}
-          </Button>
+      <Button type="submit" className="w-full bg-[#172b79] text-white">
+        {codeSent ? "تایید کد" : "ارسال کد بازیابی"}
+      </Button>
 
-          <Button
-            type="button"
-            className="w-full mt-2"
-            variant="ghost"
-            onClick={() => router.push("/sign-in")}
-          >
-            بازگشت به صفحه ورود
-          </Button>
-        </form>
-      </Form>
-    </div>
+      <Button
+        type="button"
+        variant="ghost"
+        className="w-full text-[#172b79] hover:underline"
+        onClick={() => router.push("/sign-in")}
+      >
+        بازگشت به صفحه ورود
+      </Button>
+    </form>
+  </Form>
+</div>
+
   );
 };
