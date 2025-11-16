@@ -48,6 +48,8 @@ const Articles = () => {
   }, [JSON.stringify(fetchedArticles)]);
 
   useEffect(() => {
+    console.log("articles", fetchedArticles);
+
     if (isMobile) {
       setOtherArticles(normalizedArticles.slice(0, 4));
       setHeadArticles([]);

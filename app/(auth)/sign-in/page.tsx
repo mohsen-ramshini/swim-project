@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import Cookies from "js-cookie"; 
+import Cookies from "js-cookie";
 
 const Page = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -26,10 +26,10 @@ const Page = () => {
     if (error) {
       setErrorMsg(error.message);
       console.error("Error signing in:", error);
-      toast.error("ورود کاربر ناموفق")
+      toast.error("ورود کاربر ناموفق");
     } else {
       console.log("User signed in:", data.user);
-      toast.success("کاربر با موفقیت وارد شد")
+      toast.success("کاربر با موفقیت وارد شد");
 
       // ✅ ست کردن کوکی نقش
       Cookies.set("role", "authenticated", { path: "/", expires: 1 }); // 1 روز اعتبار
