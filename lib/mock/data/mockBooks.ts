@@ -1,0 +1,73 @@
+import { InferInsertModel } from "drizzle-orm";
+import { books as booksTable } from "@/db/schema/book/book";
+
+export const mockBooks: InferInsertModel<typeof booksTable>[] = [
+  {
+    id: 1,
+    title: "آموزش کامل شنا برای مبتدی‌ها",
+    slug: "beginner-swimming-complete-guide",
+    author: "جان وودز",
+    thumbnail: "/images/books/beginner-swimming.jpg",
+    description:
+      "این کتاب برای کسانی نوشته شده که می‌خواهند شنا را از پایه و به شکل اصولی شروع کنند.",
+    bookComments: null,
+    price: 180000,
+    ISBN: "978-600-123456-1",
+    editionNo: 1,
+    state: "published",
+    pageCount: 220,
+    publishTime: new Date("2024-07-12T10:00:00Z"),
+    isActive: true,
+    createdBy: 1,
+    createdAt: new Date("2024-07-12T10:00:00Z"),
+    modifiedBy: null,
+    modifiedAt: new Date("2024-07-12T10:00:00Z"),
+    categoryId: 2,
+  },
+
+  {
+    id: 2,
+    title: "تکنیک‌های پیشرفته شنای کرال سینه",
+    slug: "advanced-front-crawl-techniques",
+    author: "مارک داوسون",
+    thumbnail: "/images/books/advanced-crawl.jpg",
+    description:
+      "کتابی مناسب شناگران نیمه‌حرفه‌ای برای بهبود سرعت، استقامت و تکنیک‌های تخصصی کرال سینه.",
+    bookComments: null,
+    price: 240000,
+    ISBN: "978-600-123456-2",
+    editionNo: 2,
+    state: "published",
+    pageCount: 180,
+    publishTime: new Date("2024-08-03T11:30:00Z"),
+    isActive: true,
+    createdBy: 1,
+    createdAt: new Date("2024-08-03T11:30:00Z"),
+    modifiedBy: null,
+    modifiedAt: new Date("2024-08-03T11:30:00Z"),
+    categoryId: 2,
+  },
+
+  {
+    id: 3,
+    title: "تمرینات خشک (Dryland) برای شناگران",
+    slug: "dryland-training-for-swimmers",
+    author: "الکس گریفین",
+    thumbnail: "/images/books/dryland-training.jpg",
+    description:
+      "تمرینات قدرتی و استقامتی مخصوص شناگران برای افزایش توان خارج از آب.",
+    bookComments: null,
+    price: 210000,
+    ISBN: "978-600-123456-3",
+    editionNo: 1,
+    state: "published",
+    pageCount: 150,
+    publishTime: new Date("2024-06-20T09:00:00Z"),
+    isActive: true,
+    createdBy: 1,
+    createdAt: new Date("2024-06-20T09:00:00Z"),
+    modifiedBy: null,
+    modifiedAt: new Date("2024-06-20T09:00:00Z"),
+    categoryId: 4,
+  },
+];
