@@ -1,3 +1,4 @@
+import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import {
   pgTable,
   text,
@@ -25,3 +26,5 @@ export const news = pgTable("news", {
 });
 
 export const insertNewsSchema = createInsertSchema(news);
+export type NewsType = InferSelectModel<typeof news>;
+export type InsertNewsType = InferInsertModel<typeof news>;
