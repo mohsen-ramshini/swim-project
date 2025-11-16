@@ -9,6 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { articleCategories } from "../article/articleCategory";
+import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
 export const books = pgTable("books", {
   id: serial("id").primaryKey(),
@@ -35,3 +36,5 @@ export const books = pgTable("books", {
 });
 
 export const insertBookSchema = createInsertSchema(books);
+export type BookType = InferSelectModel<typeof books>;
+export type InsertBookType = InferInsertModel<typeof books>;
