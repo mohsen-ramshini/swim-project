@@ -1,18 +1,24 @@
-// next.config.js
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // پیکربندی مجاز برای بارگذاری تصاویر از دامنه خارجی
   images: {
+    // اضافه کردن دامنه‌های خارجی برای بارگذاری تصاویر
     remotePatterns: [
       {
         protocol: "https",
         hostname: "www.swimacademy.ir",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com", // اضافه کردن برای تصاویر Unsplash
+      },
+      {
+        protocol: "https",
+        hostname: "images.pexels.com", // در صورت استفاده از Pexels
+      },
     ],
   },
 
-  // بازنویسی مسیرهای API برای پروکسی کردن به سرویس‌های خارجی
+  // بازنویسی مسیرهای API
   async rewrites() {
     return [
       {
@@ -26,19 +32,14 @@ const nextConfig = {
     ];
   },
 
-  // غیرفعال‌سازی بررسی‌های eslint هنگام build (مثلاً برای build در Vercel یا production)
+  // غیرفعال کردن ESLint هنگام Build
   eslint: {
     ignoreDuringBuilds: true,
   },
 
-  // مسیرهایی که توسط middleware بررسی می‌شوند
-  // (می‌تونی بسته به نیاز بیشتر اضافه یا کم کنی)
   experimental: {
     serverActions: true,
   },
 };
 
 module.exports = nextConfig;
-
-// اگر middleware داری، تنظیم زیر رو در فایل middleware.ts باشه نه اینجا:
-// export const config = { matcher: [...] }

@@ -1,3 +1,4 @@
+import { mockQuery } from "./mockQuery";
 import { mockArticles } from "../data/mockArticles";
 import { mockArticleCategories } from "../data/mockArticleCategories";
 import { mockArticleComments } from "../data/mockArticleComments";

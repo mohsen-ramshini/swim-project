@@ -1,6 +1,6 @@
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-async function mockQuery<T>(callback: () => T, time = 1500) {
+export async function mockQuery<T>(callback: () => T, time = 1500) {
   try {
     await delay(time);
 

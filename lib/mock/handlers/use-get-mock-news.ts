@@ -1,3 +1,4 @@
+import { mockQuery } from "./mockQuery";
 import { mockNews } from "../data/mockNews";
 
 /* ----------------------- News ----------------------- */
