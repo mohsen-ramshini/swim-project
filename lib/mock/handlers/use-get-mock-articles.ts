@@ -63,3 +63,25 @@ export const getRepliesByParentId = async (parentId: number) => {
     return mockArticleComments.filter((c) => c.parentId === parentId);
   }, 1100);
 };
+
+export const getArticlesByCategory = async (categoryId: number) => {
+  return mockQuery(() => {
+    const filtered = mockArticles.filter(
+      (article) => article.categoryId === categoryId
+    );
+
+    return filtered;
+  }, 1200);
+};
+
+export const getArticleBySlug = async (slug: string) => {
+  return mockQuery(() => {
+    const article = mockArticles.find((item) => item.slug === slug);
+
+    if (!article) {
+      throw new Error("Article not found");
+    }
+
+    return article;
+  }, 1500);
+};

@@ -1,16 +1,26 @@
-import React from "react";
-
 interface Props {
-  dialog: string;
+  title: string;
+  subtitle?: string;
 }
 
-const DialogContent: React.FC<Props> = ({ dialog }) => {
+const DialogContent: React.FC<Props> = ({ title, subtitle }) => {
   return (
     <section
-      className=" relative hidden lg:flex text-white  text-right opacity-90 lg:text-xl  rounded-md p-4 w-full max-w-md mx-auto lg:max-w-lg lg:w-1/3 
-      bottom-20 left-5 sm:left-10 md:left-16 lg:left-96 lg:bottom-64 shadow-lg bg-sky-900"
+      className="
+        absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        text-white text-center
+        bg-black/40 backdrop-blur-sm
+        p-6 rounded-xl
+        w-[90%] max-w-xl
+      "
     >
-      {dialog}
+      <h2 className="font-extrabold text-3xl lg:text-4xl mb-3">
+        {title}
+      </h2>
+
+      <p className="text-sm lg:text-base opacity-90">
+        {subtitle}
+      </p>
     </section>
   );
 };

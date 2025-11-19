@@ -3,28 +3,31 @@ import Image from "next/image";
 import React from "react";
 
 interface Props {
-  dialog?: string;
+  title?: string;
+  subtitle?: string;
   imageSourse: string;
   width: number;
   height: number;
 }
 
 const HeroSection: React.FC<Props> = ({
-  dialog,
+  title,
+  subtitle,
   imageSourse,
   width,
   height,
 }) => {
   return (
-    <div className="m-auto w-full bg-slate-700 lg:h-[620px] mb-10">
+    <div className="relative m-auto w-full bg-slate-700 lg:h-[400px] mb-10">
       <Image
         src={`/static/images/${imageSourse}`}
         alt="Logo"
         width={width}
         height={height}
-        className="w-full h-full"
+        className="w-full h-full object-cover"
       />
-      {dialog && <DialogContent dialog={dialog} />}
+
+      {title && <DialogContent title={title} subtitle={subtitle} />}
     </div>
   );
 };

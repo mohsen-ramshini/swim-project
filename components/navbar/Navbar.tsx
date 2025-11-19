@@ -31,16 +31,7 @@ const NavBar = () => {
   };
 
   return (
-<div
-  className="relative h-20 lg:h-[450px] w-full flex items-center justify-between px-4 bg-cover bg-center bg-no-repeat"
-  style={{
-    backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0)), url("/static/images/main-banner.jpeg")`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  }}
->
-
-
+    <div className="relative h-20 lg:h-[100px] w-full flex items-center justify-between px-4 bg-cover bg-center bg-no-repeat bg-primary">
       {/* Mobile Hamburger Menu */}
       <div className="absolute right-4 lg:hidden">
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
