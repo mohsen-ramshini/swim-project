@@ -49,3 +49,27 @@ export const getRepliesByParentId = async (parentId: number) => {
     return mockBookComments.filter((c) => c.parentId === parentId);
   }, 1100);
 };
+
+export const getBookBySlug = async (slug: string) => {
+  return mockQuery(() => {
+    const book = mockBooks.find((b) => b.slug === slug);
+
+    if (!book) {
+      throw new Error("Book not found");
+    }
+
+    return book;
+  }, 1500);
+};
+
+export const getBooksByCategory = async (categoryId: number) => {
+  return mockQuery(() => {
+    const books = mockBooks.filter((b) => b.categoryId === categoryId);
+
+    if (!books.length) {
+      return [];
+    }
+
+    return books;
+  }, 1400);
+};
