@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -9,50 +9,67 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import NewsSingleInterface from "./NewsSingleInterface";
-import { useGetNews } from "@/features/news/api/use-get-news";
 import LoadingComponent from "../appLayout/LoadingComponent";
+import { handlers } from "@/lib/mock";
 
+const USE_MOCK = process.env.NEXT_PUBLIC_DEMO === "true";
 const ARTICLES_PER_PAGE = 4;
 
 const NewsPagination = () => {
-  const { data: News = [], isLoading, isError } = useGetNews();
+  const [news, setNews] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(News.length / ARTICLES_PER_PAGE);
-  const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
+  const [loading, setLoading] = useState(true);
+
+  // گرفتن دیتا
+  useEffect(() => {
+    const fetchNews = async () => {
+      setLoading(true);
+      try {
+        if (USE_MOCK) {
+          const res = await handlers.news.getNews();
+          setNews(res.data ?? []); // فقط data
+        } else {
+          const res = await fetch("/api/news").then((r) => r.json());
+          setNews(res ?? []);
+        }
+      } catch (err) {
+        console.error(err);
+        setNews([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   const normalizedArticles = useMemo(() => {
-    return (
-      News?.map((article) => ({
-        ...article,
-        createdAt: new Date(article.createdAt),
-        modifiedAt: article.modifiedAt
-          ? new Date(article.modifiedAt)
-          : undefined,
-        publishDate: article.publishDate
-          ? new Date(article.publishDate)
-          : undefined,
-        date: article.date ? new Date(article.date) : undefined,
-      })) || []
-    );
-  }, [News]);
+    return news.map((article) => ({
+      ...article,
+      createdAt: new Date(article.createdAt),
+      modifiedAt: article.modifiedAt ? new Date(article.modifiedAt) : undefined,
+      publishDate: article.publishDate ? new Date(article.publishDate) : undefined,
+      date: article.date ? new Date(article.date) : undefined,
+    }));
+  }, [news]);
 
+  const totalPages = Math.ceil(normalizedArticles.length / ARTICLES_PER_PAGE);
+  const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
   const paginatedArticles = normalizedArticles.slice(
     startIndex,
     startIndex + ARTICLES_PER_PAGE
   );
+
+  if (loading) return <LoadingComponent />;
 
   return (
     <section className="w-full h-full flex flex-col">
       <div className="w-full h-full flex flex-row-reverse">
         <div className="w-full lg:w-3/4 flex flex-col justify-center items-center">
           <div className="w-3/4">
-            {isLoading ? (
-              <LoadingComponent />
-            ) : (
-              paginatedArticles.map((article) => (
-                <NewsSingleInterface key={article.id} data={article} />
-              ))
-            )}
+            {paginatedArticles.map((article) => (
+              <NewsSingleInterface key={article.id} data={article} />
+            ))}
           </div>
         </div>
         <div className="w-1/4 lg:flex flex-col justify-start items-center hidden ">
@@ -63,6 +80,7 @@ const NewsPagination = () => {
           </aside>
         </div>
       </div>
+
       <div className="bg-white flex justify-center my-4">
         <Pagination>
           <PaginationContent className="flex flex-row-reverse">
@@ -72,6 +90,7 @@ const NewsPagination = () => {
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               />
             </PaginationItem>
+
             {Array.from({ length: totalPages }, (_, i) => (
               <PaginationItem key={i}>
                 <PaginationLink
@@ -83,12 +102,11 @@ const NewsPagination = () => {
                 </PaginationLink>
               </PaginationItem>
             ))}
+
             <PaginationItem>
               <PaginationNext
                 href="#"
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               />
             </PaginationItem>
           </PaginationContent>

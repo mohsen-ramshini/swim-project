@@ -88,10 +88,7 @@ const CoursesInterface = () => {
 
         {!isLoading &&
           courses?.slice(0, visibleCount).map((course, idx) => (
-            <Link
-              key={idx}
-              href={`https://www.swimacademy.ir/courses/${course.slug}`}
-            >
+            <Link key={idx} href={`https://www.swimacademy.ir/courses`}>
               <div className="w-full h-full p-2 lg:min-h-96 my-10 ">
                 <div className="w-full aspect-[16/9]">
                   <Skeleton className="w-full h-full" />
