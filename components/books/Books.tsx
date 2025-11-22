@@ -53,9 +53,7 @@ const Books = () => {
 
   if (error)
     return (
-      <div className="text-red-500">
-        خطا در دریافت کتاب‌ها: {error.message}
-      </div>
+      <div className="text-red-500">خطا در دریافت کتاب‌ها: {error.message}</div>
     );
 
   return (
@@ -68,7 +66,7 @@ const Books = () => {
       </Button>
 
       <div className="w-3/4 lg:w-5/6 h-full flex flex-row justify-center items-center mt-10">
-        <BookInterface data={normalizedBooks} slider={true} />
+        <BookInterface data={normalizedBooks} slider={true} isLoading={true} />
       </div>
     </section>
   );

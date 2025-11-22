@@ -13,7 +13,7 @@ const page = () => {
         imageSourse={"banner-two.jpg"}
         width={20480}
         height={500}
-        title={"سلام"}
+        title={"تغییر کلمه عبور"}
       />
       <ChangePasswordForm onSubmit={handleLog} />
     </section>
