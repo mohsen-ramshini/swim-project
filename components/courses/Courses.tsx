@@ -27,7 +27,7 @@ const CourseList: React.FC = () => {
         </div>
       </div>
       <div className=" w-4/5">
-        <CoursesInterface />
+        <CoursesInterface isLoading={true} />
       </div>
     </section>
   );

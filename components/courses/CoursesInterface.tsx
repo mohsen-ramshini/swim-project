@@ -2,21 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Profile from "../articles/Profile";
 
 import { handlers } from "@/lib/mock";
 import { useCourses as useGetCoursesAPI } from "./hook/use-courses";
-import { CourseType } from "@/db/schema/courses/courses"; // در صورتی که تایپ داری
-// یا اگر نداری: type CourseType = any
+import { CourseType } from "@/db/schema/courses/courses";
 
 const USE_MOCK = process.env.NEXT_PUBLIC_DEMO === "true";
 
 const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const media = window.matchMedia(query);
     setMatches(media.matches);
     const listener = () => setMatches(media.matches);
@@ -27,9 +25,13 @@ const useMediaQuery = (query: string) => {
   return matches;
 };
 
-const CoursesInterface = () => {
+interface Props {
+  isLoading?: boolean; // prop جدید
+}
+
+const CoursesInterface: React.FC<Props> = ({ isLoading: propLoading }) => {
   const [courses, setCourses] = useState<CourseType[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [internalLoading, setInternalLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   const [visibleCount, setVisibleCount] = useState(6);
@@ -40,11 +42,10 @@ const CoursesInterface = () => {
     else setVisibleCount(6);
   }, [isMobile]);
 
-  // 🔥 فچ هماهنگ‌شده با Mock / API
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        setIsLoading(true);
+        setInternalLoading(true);
 
         let fetched: CourseType[] = [];
 
@@ -53,19 +54,20 @@ const CoursesInterface = () => {
           fetched = (res.data as CourseType[]) ?? [];
         } else {
           const res = await useGetCoursesAPI();
-          // fetched = res.data ?? [];
         }
 
         setCourses(fetched);
       } catch (err: any) {
         setError(err);
       } finally {
-        setIsLoading(false);
+        setInternalLoading(false);
       }
     };
 
     fetchCourses();
   }, []);
+
+  const loading = propLoading ?? internalLoading;
 
   if (error)
     return (
@@ -75,27 +77,30 @@ const CoursesInterface = () => {
     );
 
   return (
-    <section className="flex flex-col justify-center items-center w-full h-full p-4">
+    <section className="flex flex-col justify-center items-end w-full h-full p-4">
       <div className="grid grid-cols-1 w-full max-w-[350px] md:max-w-[800px] lg:max-w-none md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-        {isLoading &&
+        {loading &&
           [...Array(visibleCount)].map((_, i) => (
-            <div key={i} className="w-full h-full p-2 lg:min-h-96 my-10">
-              <Skeleton className="w-full aspect-[16/9]" />
-              <Skeleton className="w-1/2 h-6 mt-3" />
-              <Skeleton className="w-1/3 h-4 mt-2" />
+            <div
+              key={i}
+              className="w-full h-full p-2 lg:min-h-96 my-10 flex flex-col items-end text-right"
+            >
+              <Skeleton className="w-full aspect-[16/9] rounded-md mb-4" />
+              <Skeleton className="w-3/4 h-6 rounded mb-2" />
+              <Skeleton className="w-1/2 h-4 rounded" />
             </div>
           ))}
 
-        {!isLoading &&
+        {!loading &&
           courses?.slice(0, visibleCount).map((course, idx) => (
             <Link key={idx} href={`https://www.swimacademy.ir/courses`}>
-              <div className="w-full h-full p-2 lg:min-h-96 my-10 ">
-                <div className="w-full aspect-[16/9]">
+              <div className="w-full h-full p-2 lg:min-h-96 my-10 flex flex-col items-end text-right">
+                <div className="w-full aspect-[16/9] rounded-md overflow-hidden mb-4">
                   <Skeleton className="w-full h-full" />
                 </div>
 
-                <div className="w-full h-2/6 flex flex-row-reverse justify-between border-b-2 mt-2">
-                  <div className="w-1/2 text-right">
+                <div className="w-full flex flex-row-reverse justify-between border-b-2 mb-2">
+                  <div className="text-right">
                     <h4 className="text-xl lg:text-2xl font-semibold">
                       {course.title}
                     </h4>
@@ -105,7 +110,7 @@ const CoursesInterface = () => {
                   </div>
                 </div>
 
-                <div className="w-full h-1/6 flex flex-row-reverse justify-between items-center">
+                <div className="w-full flex flex-row-reverse justify-between items-center text-right">
                   <div className="flex flex-row-reverse gap-1 items-baseline">
                     <span>{course.price}</span>
                     تومان

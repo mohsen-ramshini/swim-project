@@ -89,10 +89,10 @@ const News = () => {
 
       <div className="w-full h-full flex flex-col justify-center items-center">
         <div className="w-4/5 h-1/2">
-          <NewsInterface news={sliderItems} slider={true} />
+          <NewsInterface news={sliderItems} slider={true} isLoading={true} />
         </div>
         <div className="w-full h-1/2 my-5">
-          <NewsInterface news={items} slider={false} />
+          <NewsInterface news={items} slider={false} isLoading={true} />
         </div>
       </div>
     </section>

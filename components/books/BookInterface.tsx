@@ -82,7 +82,7 @@ const BookInterface: React.FC<Props> = ({
         >
           {Array.from({ length: skeletonCount }).map((_, idx) => (
             <div key={idx} className="w-full h-full p-2 flex justify-end">
-              <Card className="w-full h-full shadow-lg border border-gray-200 rounded-lg overflow-hidden">
+              <div className="w-full h-full shadow-lg border border-gray-200 rounded-lg overflow-hidden">
                 <CardContent className="flex flex-col items-end p-4 h-full pb-10 text-right">
                   {/* تصویر */}
                   <div className="h-[250px] lg:h-4/5 w-full rounded-md overflow-hidden mb-4">
@@ -95,7 +95,7 @@ const BookInterface: React.FC<Props> = ({
                     <Skeleton className="h-4 w-1/2 rounded" />
                   </div>
                 </CardContent>
-              </Card>
+              </div>
             </div>
           ))}
         </div>
