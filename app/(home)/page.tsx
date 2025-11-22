@@ -19,7 +19,7 @@ const page = () => {
           height={150}
         />
       </div>
-      <Articles />
+      <Articles/>
       <Books />
       <Courses />
       <News />

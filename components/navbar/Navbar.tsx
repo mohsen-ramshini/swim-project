@@ -15,6 +15,7 @@ import { Menu, X, User, Phone } from "lucide-react";
 import { DialogTitle } from "@/components/ui/dialog";
 import Link from "next/link";
 import DropdownProfile from "../user/DropdownProfile";
+import Logo from "@/public/static/images/logo.png";
 
 const SwimAcademyCoursesURL = "https://www.swimacademy.ir/courses";
 
@@ -130,6 +131,27 @@ const NavBar = () => {
           className="flex justify-between p-5 min-w-full"
         >
           <NavigationMenuList>
+            <NavigationMenuItem
+              className="pl-5"
+              onClick={() => handleRouting("articles", false)}
+            >
+              <div
+                className="ml-10 flex items-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Link href="/" className="block">
+                  <Image
+                    src={Logo}
+                    alt="لوگو"
+                    width={160}
+                    height={60}
+                    priority
+                  />
+                </Link>
+              </div>
+
+              <NavigationMenuContent></NavigationMenuContent>
+            </NavigationMenuItem>
             <NavigationMenuItem
               className="pl-5"
               onClick={() => handleRouting("articles", false)}

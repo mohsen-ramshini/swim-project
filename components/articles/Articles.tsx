@@ -110,19 +110,27 @@ const Articles = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full p-4 items-stretch">
-            <div className="w-full p-4 space-y-7 text-right sm:text-center">
+          <div className="flex flex-col xl:flex-row gap-6 w-full p-4">
+            {/* ستون اول */}
+            <div className="flex-1 flex flex-col gap-7 p-4 text-right sm:text-center">
               {otherArticles.map((art) => (
-                <ArticleInterface key={art.id} data={art} />
+                <div className="flex-1 ">
+                  <ArticleInterface key={art.id} data={art} isLoading={true} />
+                </div>
               ))}
             </div>
 
-            <div className="hidden xl:block w-full p-4 space-y-4 text-right sm:text-center">
+            {/* ستون دوم */}
+            <div className="hidden xl:flex-1 xl:flex xl:flex-col gap-4 p-4 text-right sm:text-center">
               {headArticles.map((art) => (
-                <HeadArticle key={art.id} data={art} />
+                <div className="flex-1">
+                  <HeadArticle key={art.id} data={art} isLoading={true} />
+                </div>
               ))}
               {middleArticle.map((art) => (
-                <ArticleInterface key={art.id} data={art} />
+                <div className="flex flex-col flex-1 justify-end ">
+                  <ArticleInterface key={art.id} data={art} isLoading={true} />
+                </div>
               ))}
             </div>
           </div>

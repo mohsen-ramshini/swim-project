@@ -12,7 +12,13 @@ const Page = () => {
 
   return (
     <section className="w-full h-full">
-      <HeroSection imageSourse={"banner-one.jpg"} width={2048} height={500} />
+      <HeroSection
+        imageSourse={"banner-one.jpg"}
+        width={2048}
+        height={500}
+        title="پروفایل"
+        subtitle="صفحه اصلی | جزییات پروفایل"
+      />
       <div className="w-full">
         <ProfileForm onSubmit={handleLog} />
       </div>

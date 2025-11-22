@@ -168,13 +168,16 @@ const page = () => {
   const router = useRouter();
   return (
     <section className="w-full h-full flex flex-col justify-center items-center">
-      <HeroSection imageSourse={"banner-three.jpg"} width={1920} height={680} />
+      <HeroSection
+        imageSourse={"banner-three.jpg"}
+        width={1920}
+        height={680}
+        title="سبد خرید"
+        subtitle="صفحه اصلی | سبد خرید"
+      />
       <div className="hidden md:block w-full h-1/4">
         <ShoppingStageBar activeStage={1} />
       </div>
-      <h2 className="relative bottom-10 text-4xl md:text-5xl font-extrabold mt-16">
-        سبد خرید
-      </h2>
       <div className="w-full flex flex-col justify-center md:flex-row-reverse my-20 px-4 md:px-0">
         <div className="h-full w-full md:w-3/5 flex justify-center items-center ">
           <div className="border-2 rounded-sm w-full h-full flex flex-col justify-center items-center overflow-auto">
