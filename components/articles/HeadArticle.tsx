@@ -1,26 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Profile from "./Profile";
-import { Button } from "@/components/ui/button";
 import { z } from "zod";
-import { insertArticleSchema } from "@/db/schema/article/article";
+import { insertArticleSchema, insertCreatorSchema } from "@/db/schema";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import useContentParser from "@/hooks/use-content-parser";
+import { handlers } from "@/lib/mock";
 import { useGetCreator } from "@/features/creator/api/use-get-creator";
+import Image from "next/image";
+
+const USE_MOCK = process.env.NEXT_PUBLIC_DEMO === "true";
 
 type Article = z.infer<typeof insertArticleSchema>;
+type CreatorType = z.infer<typeof insertCreatorSchema>;
 
 interface Props {
   data: Article;
-  isLoading?: boolean; // اضافه کردن پراپ isLoading
+  isLoading?: boolean;
 }
 
 const HeadArticle: React.FC<Props> = ({ data, isLoading = false }) => {
-  const { data: authorData, isLoading: authorLoading } = useGetCreator(
-    data?.authorId?.toString()
-  );
+  const [FetchedCreator, setFetchedCreator] = useState<CreatorType>();
+  const [authorLoading, setAuthorLoading] = useState<boolean>();
   const router = useRouter();
   const content = useContentParser(data.excerpt, true);
+
+  useEffect(() => {
+    const fetchCreators = async () => {
+      setAuthorLoading(true);
+      try {
+        let creators: CreatorType[] = [];
+
+        if (USE_MOCK) {
+          const res = await handlers.creators.getCreatorById(
+            data?.authorId || 0
+          );
+          creators = Array.isArray(res.data)
+            ? res.data
+            : res.data
+            ? [res.data]
+            : [];
+        } else {
+          const res = await useGetCreator();
+          // اینجا هم باید مشابه بالا داده را به آرایه تبدیل کنی
+        }
+
+        setFetchedCreator(creators[0]);
+      } catch (err: any) {
+        setError(err);
+      } finally {
+        setAuthorLoading(false);
+      }
+    };
+
+    fetchCreators();
+  }, []);
 
   if (isLoading) {
     return (
@@ -29,9 +63,8 @@ const HeadArticle: React.FC<Props> = ({ data, isLoading = false }) => {
           <Skeleton className="w-full h-full" />
         </div>
         <div className="flex flex-col lg:flex-row-reverse w-full mt-5 px-4">
-          {/* عنوان و پروفایل */}
           <div className="lg:w-1/2 flex flex-col items-end text-right">
-            <Skeleton className="h-6 w-3/4 mb-4" /> {/* Skeleton برای عنوان */}
+            <Skeleton className="h-6 w-3/4 mb-4" />
             <div className="flex justify-end">
               <Profile
                 fullName=""
@@ -42,12 +75,10 @@ const HeadArticle: React.FC<Props> = ({ data, isLoading = false }) => {
               />
             </div>
           </div>
-
-          {/* متن Skeleton */}
           <div className="lg:w-1/2 text-right mt-4 lg:mt-0 flex flex-col gap-2">
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-5/6" /> {/* آخرین خط کمی کوتاه‌تر */}
+            <Skeleton className="h-4 w-5/6" />
           </div>
         </div>
       </aside>
@@ -55,10 +86,20 @@ const HeadArticle: React.FC<Props> = ({ data, isLoading = false }) => {
   }
 
   return (
-    <aside className="w-full flex flex-col items-center lg:mb-5 lg:border-none border-b-2 pb-2">
+    <aside
+      className="w-full flex flex-col items-center lg:mb-5 lg:border-none border-b-2 pb-2 cursor-pointer"
+      onClick={() => router.push(`/articles/${data.slug}`)}
+    >
       <div className="w-full h-[200px] xl:h-[455px] rounded-sm">
         {/* می‌تونی این Skeleton رو با thumbnail واقعی جایگزین کنی */}
-        <Skeleton className="w-full h-full" />
+        <Image
+          src={`${data?.thumbnail}`}
+          alt=""
+          width={700}
+          height={50}
+          className="rounded-sm"
+        />
+        {/* <Skeleton className="w-full h-full" /> */}
       </div>
 
       <div className="flex flex-col lg:flex-row-reverse w-full mt-5 px-4">
@@ -68,10 +109,16 @@ const HeadArticle: React.FC<Props> = ({ data, isLoading = false }) => {
           </h3>
           <div className="flex justify-end">
             <Profile
-              fullName={"ناشناس"}
+              fullName={`${FetchedCreator?.name}`}
               isLoading={authorLoading}
               size="lg"
-              role={"نویسنده"}
+              role={
+                FetchedCreator?.author
+                  ? "نویسنده"
+                  : FetchedCreator?.editor
+                  ? "تدوین گر"
+                  : "مترجم"
+              }
               occupation={"استاد دانشگاه"}
             />
           </div>
@@ -79,14 +126,6 @@ const HeadArticle: React.FC<Props> = ({ data, isLoading = false }) => {
 
         <div className="lg:w-1/2 text-center lg:text-right mt-4 lg:mt-0">
           <p className="text-right lg:text-sm md:text-base">{content}</p>
-          <div className="flex justify-center lg:justify-start items-center mt-3">
-            <Button
-              variant={"ghost"}
-              onClick={() => router.push(`/articles/${data.slug}`)}
-            >
-              بیشتر
-            </Button>
-          </div>
         </div>
       </div>
     </aside>
@@ -94,3 +133,7 @@ const HeadArticle: React.FC<Props> = ({ data, isLoading = false }) => {
 };
 
 export default HeadArticle;
+
+function setError(err: any) {
+  throw new Error("Function not implemented.");
+}

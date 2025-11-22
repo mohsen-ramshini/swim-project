@@ -7,8 +7,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "آموزش مقدماتی شنا برای مبتدی‌ها",
     slug: "swimming-basics-for-beginners",
-    thumbnail:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    thumbnail: "/static/images/article_two.jpg",
     excerpt:
       "اگر برای اولین بار قصد یادگیری شنا را دارید، این مقاله شما را با اصول اولیه مثل شناوری، تنفس و حرکات دست و پا آشنا می‌کند.",
     content:
@@ -28,8 +27,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "اصول صحیح شنای کرال سینه",
     slug: "freestyle-main-techniques",
-    thumbnail:
-      "https://images.unsplash.com/photo-1526403224-8f3fcbf5c1b2?auto=format&fit=crop&w=800&q=80",
+    thumbnail: "/static/images/banner-two.jpg",
     excerpt:
       "کرال سینه پرکاربردترین سبک شناست. یادگیری صحیح حرکات دست، پا و هماهنگی تنفس از اهمیت زیادی برخوردار است.",
     content:
@@ -49,8 +47,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "آموزش شنای کرال پشت برای همه سطوح",
     slug: "backstroke-complete-guide",
-    thumbnail:
-      "https://images.unsplash.com/photo-1593547874693-530d97d69d1f?auto=format&fit=crop&w=800&q=80",
+    thumbnail: "/static/images/banner-three.jpg",
     excerpt:
       "کرال پشت یکی از راحت‌ترین و کم‌فشارترین سبک‌های شنا است که مهارت تنفس را نیز بهبود می‌دهد.",
     content:
@@ -70,8 +67,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "شنا قورباغه: نکات ضروری برای اجرای صحیح",
     slug: "breaststroke-essential-tips",
-    thumbnail:
-      "https://images.unsplash.com/photo-1599058917215-7a0a9c326d8b?auto=format&fit=crop&w=800&q=80",
+    thumbnail: "/static/images/banner-four.jpg",
     excerpt:
       "شنا قورباغه به دلیل حرکات آرام و قابل‌کنترل، برای مبتدی‌ها و افراد مسن بسیار مناسب است.",
     content:
@@ -91,8 +87,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "روش‌های حرفه‌ای شنای پروانه",
     slug: "butterfly-professional-techniques",
-    thumbnail:
-      "https://images.unsplash.com/photo-1606813903483-7d6b7c62f2b5?auto=format&fit=crop&w=800&q=80",
+    thumbnail: "/static/images/banner-two.jpg",
     excerpt:
       "شنای پروانه یکی از سخت‌ترین سبک‌های شناست و اجرای صحیح آن نیازمند قدرت بدنی بالا و تکنیک مناسب است.",
     content:
@@ -112,8 +107,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "تمرینات افزایش استقامت برای شناگران",
     slug: "swimmers-endurance-workouts",
-    thumbnail:
-      "https://images.unsplash.com/photo-1594737625785-2c01c0d1f3b5?auto=format&fit=crop&w=800&q=80",
+    thumbnail: "/static/images/banner-four.jpg",
     excerpt:
       "استقامت یکی از مهم‌ترین مهارت‌ها برای شناگران حرفه‌ای است. این مقاله ۵ تمرین عالی برای تقویت طولانی‌مدت بدن پیشنهاد می‌کند.",
     content:
@@ -128,48 +122,46 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     editorId: 3,
     translatorId: 4,
   },
-//   {
-//     id: 7,
-//     articleType: 1,
-//     title: "تقویت مهارت تنفس در شنا",
-//     slug: "breathing-skills-for-swimmers",
-//     thumbnail:
-//       "https://images.unsplash.com/photo-1616481880465-9b2cf29ebf8e?auto=format&fit=crop&w=800&q=80",
-//     excerpt:
-//       "تنفس درست می‌تواند سرعت و عملکرد شما را به شکل چشمگیری بهبود دهد. این مقاله تکنیک‌های بهینه تنفس را توضیح می‌دهد.",
-//     content:
-//       "تمرینات کنترل تنفس مثل بیرون دادن آرام هوا زیر آب و هماهنگی با حرکات دست، باعث افزایش راندمان شنا می‌شود...",
-//     categoryId: 7,
-//     reference: "Swimming Science",
-//     publishTime: new Date(),
-//     isActive: true,
-//     createdBy: 1,
-//     createdAt: new Date(),
-//     authorId: 2,
-//     editorId: null,
-//     translatorId: null,
-//   },
-//   {
-//     id: 8,
-//     articleType: 1,
-//     title: "راهنمای خرید تجهیزات شنا برای مبتدی‌ها",
-//     slug: "swim-equipment-guide",
-//     thumbnail:
-//       "https://images.unsplash.com/photo-1583454110559-21a1ec5c64b1?auto=format&fit=crop&w=800&q=80",
-//     excerpt:
-//       "برای شروع شنا لازم نیست همه تجهیزات حرفه‌ای بخرید. این مقاله بهترین انتخاب‌ها برای تازه‌کارها را معرفی می‌کند.",
-//     content:
-//       "مهم‌ترین تجهیزات برای شروع شنا شامل عینک، کلاه شنا و تخته شنا هستند. کیفیت و سایز مناسب اهمیت زیادی دارد...",
-//     categoryId: 8,
-//     reference: "Swim Gear Shop",
-//     publishTime: new Date(),
-//     isActive: true,
-//     createdBy: 1,
-//     createdAt: new Date(),
-//     authorId: 3,
-//     editorId: 2,
-//     translatorId: null,
-//   },
+  {
+    id: 7,
+    articleType: 1,
+    title: "تقویت مهارت تنفس در شنا",
+    slug: "breathing-skills-for-swimmers",
+    thumbnail: "/static/images/banner-three.jpg",
+    excerpt:
+      "تنفس درست می‌تواند سرعت و عملکرد شما را به شکل چشمگیری بهبود دهد. این مقاله تکنیک‌های بهینه تنفس را توضیح می‌دهد.",
+    content:
+      "تمرینات کنترل تنفس مثل بیرون دادن آرام هوا زیر آب و هماهنگی با حرکات دست، باعث افزایش راندمان شنا می‌شود...",
+    categoryId: 7,
+    reference: "Swimming Science",
+    publishTime: new Date(),
+    isActive: true,
+    createdBy: 1,
+    createdAt: new Date(),
+    authorId: 2,
+    editorId: null,
+    translatorId: null,
+  },
+  {
+    id: 8,
+    articleType: 1,
+    title: "راهنمای خرید تجهیزات شنا برای مبتدی‌ها",
+    slug: "swim-equipment-guide",
+    thumbnail: "/static/images/article_two.jpg",
+    excerpt:
+      "برای شروع شنا لازم نیست همه تجهیزات حرفه‌ای بخرید. این مقاله بهترین انتخاب‌ها برای تازه‌کارها را معرفی می‌کند.",
+    content:
+      "مهم‌ترین تجهیزات برای شروع شنا شامل عینک، کلاه شنا و تخته شنا هستند. کیفیت و سایز مناسب اهمیت زیادی دارد...",
+    categoryId: 8,
+    reference: "Swim Gear Shop",
+    publishTime: new Date(),
+    isActive: true,
+    createdBy: 1,
+    createdAt: new Date(),
+    authorId: 3,
+    editorId: 2,
+    translatorId: null,
+  },
 ];
 
 export { articles };
