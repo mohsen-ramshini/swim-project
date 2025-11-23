@@ -20,13 +20,17 @@ import { Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "ایمیل نامعتبر است" }),
-  password: z.string().min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
+  password: z
+    .string()
+    .min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
 });
 
 const signUpSchema = z
   .object({
     email: z.string().email({ message: "ایمیل نامعتبر است" }),
-    password: z.string().min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
+    password: z
+      .string()
+      .min(6, { message: "رمز عبور باید حداقل ۶ کاراکتر باشد" }),
     confirmPassword: z
       .string()
       .min(6, { message: "تأیید رمز عبور باید حداقل ۶ کاراکتر باشد" }),
@@ -59,8 +63,8 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
   const form = useForm<AuthFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "rsmohsen20@gmail.com",
+      password: "123456",
       confirmPassword: "",
     },
   });
@@ -75,7 +79,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
           {isLogin ? "ورود به حساب کاربری" : "ایجاد حساب کاربری"}
         </h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-          {`برای ${isLogin ? "ورود" : "ثبت‌نام"} ایمیل و رمز عبور خود را وارد کنید.`}
+          {`برای ${
+            isLogin ? "ورود" : "ثبت‌نام"
+          } ایمیل و رمز عبور خود را وارد کنید.`}
         </p>
       </div>
 
@@ -155,11 +161,17 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
                       />
                       <button
                         type="button"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
                         className="absolute inset-y-0 left-2 flex items-center px-2 text-gray-600 dark:text-gray-400"
                         tabIndex={-1}
                       >
-                        {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        {showConfirmPassword ? (
+                          <EyeOff size={20} />
+                        ) : (
+                          <Eye size={20} />
+                        )}
                       </button>
                     </div>
                   </FormControl>
@@ -178,7 +190,10 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isLogin }) => {
             </Link>
           )}
 
-          <Button type="submit" className="w-full mt-2 bg-blue-500 hover:bg-blue-600">
+          <Button
+            type="submit"
+            className="w-full mt-2 bg-blue-500 hover:bg-blue-600"
+          >
             {isLogin ? "ورود" : "ثبت‌نام"}
           </Button>
 
