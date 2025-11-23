@@ -10,7 +10,7 @@ export const mockNews: InferInsertModel<typeof newsTable>[] = [
     slug: "largest-swimming-pool-opened-tehran",
     content:
       "بزرگ‌ترین مرکز آموزش شنا در تهران با امکانات حرفه‌ای و استانداردهای بین‌المللی افتتاح شد. این مجموعه دارای استخرهای مخصوص کودکان، بزرگسالان و ورزش‌های تخصصی آب است.",
-    banner: "/images/news/swimming-center-opening.jpg",
+    banner: "/static/images/banner-four.jpg",
     publishDate: new Date("2024-09-10T08:00:00Z"),
     isActive: true,
     createdBy: 1,
@@ -27,7 +27,7 @@ export const mockNews: InferInsertModel<typeof newsTable>[] = [
     slug: "iran-swimmers-asia-championship",
     content:
       "تیم ملی شنای ایران در مسابقات قهرمانی آسیا توانست چندین مدال رنگارنگ کسب کند. مربیان تیم این موفقیت را نتیجه تمرینات منظم و برنامه‌ریزی هدفمند دانستند.",
-    banner: "/images/news/iran-swimmers-asia.jpg",
+    banner: "/static/images/banner-four.jpg",
     publishDate: new Date("2024-08-22T11:30:00Z"),
     isActive: true,
     createdBy: 1,
@@ -44,7 +44,7 @@ export const mockNews: InferInsertModel<typeof newsTable>[] = [
     slug: "5-techniques-avoid-swimming-fatigue",
     content:
       "شناگران تازه‌کار معمولاً با مشکل خستگی سریع مواجه می‌شوند. در این مقاله ۵ تکنیک اصولی برای مدیریت انرژی و پیشگیری از خستگی معرفی شده است.",
-    banner: "/images/news/swimming-fatigue-tips.jpg",
+    banner: "/static/images/banner-four.jpg",
     publishDate: new Date("2024-07-01T14:10:00Z"),
     isActive: true,
     createdBy: 1,
@@ -61,7 +61,7 @@ export const mockNews: InferInsertModel<typeof newsTable>[] = [
     slug: "swimming-classes-summer-1403",
     content:
       "ثبت‌نام دوره‌های آموزش شنا ویژه تابستان ۱۴۰۳ در سراسر کشور آغاز شد. این دوره‌ها شامل آموزش برای کودکان، نوجوانان و بزرگسالان است.",
-    banner: "/images/news/swimming-classes-summer.jpg",
+    banner: "/static/images/banner-four.jpg",
     publishDate: new Date("2024-06-15T09:00:00Z"),
     isActive: true,
     createdBy: 1,
@@ -75,15 +75,15 @@ export const mockNews: InferInsertModel<typeof newsTable>[] = [
     title: "فواید شنا برای سلامت قلب در تحقیقات جدید",
     author: "نسترن محسنی",
     date: new Date("2024-05-04T12:40:00Z"),
-    slug: "swimming-benefits-heart-health",
+    slug: "/images/static/article_one.jpg",
     content:
       "طبق تحقیقات جدید دانشگاه آکسفورد، شنا یکی از موثرترین ورزش‌ها برای سلامت قلب شناخته شده است. این مطالعه نشان می‌دهد شنا می‌تواند ریسک بیماری‌های قلبی را تا ۳۵٪ کاهش دهد.",
-    banner: "/images/news/swimming-heart-health.jpg",
+    banner: "/static/images/banner-four.jpg",
     publishDate: new Date("2024-05-04T12:40:00Z"),
     isActive: true,
     createdBy: 1,
     createdAt: new Date("2024-05-04T12:40:00Z"),
     modifiedBy: null,
     modifiedAt: new Date("2024-05-04T12:40:00Z"),
-  }
+  },
 ];

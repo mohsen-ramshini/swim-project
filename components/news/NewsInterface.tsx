@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -7,12 +8,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
 import { z } from "zod";
 import { insertNewsSchema } from "@/db/schema/news/news";
-import NewsContent from "./NewsContent";
 import Link from "next/link";
 import Content from "./Content";
 
@@ -22,12 +20,11 @@ interface Props {
   news: News[];
   slider: boolean;
   interval?: number;
-  isLoading?: boolean; // prop جدید
+  isLoading?: boolean;
 }
 
 const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState(false);
-
   useEffect(() => {
     const media = window.matchMedia(query);
     setMatches(media.matches);
@@ -35,15 +32,13 @@ const useMediaQuery = (query: string) => {
     media.addEventListener("change", listener);
     return () => media.removeEventListener("change", listener);
   }, [query]);
-
   return matches;
 };
 
-const chunkArray = (arr: News[], size: number) => {
-  return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
+const chunkArray = (arr: News[], size: number) =>
+  Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
     arr.slice(i * size, i * size + size)
   );
-};
 
 const NewsInterface: React.FC<Props> = ({
   news,
@@ -58,66 +53,53 @@ const NewsInterface: React.FC<Props> = ({
 
   useEffect(() => {
     if (!slider) return;
-
     const timer = setInterval(() => {
-      setActiveIndex((prevIndex) =>
-        prevIndex + 1 >= groupedNews.length ? 0 : prevIndex + 1
-      );
+      setActiveIndex((prev) => (prev + 1 >= groupedNews.length ? 0 : prev + 1));
     }, interval);
-
     return () => clearInterval(timer);
   }, [groupedNews.length, slider, interval]);
 
-  // ===== Skeleton برای حالت slider =====
+  // =================== SKELETONS ===================
   if (isLoading && slider) {
-    const skeletonCount = itemsPerSlide * 2;
     return (
-      <aside className="w-full h-auto flex flex-col items-end">
-        <div className="flex justify-center items-center gap-4 w-full h-[550px]">
-          {Array.from({ length: skeletonCount }).map((_, idx) => (
-            <div key={idx} className="w-full max-w-3xl p-2">
-              <CardContent className="flex flex-col items-end p-4">
-                <div className="w-full h-48 md:h-64 lg:h-72 mb-4">
-                  <Skeleton className="w-full h-full rounded-md" />
-                </div>
-                <Skeleton className="w-3/4 h-6 mb-2 rounded" />
-                <Skeleton className="w-1/2 h-4 rounded" />
-              </CardContent>
+      <aside className="w-full flex justify-center my-6">
+        <div className="w-full max-w-6xl">
+          <div className="relative w-full h-[420px] md:h-[520px] rounded-xl overflow-hidden shadow-md bg-white">
+            <Skeleton className="absolute inset-0 w-full h-full" />
+            <div className="absolute bottom-0 right-0 w-full p-6 bg-gradient-to-t from-black/70 to-transparent flex flex-col items-end">
+              <Skeleton className="w-2/3 h-7 rounded-md mb-3" />
+              <Skeleton className="w-1/2 h-6 rounded-md mb-2" />
+              <Skeleton className="w-1/3 h-5 rounded-md" />
             </div>
-          ))}
+          </div>
+          <div className="flex justify-center gap-4 mt-4 opacity-60">
+            <Skeleton className="w-10 h-10 rounded-full" />
+            <Skeleton className="w-10 h-10 rounded-full" />
+          </div>
         </div>
       </aside>
     );
   }
 
-  // ===== Skeleton برای حالت slider=false (لیست عمودی) =====
   if (isLoading && !slider) {
-    const skeletonCount = 1; // تعداد Skeleton ها
     return (
-      <aside className="w-full flex flex-col items-center gap-6 my-10">
-        {Array.from({ length: skeletonCount }).map((_, idx) => (
+      <aside className="w-full flex flex-col items-center gap-8 my-10">
+        {[1, 2, 3].map((i) => (
           <div
-            key={idx}
-            className="flex flex-col md:flex-row-reverse w-full max-w-5xl h-64 md:h-64 lg:h-72 items-stretch gap-4 bg-gray-50 rounded-lg shadow-sm p-3"
+            key={i}
+            className="w-full max-w-5xl bg-white border rounded-xl shadow-sm overflow-hidden flex flex-col md:flex-row-reverse gap-4 p-4"
           >
-            {/* تصویر */}
-            <div className="w-full md:w-1/3 h-full rounded-md overflow-hidden">
-              <Skeleton className="w-full h-full rounded-md" />
+            <div className="w-full md:w-1/3 h-48 md:h-56 rounded-lg overflow-hidden">
+              <Skeleton className="w-full h-full" />
             </div>
-
-            {/* متن */}
-            <div className="w-full md:w-2/3 flex flex-col justify-between items-end gap-3 px-4 py-2 h-full text-right">
-              {/* عنوان */}
-              <Skeleton className="w-3/4 h-6 md:h-7 rounded-md mt-1" />
-              {/* خطوط توضیحات */}
-              <div className="flex flex-col gap-2 w-full items-end text-right">
+            <div className="w-full md:w-2/3 flex flex-col items-end gap-4 text-right">
+              <Skeleton className="w-3/4 h-6 rounded-md" />
+              <div className="flex flex-col gap-3 w-full">
                 <Skeleton className="w-full h-4 rounded-md" />
                 <Skeleton className="w-5/6 h-4 rounded-md" />
-                <Skeleton className="w-2/3 h-4 rounded-md" />
+                <Skeleton className="w-4/6 h-4 rounded-md" />
               </div>
-
-              {/* خط پایین متن */}
-              <Skeleton className="w-1/2 h-4 rounded-md mb-1" />
+              <Skeleton className="w-1/4 h-4 rounded-md" />
             </div>
           </div>
         ))}
@@ -125,45 +107,42 @@ const NewsInterface: React.FC<Props> = ({
     );
   }
 
-  // ===== حالت واقعی slider =====
+  // =================== REAL SLIDER ===================
   if (slider) {
     return (
-      <aside className="w-full h-auto flex flex-col">
-        <Carousel className="w-full h-auto max-w-5xl m-auto">
+      <aside className="w-full flex justify-center my-6">
+        <Carousel className="w-full max-w-6xl">
           <CarouselContent
-            className="w-full h-auto lg:h-[550px]"
+            className="transition-transform"
             style={{
               transform: `translateX(${activeIndex * 100}%)`,
-              transition: "transform 0.5s ease-in-out",
+              transition: "transform 0.6s ease-in-out",
             }}
           >
-            {groupedNews.map((newsGroup, index) => (
-              <CarouselItem
-                key={`group-${index}`}
-                className={cn(
-                  "flex justify-center items-center h-auto gap-4 px-2",
-                  isMobile ? "w-full flex-col" : "w-1/3"
-                )}
-              >
-                {newsGroup.map((newsItem) => (
+            {groupedNews.map((group, idx) => (
+              <CarouselItem key={idx} className="w-full">
+                {group.map((item) => (
                   <Link
-                    key={newsItem.id}
-                    href={`/news/${newsItem.slug}`}
-                    className="w-full max-w-3xl p-2"
+                    key={item.id}
+                    href={`/news/${item.slug}`}
+                    className="block"
                   >
-                    <Card className="w-full h-auto shadow-md rounded-lg overflow-hidden">
-                      <CardContent className="flex flex-col items-end p-4">
-                        <div className="w-full h-48 md:h-64 lg:h-72 mb-4">
-                          <Skeleton className="w-full h-full rounded-md" />
+                    <div className="relative w-full h-[420px] md:h-[520px] rounded-xl overflow-hidden shadow-md">
+                      <Image
+                        src={item.banner || "/placeholder.jpg"}
+                        alt={item.title}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute bottom-0 right-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent text-white flex flex-col items-end">
+                        <h2 className="text-2xl font-bold mb-3">
+                          {item.title}
+                        </h2>
+                        <div className="text-sm md:text-base leading-6 max-w-xl">
+                          <Content data={item.content?.slice(0, 150) || ""} />
                         </div>
-                        <div className="w-full text-right mt-2 font-semibold text-lg md:text-xl">
-                          {newsItem.title}
-                        </div>
-                        <div className="w-full text-right mt-2 font-normal text-sm md:text-base">
-                          <Content data={newsItem.content.slice(0, 120)} />
-                        </div>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   </Link>
                 ))}
               </CarouselItem>
@@ -171,15 +150,15 @@ const NewsInterface: React.FC<Props> = ({
           </CarouselContent>
           <CarouselPrevious
             onClick={() =>
-              setActiveIndex((prevIndex) =>
-                prevIndex + 1 >= groupedNews.length ? 0 : prevIndex + 1
+              setActiveIndex((prev) =>
+                prev - 1 < 0 ? groupedNews.length - 1 : prev - 1
               )
             }
           />
           <CarouselNext
             onClick={() =>
-              setActiveIndex((prevIndex) =>
-                prevIndex - 1 < 0 ? groupedNews.length - 1 : prevIndex - 1
+              setActiveIndex((prev) =>
+                prev + 1 >= groupedNews.length ? 0 : prev + 1
               )
             }
           />
@@ -188,11 +167,31 @@ const NewsInterface: React.FC<Props> = ({
     );
   }
 
-  // ===== حالت واقعی slider=false =====
+  // =================== REAL LIST VIEW ===================
   return (
-    <aside className="w-full h-auto flex flex-col items-end gap-6">
-      {news.map((newsItem) => (
-        <NewsContent key={newsItem.id} news={newsItem} />
+    <aside className="w-full flex flex-col items-end gap-8 my-8">
+      {news.map((item) => (
+        <Link
+          key={item.id}
+          href={`/news/${item.slug}`}
+          className="w-full max-w-5xl bg-white border rounded-xl shadow-md flex flex-col md:flex-row-reverse gap-4 overflow-hidden p-4"
+        >
+          <div className="w-full md:w-1/3 h-48 md:h-56 rounded-lg overflow-hidden relative">
+            {/* <Image
+              src={item.banner || "/placeholder.jpg"}
+              alt={item.title}
+              fill
+              className="object-cover"
+            /> */}
+            <Skeleton className="w-full h-full" />
+          </div>
+          <div className="w-full md:w-2/3 flex flex-col items-end gap-4 text-right">
+            <h2 className="text-xl font-bold">{item.title}</h2>
+            <div className="text-gray-700 text-sm md:text-base leading-7">
+              <Content data={item.content?.slice(0, 180) || ""} />
+            </div>
+          </div>
+        </Link>
       ))}
     </aside>
   );

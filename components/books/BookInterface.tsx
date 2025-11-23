@@ -173,26 +173,31 @@ const BookInterface: React.FC<Props> = ({
                 >
                   <Card className="w-full h-full">
                     <CardContent className="flex flex-col items-center p-4 h-full pb-10">
-                      <div className="h-[250px] lg:h-4/5 w-full">
+                      <div className="h-[250px] lg:h-4/5 w-full overflow-hidden rounded-md mb-4">
+                        {/* <img
+                          src={book.thumbnail ?? "/placeholder.png"}
+                          alt={book.title}
+                          className="w-full h-full object-cover"
+                        /> */}
                         <Skeleton className="w-full h-full" />
                       </div>
-                      <div className="w-full h-1/5 text-center">
-                        <h3 className="w-full text-2xl h-1/4 font-semibold my-3">
+
+                      {/* عنوان و نویسنده */}
+                      <div className="w-full h-20 text-center flex flex-col justify-between">
+                        <h3 className="text-lg lg:text-xl font-semibold line-clamp-2">
                           {book.title}
                         </h3>
-                        <div className="flex flex-col border-t-2">
-                          <div className="flex flex-row items-center justify-around opacity-90 text-gray-500">
-                            <p>تعداد صفحات</p>
-                            <p>قیمت</p>
-                          </div>
-                          <div className="flex flex-row items-center justify-around relative left-5">
-                            <p>{book.pageCount}</p>
-                            <p className="flex flex-row gap-2 items-baseline text-md h-1/4 font-bold mt-2">
-                              <span>تومان</span>
-                              {book.price}
-                            </p>
-                          </div>
-                        </div>
+                        <p className="text-gray-500 text-sm line-clamp-1">
+                          {book.author ?? "ناشناس"}
+                        </p>
+                      </div>
+
+                      {/* اطلاعات صفحات و قیمت */}
+                      <div className="flex justify-between w-full border-t pt-2 mt-2 text-gray-700 text-sm">
+                        <span>{book.pageCount ?? "نامشخص"} صفحه</span>
+                        <span className="font-bold">
+                          {book.price ?? "نامشخص"} تومان
+                        </span>
                       </div>
                     </CardContent>
                   </Card>

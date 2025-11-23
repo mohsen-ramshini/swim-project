@@ -66,7 +66,11 @@ const Books = () => {
       </Button>
 
       <div className="w-3/4 lg:w-5/6 h-full flex flex-row justify-center items-center mt-10">
-        <BookInterface data={normalizedBooks} slider={true} isLoading={true} />
+        <BookInterface
+          data={normalizedBooks}
+          slider={true}
+          isLoading={isLoading}
+        />
       </div>
     </section>
   );

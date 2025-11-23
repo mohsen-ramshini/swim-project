@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { ArrowLeftCircle } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
@@ -6,7 +7,7 @@ import NewsInterface from "./NewsInterface";
 import { useRouter } from "next/navigation";
 import { useGetNews as useGetNewsAPI } from "@/features/news/api/use-get-news";
 import { handlers } from "@/lib/mock";
-import type { NewsType } from "@/db/schema/news/news"; // اگر نداری برات می‌نویسم
+import type { NewsType } from "@/db/schema/news/news";
 
 const USE_MOCK = process.env.NEXT_PUBLIC_DEMO === "true";
 
@@ -59,15 +60,9 @@ const News = () => {
     }));
   }, [news]);
 
-  // ==========================
-  //       SPLIT SLIDER / LIST
-  // ==========================
   const sliderItems = normalizedNews.slice(0, 4);
   const items = normalizedNews.slice(4);
 
-  // ==========================
-  //         ERROR UI
-  // ==========================
   if (error)
     return (
       <div className="text-red-500 text-center mt-10">
@@ -76,24 +71,28 @@ const News = () => {
     );
 
   return (
-    <section className="w-full h-full flex flex-col">
-      <div className="w-full flex flex-col justify-center mt-5">
+    <section className="w-full h-full flex flex-col items-center">
+      {/* عنوان */}
+      <div className="w-full max-w-5xl mt-5 flex flex-col items-center">
         <h2 className="text-5xl font-extrabold text-center my-5">اخبار</h2>
-        <div className="w-full flex justify-center items-center">
-          <Button variant={"ghost"} onClick={() => router.push("/news")}>
-            <ArrowLeftCircle />
-            دیدن همه
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          onClick={() => router.push("/news")}
+          className="flex items-center gap-2"
+        >
+          <ArrowLeftCircle size={22} />
+          دیدن همه
+        </Button>
       </div>
 
-      <div className="w-full h-full flex flex-col justify-center items-center">
-        <div className="w-4/5 h-1/2">
-          <NewsInterface news={sliderItems} slider={true} isLoading={true} />
-        </div>
-        <div className="w-full h-1/2 my-5">
-          <NewsInterface news={items} slider={false} isLoading={true} />
-        </div>
+      {/* اسلایدر اخبار */}
+      <div className="w-full max-w-5xl mt-10 px-4">
+        <NewsInterface news={sliderItems} slider={true} isLoading={isLoading} />
+      </div>
+
+      {/* لیست اخبار */}
+      <div className="w-full max-w-4xl mt-10 px-4">
+        <NewsInterface news={items} slider={false} isLoading={isLoading} />
       </div>
     </section>
   );
