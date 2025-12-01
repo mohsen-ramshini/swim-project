@@ -4,9 +4,9 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const role = request.cookies.get('role')?.value;
 
-  if (role !== 'authenticated') {
-    return NextResponse.redirect(new URL('/sign-in', request.url));
-  }
+  // if (role !== 'authenticated') {
+  //   return NextResponse.redirect(new URL('/sign-in', request.url));
+  // }
 
   return NextResponse.next();
 }
