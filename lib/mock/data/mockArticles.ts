@@ -7,7 +7,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "آموزش مقدماتی شنا برای مبتدی‌ها",
     slug: "swimming-basics-for-beginners",
-    thumbnail: "/static/images/article_two.jpg",
+    thumbnail: "",
     excerpt:
       "اگر برای اولین بار قصد یادگیری شنا را دارید، این مقاله شما را با اصول اولیه مثل شناوری، تنفس و حرکات دست و پا آشنا می‌کند.",
     content:
@@ -27,7 +27,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "اصول صحیح شنای کرال سینه",
     slug: "freestyle-main-techniques",
-    thumbnail: "/static/images/banner-two.jpg",
+    thumbnail: "",
     excerpt:
       "کرال سینه پرکاربردترین سبک شناست. یادگیری صحیح حرکات دست، پا و هماهنگی تنفس از اهمیت زیادی برخوردار است.",
     content:
@@ -67,7 +67,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "شنا قورباغه: نکات ضروری برای اجرای صحیح",
     slug: "breaststroke-essential-tips",
-    thumbnail: "/static/images/banner-four.jpg",
+    thumbnail: "",
     excerpt:
       "شنا قورباغه به دلیل حرکات آرام و قابل‌کنترل، برای مبتدی‌ها و افراد مسن بسیار مناسب است.",
     content:
@@ -87,7 +87,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "روش‌های حرفه‌ای شنای پروانه",
     slug: "butterfly-professional-techniques",
-    thumbnail: "/static/images/banner-two.jpg",
+    thumbnail: "",
     excerpt:
       "شنای پروانه یکی از سخت‌ترین سبک‌های شناست و اجرای صحیح آن نیازمند قدرت بدنی بالا و تکنیک مناسب است.",
     content:
@@ -107,7 +107,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "تمرینات افزایش استقامت برای شناگران",
     slug: "swimmers-endurance-workouts",
-    thumbnail: "/static/images/banner-four.jpg",
+    thumbnail: "",
     excerpt:
       "استقامت یکی از مهم‌ترین مهارت‌ها برای شناگران حرفه‌ای است. این مقاله ۵ تمرین عالی برای تقویت طولانی‌مدت بدن پیشنهاد می‌کند.",
     content:
@@ -127,7 +127,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "تقویت مهارت تنفس در شنا",
     slug: "breathing-skills-for-swimmers",
-    thumbnail: "/static/images/banner-three.jpg",
+    thumbnail: "",
     excerpt:
       "تنفس درست می‌تواند سرعت و عملکرد شما را به شکل چشمگیری بهبود دهد. این مقاله تکنیک‌های بهینه تنفس را توضیح می‌دهد.",
     content:
@@ -147,7 +147,7 @@ export const mockArticles: InferInsertModel<typeof articles>[] = [
     articleType: 1,
     title: "راهنمای خرید تجهیزات شنا برای مبتدی‌ها",
     slug: "swim-equipment-guide",
-    thumbnail: "/static/images/article_two.jpg",
+    thumbnail: "",
     excerpt:
       "برای شروع شنا لازم نیست همه تجهیزات حرفه‌ای بخرید. این مقاله بهترین انتخاب‌ها برای تازه‌کارها را معرفی می‌کند.",
     content:
